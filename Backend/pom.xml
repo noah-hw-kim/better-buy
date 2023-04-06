@@ -47,6 +47,11 @@
 			<artifactId>spring-dotenv</artifactId>
 			<version>2.5.4</version>
 		</dependency>
+		<dependency>
+			<groupId>io.github.qudtlib</groupId>
+			<artifactId>qudtlib</artifactId>
+			<version>4.3.0</version> <!-- remember to use the latest version -->
+		</dependency>
 	</dependencies>
 
 	<build>
