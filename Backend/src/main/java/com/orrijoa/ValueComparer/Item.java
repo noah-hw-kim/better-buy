@@ -20,7 +20,6 @@ public class Item implements Comparable<Item>{
     private double price;
     private double amount;
 
-
     @Override
     public int compareTo(Item o) {
         return 0;
