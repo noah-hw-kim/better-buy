@@ -8,6 +8,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
+
 @Document(collection = "items")
 @Data
 @NoArgsConstructor
@@ -24,16 +26,28 @@ public class Item implements Comparable<Item> {
     /*
      * convert unit1 and unit2 to the metric unit
      * */
-    private void standardizeByUnit() {
+    private double standardizeByCurrentUnit(Item other) {
+        double convertedAmount;
+        String currReference = other.getUnit();
 
+        switch (currReference) {
+            case "litter"
+        }
+
+        String currReferenceName = UnitMap.get(this.getUnit());
+        String otherReferenceName = UnitMap.get(other.getUnit());
+
+        double convertedAmount = Qudt.convert(new BigDecimal(35), Qudt.Units.{currReferenceName}, Qudt.Units.{otherReferenceName});
+
+        return
     }
 
     @Override
-    public int compareTo(Item i) {
+    public int compareTo(Item other) {
+        double currItemValue = price * amount;
 
-        /*
-        int currItemValue = price * amount * standardizeByUnit(unit);
-        int otherItemValue = i.getPrice() * i.getAmount() * i.standardizeByUnit(i.getUnit());
+
+        double otherItemValue = other.getPrice() * Qudt.convert(new BigDecimal(Double.));
 
 
 
@@ -41,14 +55,13 @@ public class Item implements Comparable<Item> {
             return 1;
         }
         return -1;
-        */
         return 0;
     }
 
 
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object other) {
         return false;
     }
 

@@ -12,10 +12,10 @@ import java.util.HashMap;
 @Document
 public class UnitMap {
     @Autowired
-    HashMap<String, String> unitReferenceMap;
+    static HashMap<String, String> unitReferenceMap;
 
     @Autowired
-    HashMap<String, String> unitTypeMap;
+    static HashMap<String, String> unitTypeMap;
 
     public UnitMap() {
         unitReferenceMap = new HashMap<>();
@@ -77,5 +77,9 @@ public class UnitMap {
         unitTypeMap.put("length", "yard");
         unitTypeMap.put("length", "foot");
         unitTypeMap.put("length", "inch");
+    }
+
+    public static String get(String unit) {
+        return unitReferenceMap.get(unit);
     }
 }
