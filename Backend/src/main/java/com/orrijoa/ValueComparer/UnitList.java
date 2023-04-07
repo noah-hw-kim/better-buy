@@ -2,11 +2,6 @@ package com.orrijoa.ValueComparer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
 import java.util.HashSet;
 
 /*
@@ -15,7 +10,7 @@ import java.util.HashSet;
 
 @Data
 @AllArgsConstructor
-public class UnitMap {
+public class UnitList {
 
     HashSet<String> volumeSet;
 
@@ -23,7 +18,7 @@ public class UnitMap {
 
     HashSet<String> lengthSet;
 
-    public UnitMap() {
+    public UnitList() {
         /*
         * reference for the frontend. It will be loaded to show the list
         * */
@@ -51,6 +46,7 @@ public class UnitMap {
         lengthSet.add("yard");
         lengthSet.add("foot");
         lengthSet.add("inch");
+
         /*
         // volume convert to use external library
         unitReferenceMap.put("litter", "Qudt.Units.L");

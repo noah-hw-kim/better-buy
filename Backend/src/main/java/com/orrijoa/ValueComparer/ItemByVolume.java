@@ -49,16 +49,9 @@ public class ItemByVolume implements Item {
                 standardAmount = (Qudt.convert(new BigDecimal(amount), Qudt.Units.L, Qudt.Units.MilliL)).doubleValue();
                 break;
             default:
+                standardAmount = amount;
                 break;
         }
-    }
-
-    @Override
-    public int compareTo(Item other) {
-        double thisItemValue = standardAmount * price;
-        double otherItemValue = ((ItemByVolume)other).getStandardAmount() * ((ItemByVolume) other).getPrice();
-
-        return Double.compare(thisItemValue, otherItemValue);
     }
 
     @Override

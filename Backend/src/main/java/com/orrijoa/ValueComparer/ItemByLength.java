@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 
-
 /*
  * standard unit for ItemByLength class is meter (m)
  * */
@@ -57,16 +56,9 @@ public class ItemByLength implements Item {
                 standardAmount = (Qudt.convert(new BigDecimal(amount), Qudt.Units.IN, Qudt.Units.M)).doubleValue();
                 break;
             default:
+                standardAmount = amount;
                 break;
         }
-    }
-
-    @Override
-    public int compareTo(Item other) {
-        double thisItemValue = standardAmount * price;
-        double otherItemValue = ((ItemByLength)other).getStandardAmount() * ((ItemByLength) other).getPrice();
-
-        return Double.compare(thisItemValue, otherItemValue);
     }
 
     @Override

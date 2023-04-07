@@ -47,16 +47,9 @@ public class ItemByMass implements Item {
                 standardAmount = (Qudt.convert(new BigDecimal(amount), Qudt.Units.MilliGM, Qudt.Units.GM)).doubleValue();
                 break;
             default:
+                standardAmount = amount;
                 break;
         }
-    }
-
-    @Override
-    public int compareTo(Item other) {
-        double thisItemValue = standardAmount * price;
-        double otherItemValue = ((ItemByMass)other).getStandardAmount() * ((ItemByMass) other).getPrice();
-
-        return Double.compare(thisItemValue, otherItemValue);
     }
 
     @Override
