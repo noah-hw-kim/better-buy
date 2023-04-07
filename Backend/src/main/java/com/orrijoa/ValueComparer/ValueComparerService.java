@@ -1,10 +1,8 @@
 package com.orrijoa.ValueComparer;
 
-import io.github.qudtlib.Qudt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 
 /*
 * Reference for Qudt library
@@ -26,14 +24,19 @@ public class ValueComparerService {
     @Autowired
     ValueComparerRepository valueComparerRepository;
 
+    UnitMap unitMap;
+
     /**
      * create item 1 and item 2 and compare the value and return the result
      * */
     public Item getCheaper(Double amount1, String unit1, Double price1, Double amount2, String unit2, Double price2) {
+        unitMap = new UnitMap();
+
         Item i1;
         Item i2;
 
-        if (UnitMap.volumeSet.contains(unit1)) {
+        if (unitMap.getVolumeSet().contains(unit1)) {
+            System.out.println("volume");
             i1 = new ItemByVolume();
             i2 = new ItemByVolume();
 
@@ -44,7 +47,8 @@ public class ValueComparerService {
             ((ItemByVolume)i2).setUnit(unit2);
             ((ItemByVolume)i2).setPrice(price2);
         }
-        else if (UnitMap.massSet.contains(unit1)) {
+        else if (unitMap.getMassSet().contains(unit1)) {
+            System.out.println("mass");
             i1 = new ItemByMass();
             i2 = new ItemByMass();
 
@@ -56,6 +60,7 @@ public class ValueComparerService {
             ((ItemByMass)i2).setPrice(price2);
         }
         else {
+            System.out.println("length");
             i1 = new ItemByLength();
             i2 = new ItemByLength();
 
@@ -66,19 +71,22 @@ public class ValueComparerService {
             ((ItemByLength)i2).setUnit(unit2);
             ((ItemByLength)i2).setPrice(price2);
         }
+
+        // invoke standardizeAmount --> convert current amount to the standard unit amount
+        i1.standardizeAmount();
+        i2.standardizeAmount();
+
+        System.out.println(i1.getClass());
+
         return compareValue(i1, i2);
-    }
-
-    public Item test() {
-        System.out.println(Qudt.convert(new BigDecimal("1"), Qudt.Units.YD, Qudt.Units.KiloM));
-
-        return null;
     }
 
     /**
      * compare Item 1 and Item 2's value and return the cheaper item
      * */
     private Item compareValue(Item i1, Item i2) {
+
+
         if (i1.compareTo(i2) > 0){
             return i1;
         }

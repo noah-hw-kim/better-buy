@@ -63,10 +63,10 @@ public class ItemByLength implements Item {
 
     @Override
     public int compareTo(Item other) {
-        standardizeAmount();
-        other.standardizeAmount();
+        double thisItemValue = standardAmount * price;
+        double otherItemValue = ((ItemByLength)other).getStandardAmount() * ((ItemByLength) other).getPrice();
 
-        return Double.compare(standardAmount, ((ItemByLength)other).getStandardAmount());
+        return Double.compare(thisItemValue, otherItemValue);
     }
 
     @Override

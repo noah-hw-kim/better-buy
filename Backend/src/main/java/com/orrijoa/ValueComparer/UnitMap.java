@@ -1,7 +1,10 @@
 package com.orrijoa.ValueComparer;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,62 +13,44 @@ import java.util.HashSet;
 * this map is used to convert regular metric/US unit to qudt unit system
 * */
 
-@Document
+@Data
+@AllArgsConstructor
 public class UnitMap {
-    @Autowired
-    static HashMap<String, String> unitReferenceMap;
 
-    @Autowired
-    static HashMap<String, String> unitTypeMap;
+    HashSet<String> volumeSet;
 
-    @Autowired
-    static HashSet<String> volumeSet;
-    @Autowired
-    static HashSet<String> massSet;
-    @Autowired
-    static HashSet<String> lengthSet;
+    HashSet<String> massSet;
 
+    HashSet<String> lengthSet;
 
     public UnitMap() {
         /*
         * reference for the frontend. It will be loaded to show the list
         * */
-        unitTypeMap.put("volume", "gallon");
-        unitTypeMap.put("volume", "quart");
-        unitTypeMap.put("volume", "pint");
-        unitTypeMap.put("volume", "fluid ounces");
-        unitTypeMap.put("volume", "litter");
-        unitTypeMap.put("volume", "milliliter");
+        volumeSet = new HashSet<>();
+        massSet = new HashSet<>();
+        lengthSet = new HashSet<>();
 
-        unitTypeMap.put("mass", "pound");
-        unitTypeMap.put("mass", "gram ounces");
-        unitTypeMap.put("mass", "kilogram");
-        unitTypeMap.put("mass", "milligram");
+        volumeSet.add("gallon");
+        volumeSet.add("quart");
+        volumeSet.add("pint");
+        volumeSet.add("fluid ounces");
+        volumeSet.add("litter");
+        volumeSet.add("milliliter");
 
-        unitTypeMap.put("length", "kilometer");
-        unitTypeMap.put("length", "meter");
-        unitTypeMap.put("length", "centimeter");
-        unitTypeMap.put("length", "millimeter");
-        unitTypeMap.put("length", "mile");
-        unitTypeMap.put("length", "yard");
-        unitTypeMap.put("length", "foot");
-        unitTypeMap.put("length", "inch");
+        massSet.add("pound");
+        massSet.add("gram ounces");
+        massSet.add("kilogram");
+        massSet.add("milligram");
 
-        for (String s : unitReferenceMap.keySet()) {
-            if (s.equals("volume")) {
-                volumeSet.add(unitTypeMap.get(s));
-            }
-            else if (s.equals("mass")) {
-                massSet.add(unitTypeMap.get(s));
-            }
-            else if (s.equals("length")) {
-                lengthSet.add(unitTypeMap.get(s));
-            }
-            else{
-
-            }
-        }
-
+        lengthSet.add("kilometer");
+        lengthSet.add("meter");
+        lengthSet.add("centimeter");
+        lengthSet.add("millimeter");
+        lengthSet.add("mile");
+        lengthSet.add("yard");
+        lengthSet.add("foot");
+        lengthSet.add("inch");
         /*
         // volume convert to use external library
         unitReferenceMap.put("litter", "Qudt.Units.L");
@@ -91,12 +76,6 @@ public class UnitMap {
         unitReferenceMap.put("yard", "Qudt.Units.YD");
         unitReferenceMap.put("foot", "Qudt.Units.FT");
         unitReferenceMap.put("inch", "Qudt.Units.IN");
-
          */
     }
-
-    public static String get(String unit) {
-        return unitReferenceMap.get(unit);
-    }
-
 }

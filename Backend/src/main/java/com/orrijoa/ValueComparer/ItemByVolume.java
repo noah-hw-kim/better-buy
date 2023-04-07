@@ -55,10 +55,10 @@ public class ItemByVolume implements Item {
 
     @Override
     public int compareTo(Item other) {
-        standardizeAmount();
-        other.standardizeAmount();
+        double thisItemValue = standardAmount * price;
+        double otherItemValue = ((ItemByVolume)other).getStandardAmount() * ((ItemByVolume) other).getPrice();
 
-        return Double.compare(standardAmount, ((ItemByVolume)other).getStandardAmount());
+        return Double.compare(thisItemValue, otherItemValue);
     }
 
     @Override

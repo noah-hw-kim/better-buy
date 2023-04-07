@@ -53,10 +53,10 @@ public class ItemByMass implements Item {
 
     @Override
     public int compareTo(Item other) {
-        standardizeAmount();
-        other.standardizeAmount();
+        double thisItemValue = standardAmount * price;
+        double otherItemValue = ((ItemByMass)other).getStandardAmount() * ((ItemByMass) other).getPrice();
 
-        return Double.compare(standardAmount, ((ItemByMass)other).getStandardAmount());
+        return Double.compare(thisItemValue, otherItemValue);
     }
 
     @Override
