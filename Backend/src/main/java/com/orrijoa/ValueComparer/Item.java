@@ -13,25 +13,19 @@ public interface Item {
         return Double.compare(item1PricePerAmount, item2PricePerAmount);
     }
 
-    @Override
-    public boolean equals(Object other);
+    String getUnit();
+    void setUnit(String unit);
 
-    @Override
-    public int hashCode();
+    String getName();
+    void setName(String name);
 
-    public String getUnit();
-    public void setUnit(String unit);
+    double getPrice();
+    void setPrice(double price);
 
-    public String getName();
-    public void setName(String name);
+    double getAmount();
+    void setAmount(double amount);
 
-    public double getPrice();
-    public void setPrice(double price);
-
-    public double getAmount();
-    public void setAmount(double amount);
-
-    public double getStandardAmount();
-    public void setStandardAmount(double standardAmount);
+    double getStandardAmount();
+    void setStandardAmount(double standardAmount);
 
 }

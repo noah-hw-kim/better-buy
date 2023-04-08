@@ -5,17 +5,7 @@ import org.springframework.stereotype.Service;
 
 
 /*
-* Reference for Qudt library
-* Volume
-* Metric
-* Qudt.Units.L = Liter metric
-* Qudt.Units.MilliL = Milliliter metric
-* Qudt.Units.CentiM3 = Cubic Centimeter metric
-*
-*
-* Qudt.Units.OZ_VOL_US = US oz imperial
 
-*
 * */
 
 @Service
@@ -53,7 +43,7 @@ public class ValueComparerService {
         i2.setUnit(unit2);
         i2.setPrice(price2);
 
-        // invoke standardizeAmount --> convert current amount to the standard unit amount
+        // invoke standardizeAmount --> convert current amount to the standard unit amount and save in the obj as a private
         i1.standardizeAmount();
         i2.standardizeAmount();
 
@@ -67,6 +57,12 @@ public class ValueComparerService {
         System.out.println(i1.getStandardAmount());
         System.out.println(i2.getStandardAmount());
 
+        /*
+        compareTo method calculates each of the itemPricePerAmount and return
+        - positive num if i1 is cheaper than i2
+        - 0 if i1 and i2 has same value
+        - negative number. if i2 is cheaper than i1
+         */
         if (Item.compareTo(i1, i2) > 0){
             return i2;
         }
