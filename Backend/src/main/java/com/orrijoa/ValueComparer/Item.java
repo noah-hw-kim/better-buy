@@ -1,65 +1,37 @@
 package com.orrijoa.ValueComparer;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.HashMap;
-
-@Document(collection = "items")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-
-public class Item implements Comparable<Item> {
-    @Id
-    private ObjectId id;
-    private String unit;
-    private String name;
-    private double price;
-    private double amount;
-
+public interface Item {
     /*
      * convert unit1 and unit2 to the metric unit
      * */
-    private void standardizeByUnit() {
+    void standardizeAmount();
 
+    public static int compareTo(Item item1, Item item2) {
+        double item1PricePerAmount = item1.getPrice() / item1.getStandardAmount();
+        double item2PricePerAmount = item2.getPrice() / item2.getStandardAmount();
+
+        return Double.compare(item1PricePerAmount, item2PricePerAmount);
     }
 
     @Override
-    public int compareTo(Item i) {
-
-        /*
-        int currItemValue = price * amount * standardizeByUnit(unit);
-        int otherItemValue = i.getPrice() * i.getAmount() * i.standardizeByUnit(i.getUnit());
-
-
-
-        if (currItemValue > otherItemValue) {
-            return 1;
-        }
-        return -1;
-        */
-        return 0;
-    }
-
-
+    public boolean equals(Object other);
 
     @Override
-    public boolean equals(Object obj) {
-        return false;
-    }
+    public int hashCode();
 
-    @Override
-    public int hashCode() {
-        return 0;
-    }
+    public String getUnit();
+    public void setUnit(String unit);
 
-    public String toString() {
-        return null;
-    }
+    public String getName();
+    public void setName(String name);
+
+    public double getPrice();
+    public void setPrice(double price);
+
+    public double getAmount();
+    public void setAmount(double amount);
+
+    public double getStandardAmount();
+    public void setStandardAmount(double standardAmount);
 
 }
