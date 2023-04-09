@@ -25,7 +25,10 @@ public class ItemByVolume implements Item {
     private double price;
     private double amount;
 
-    // convert the amount to milliliter (ml)
+
+    /*
+     * the amount after converting the current amount to milliliter (ml)
+     * */
     private double standardAmount;
 
     @Override

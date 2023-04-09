@@ -14,9 +14,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 
-/*
- * standard unit for ItemByLength class is meter (m)
- * */
+
 public class ItemByLength implements Item {
 
     @Id
@@ -26,6 +24,9 @@ public class ItemByLength implements Item {
     private double price;
     private double amount;
 
+    /*
+     * the amount after converting the current amount to meter (m)
+     * */
     private double standardAmount;
 
     // convert the amount to meter (m). It is used to compareTo() method to compare two items value
