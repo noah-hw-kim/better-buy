@@ -34,7 +34,6 @@ public class ItemByMass implements Item {
         double base = ul.get(unit);
         standardAmount = base * amount;
 
-
         /*
         String unit = getUnit();
 
@@ -59,8 +58,9 @@ public class ItemByMass implements Item {
     }
 
     public Item compareTo(Item i1, Item i2) {
-        double item1BaseAmount = UnitList.unitToStandardAmountMap.get(i1.getUnit());
-        double item2BaseAmount = UnitList.unitToStandardAmountMap.get(i2.getUnit());
+        //double item1BaseAmount = UnitList.unitToStandardAmountMap.get(i1.getUnit());
+        //double item2BaseAmount = UnitList.unitToStandardAmountMap.get(i2.getUnit());
+        return null;
     }
 
     @Override

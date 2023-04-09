@@ -33,6 +33,11 @@ public class ItemByVolume implements Item {
 
     @Override
     public void standardizeAmount() {
+        UnitList ul = new UnitList();
+        double base = ul.get(unit);
+        standardAmount = base * amount;
+
+        /*
         String unit = getUnit();
 
         switch (unit) {
@@ -55,6 +60,8 @@ public class ItemByVolume implements Item {
                 standardAmount = amount;
                 break;
         }
+
+         */
     }
 
     @Override

@@ -19,7 +19,21 @@ public class ValueComparerService {
     /**
      * create item 1 and item 2 objects with inputs and compare the value and return the cheaper item
      * */
-    public Item getCheaper(Double amount1, String unit1, Double price1, Double amount2, String unit2, Double price2) {
+    public ItemPlus getCheaper(Double amount1, String unit1, Double price1, Double amount2, String unit2, Double price2) {
+        ItemPlus item1 = new ItemPlus();
+        ItemPlus item2 = new ItemPlus();
+
+        item1.setAmount(amount1);
+        item1.setUnit(unit1);
+        item1.setPrice(price1);
+        item2.setAmount(amount2);
+        item2.setUnit(unit2);
+        item2.setPrice(price2);
+
+        return compareValue(item1, item2);
+
+
+        /*
         Item i1;
         Item i2;
 
@@ -49,24 +63,37 @@ public class ValueComparerService {
         i2.standardizeAmount();
 
         return compareValue(i1, i2);
+
+         */
     }
 
     /**
      * compare Item 1 and Item 2's value and return the cheaper item
      * */
-    private Item compareValue(Item i1, Item i2) {
+    private ItemPlus compareValue(ItemPlus item1, ItemPlus item2) {
         /*
         compareTo method calculates each of the itemPricePerAmount and return
         - positive num if i1 is cheaper than i2
         - 0 if i1 and i2 has same value
         - negative number. if i2 is cheaper than i1
          */
+
+        if (item1.compareTo(item2) > 0) {
+            // item2 is cheaper
+            return item2;
+        }
+        // item1 is cheaper
+        return item1;
+
+        /*
         if (Item.compareTo(i1, i2) > 0){
             // i2 is cheaper
             return i2;
         }
         // i1 is cheaper
         return i1;
+
+         */
     }
 
     public UnitList getList() {

@@ -32,6 +32,11 @@ public class ItemByLength implements Item {
     // convert the amount to meter (m). It is used to compareTo() method to compare two items value
     @Override
     public void standardizeAmount() {
+        UnitList ul = new UnitList();
+        double base = ul.get(unit);
+        standardAmount = base * amount;
+
+        /*
         String unit = getUnit();
 
         switch (unit) {
@@ -60,6 +65,8 @@ public class ItemByLength implements Item {
                 standardAmount = amount;
                 break;
         }
+
+         */
     }
 
     @Override
