@@ -14,9 +14,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 
-/*
- * standard unit for ItemByMass class is gram (g)
- * */
 public class ItemByMass implements Item {
 
     @Id
@@ -26,11 +23,19 @@ public class ItemByMass implements Item {
     private double price;
     private double amount;
 
-    // convert the amount to g (g)
+    /*
+     * the amount after converting the current amount to gram (g)
+     * */
     private double standardAmount;
 
     @Override
     public void standardizeAmount() {
+        UnitList ul = new UnitList();
+        double base = ul.get(unit);
+        standardAmount = base * amount;
+
+
+        /*
         String unit = getUnit();
 
         switch (unit) {
@@ -50,15 +55,36 @@ public class ItemByMass implements Item {
                 standardAmount = amount;
                 break;
         }
+         */
+    }
+
+    public Item compareTo(Item i1, Item i2) {
+        double item1BaseAmount = UnitList.unitToStandardAmountMap.get(i1.getUnit());
+        double item2BaseAmount = UnitList.unitToStandardAmountMap.get(i2.getUnit());
     }
 
     @Override
-    public boolean equals(Object other) {
-        return false;
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        ItemByMass other = (ItemByMass) obj;
+
+        return other.id.equals(id) && other.unit.equals(unit) && other.name.equals(name) && other.price == price && other.amount == amount;
     }
 
     @Override
     public int hashCode(){
-        return 0;
+        // creating hashcode() with custom : starting point 1, prime multiplier 31
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((unit == null) ? 0 : unit.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + (int) price;
+        result = prime * result + (int) amount;
+
+        return result;
     }
 }

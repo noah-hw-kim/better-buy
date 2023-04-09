@@ -52,6 +52,7 @@
 			<artifactId>qudtlib</artifactId>
 			<version>4.3.0</version> <!-- remember to use the latest version -->
 		</dependency>
+
 	</dependencies>
 
 	<build>

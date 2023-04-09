@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 
 /*
-* standard unit for ItemByVolume class is milliliter (ml)
+* standard unit for ItemByVolume class is milliliter (ml). It is used to compareTo() method to compare two items value
 * */
 public class ItemByVolume implements Item {
 
@@ -25,7 +25,10 @@ public class ItemByVolume implements Item {
     private double price;
     private double amount;
 
-    // convert the amount to milliliter (ml)
+
+    /*
+     * the amount after converting the current amount to milliliter (ml)
+     * */
     private double standardAmount;
 
     @Override
@@ -55,12 +58,27 @@ public class ItemByVolume implements Item {
     }
 
     @Override
-    public boolean equals(Object other) {
-        return false;
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        ItemByVolume other = (ItemByVolume) obj;
+
+        return other.id.equals(id) && other.unit.equals(unit) && other.name.equals(name) && other.price == price && other.amount == amount;
     }
 
     @Override
     public int hashCode(){
-        return 0;
+        // creating hashcode() with custom : starting point 1, prime multiplier 31
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((unit == null) ? 0 : unit.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + (int) price;
+        result = prime * result + (int) amount;
+
+        return result;
     }
 }

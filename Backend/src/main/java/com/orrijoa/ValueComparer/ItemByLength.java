@@ -14,9 +14,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 
-/*
- * standard unit for ItemByLength class is meter (m)
- * */
+
 public class ItemByLength implements Item {
 
     @Id
@@ -26,9 +24,12 @@ public class ItemByLength implements Item {
     private double price;
     private double amount;
 
-    // convert the amount to meter (m)
+    /*
+     * the amount after converting the current amount to meter (m)
+     * */
     private double standardAmount;
 
+    // convert the amount to meter (m). It is used to compareTo() method to compare two items value
     @Override
     public void standardizeAmount() {
         String unit = getUnit();
@@ -62,12 +63,27 @@ public class ItemByLength implements Item {
     }
 
     @Override
-    public boolean equals(Object other) {
-        return false;
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        ItemByLength other = (ItemByLength) obj;
+
+        return other.id.equals(id) && other.unit.equals(unit) && other.name.equals(name) && other.price == price && other.amount == amount;
     }
 
     @Override
     public int hashCode(){
-        return 0;
+        // creating hashcode() with custom : starting point 1, prime multiplier 31
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((unit == null) ? 0 : unit.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + (int) price;
+        result = prime * result + (int) amount;
+
+        return result;
     }
 }
