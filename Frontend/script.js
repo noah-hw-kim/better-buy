@@ -1,114 +1,82 @@
-function genSections(numSections) {
-    let parent = document.getElementById("compare-form")
-    
-    for (let i=1; i<=numSections; i++) {
-        
-        document.createElement("div")
-        div.className = "item";
+let unitTypeLst=[];
+let massUnitsLst=[];
+let volumeUnitsLst=[];
+let lengthUnitsLst=[];
 
-        let h2 = genElement("h2", `Item${i}`);
-        let labelAmount = genElement("label", "Amount");
-        let labelPrice = genElement("label", "Price");
-        let labelUnitType = genElement("label", "UnitType");
-        let labelUnit = genElement("label", "Unit");
+genUnitLists();
 
-        let optionLength = genElement("option", "length");
-        let optionMass = genElement("option", "mass");
-        let optionVolume = genElement("option", "volume");
+let unitTypeDropdown1 = document.getElementById("unit-type-dropdown-1");
+let unitDropdown1 = document.getElementById("unit-dropdown-1");
+unitTypeDropdown1.addEventListener("change", () => genUnitDropdown(unitTypeDropdown1, unitDropdown1));
 
+let unitTypeDropdown2 = document.getElementById("unit-type-dropdown-2");
+let unitDropdown2 = document.getElementById("unit-dropdown-2");
+unitTypeDropdown2.addEventListener("change", () => genUnitDropdown(unitTypeDropdown2, unitDropdown2));
+
+
+/**
+ * Generates list of unit types and units
+ */
+async function genUnitLists() {
+    let response = await fetch("http://localhost:8080/api/value-comparer/unit-list");
+    let responseJson = await response.json();
+
+    let jsonKeys = Object.keys(responseJson);   // returns array of keys
+
+    for (let i=0; i< jsonKeys.length; i++) {    // for each item in jsonKeys
+        let currKey = jsonKeys[i];              // get the key
+
+        if (currKey.includes("mass")) {
+            unitTypeLst.push("mass");
+            massUnitsLst.push(...responseJson[currKey]);
+        } else if (currKey.includes("volume")) {
+            unitTypeLst.push("volume");
+            volumeUnitsLst.push(...responseJson[currKey]);
+        } else if (currKey.includes("length")) {
+            unitTypeLst.push("length");
+            lengthUnitsLst.push(...responseJson[currKey]);
+        }
     }
 }
 
-function genMassDropdowns() {
-    lst = ["milligram (mg)",
-            "gram (g)",
-            "kilogram (kg)",
-            "ounce (oz)", 
-            "pound (lbs)",
-            "ton (T)"
-            ]
-    
-    genElements("select-unit", "option", lst);
+/**
+ * Generates Unit Type dropdown and its corresponding unit dropdown
+ */
+function genUnitDropdown(unitTypeDropdown, unitDropdown) {
+    //let unitTypeDropdown = document.getElementById("unit-type-dropdown-1");
+    //let unitDropdown = document.getElementById("unit-dropdown-1");
+
+    if (unitTypeDropdown.value == "length") {
+        regenerateChildren("option", lengthUnitsLst, unitDropdown);
+    } else if (unitTypeDropdown.value == "mass") {
+        regenerateChildren("option", massUnitsLst, unitDropdown);
+    } else if (unitTypeDropdown.value == "volume") {
+        regenerateChildren("option", volumeUnitsLst, unitDropdown);
+    }
 }
 
-function genLengthsDropdowns() {
-    lst = ["inch (in)",
-            "feet (ft)",
-            "yard (yd)", 
-            "mile (mi)",
-            "milimeter (mm)",
-            "centimeter (cm)",
-            "meter (m)",
-            "kilometer (km)"
-            ]
-    
-    genElements("select-unit", "option", lst);
-}
-
-function genVolumeDropdowns() {
-    lst = ["milliliter (ml)",
-            "liter (l)",
-            "kiloleter (kl)", 
-            "cubic centimeter (cm3)",
-            "fluid ounce (fl. oz.)",
-            "gallon (gal)",
-            "pint (pt)",
-            ]
-    
-    genElements("select-unit", "option", lst);
-}
-
+/**
+ * Returns a single element with text (e.x., "<option>Option1</option>")
+ */
 function genElement(elementType, text) {
     let newElement = document.createElement(elementType);
     newElement.innerText = text;
     return newElement;
 }
 
-function genElements(elementsLst, parent) {
-    let parent = document.getElementById(parentId);
+/**
+ * Clears parent element of its current children and regenerates new children from elementsLst
+ */
+function regenerateChildren(elementType, elementsLst, parent) {
     parent.replaceChildren();
 
     for (let i=0; i<elementsLst.length; i++) {
-        parent.appendChild(elementsLst[i]);
-    }
-}
-
-/**
- * Takes in a list of items and appends them as elementType to parent
- */
-function genElements(parentId, elementType, itemsLst) {
-    let parent = document.getElementById(parentId);
-    parent.replaceChildren();
-
-    for (let i=0; i<itemsLst.length; i++) {
-        let text = itemsLst[i];
-        let newElement = genElement(elementType, text);
+        let newText = elementsLst[i];
+        let newElement = genElement(elementType, newText);
         parent.appendChild(newElement);
     }
 }
 
-let unitTypeSelectors = document.getElementsByClassName("select-unit-type");
-for (let i=0; i<unitTypeSelectors.length; i++) {
-    let selector = unitTypeSelectors
-    selector.addEventListener("change", () => {
-        if (selector.value == "length") {
-            genLengthsDropdowns();
-        } else if (selector.value == "mass") {
-            genMassDropdowns();
-        } else if (selector.value == "volume") {
-            genVolumeDropdowns();
-        }
-    })
-}
-
-
-/* let selectUnitType = document.getElementById("select-unit-type");
-selectUnitType.addEventListener("change", ()=> {
-    if (selectUnitType.value == "length") {
-        genLengthsDropdowns();
-    } else if (selectUnitType.value == "mass") {
-        genMassDropdowns();
-    } else if (selectUnitType.value == "volume") {
-        genVolumeDropdowns();
-    }
-}) */
+/**
+ * Get better value
+ */
