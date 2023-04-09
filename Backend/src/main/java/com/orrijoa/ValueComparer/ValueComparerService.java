@@ -19,9 +19,9 @@ public class ValueComparerService {
     /**
      * create item 1 and item 2 objects with inputs and compare the value and return the cheaper item
      * */
-    public ItemPlus getCheaper(Double amount1, String unit1, Double price1, Double amount2, String unit2, Double price2) {
-        ItemPlus item1 = new ItemPlus();
-        ItemPlus item2 = new ItemPlus();
+    public Item getCheaper(Double amount1, String unit1, Double price1, Double amount2, String unit2, Double price2) {
+        Item item1 = new Item();
+        Item item2 = new Item();
 
         item1.setAmount(amount1);
         item1.setUnit(unit1);
@@ -70,7 +70,7 @@ public class ValueComparerService {
     /**
      * compare Item 1 and Item 2's value and return the cheaper item
      * */
-    private ItemPlus compareValue(ItemPlus item1, ItemPlus item2) {
+    private Item compareValue(Item item1, Item item2) {
         /*
         compareTo method calculates each of the itemPricePerAmount and return
         - positive num if i1 is cheaper than i2

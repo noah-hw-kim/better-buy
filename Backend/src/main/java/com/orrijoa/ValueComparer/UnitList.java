@@ -1,7 +1,6 @@
 package com.orrijoa.ValueComparer;
 
 import io.github.qudtlib.Qudt;
-import io.github.qudtlib.model.QuantityValue;
 import io.github.qudtlib.model.Unit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +10,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 /*
-* this map is used to convert regular metric/US unit to qudt unit system
+* Measurements Available:
+*
+*
 * */
 
 @Data
@@ -20,11 +21,11 @@ public class UnitList {
 
     private static HashMap<String, Double> unitToStandardAmountMap;
 
-    HashSet<String> volumeSet;
+    private HashSet<String> volumeSet;
 
-    HashSet<String> massSet;
+    private HashSet<String> massSet;
 
-    HashSet<String> lengthSet;
+    private HashSet<String> lengthSet;
 
     // represent a single unit
     private final BigDecimal ONE_UNIT = new BigDecimal("1");
@@ -68,7 +69,7 @@ public class UnitList {
         * 2) mass: base unit - gram (g)
         * 3) length: base unit - meter (m)
         *
-        * e.g.) 
+        * e.g.)
         * "gallon" : convert 1 gallon to milliliter (ml)
         * "pound" : convert 1 pound to gram (g)
         * "mile" : convert 1 mile to meter (m)
@@ -112,7 +113,7 @@ public class UnitList {
         return Qudt.convert(ONE_UNIT, unit1, BASE_LENGTH).doubleValue();
     }
 
-    public static Double get (String unit) {
+    public static Double get(String unit) {
         return unitToStandardAmountMap.get(unit);
     }
 }

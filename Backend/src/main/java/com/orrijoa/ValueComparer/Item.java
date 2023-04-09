@@ -1,31 +1,56 @@
 package com.orrijoa.ValueComparer;
 
-public interface Item {
-    /*
-     * convert unit1 and unit2 to the metric unit
-     * */
-    void standardizeAmount();
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 
-    public static int compareTo(Item item1, Item item2) {
-        double item1PricePerAmount = item1.getPrice() / item1.getStandardAmount();
-        double item2PricePerAmount = item2.getPrice() / item2.getStandardAmount();
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Item implements Comparable<Item> {
 
-        return Double.compare(item1PricePerAmount, item2PricePerAmount);
+    @Id
+    private ObjectId id;
+    private String unit;
+    private String name;
+    private double price;
+    private double amount;
+
+    @Override
+    public int compareTo(Item other) {
+        double currentItemBaseAmount = UnitList.get(unit) * amount;
+        double otherItemBaseAmount = UnitList.get(other.getUnit()) * other.getAmount();
+
+        double currentItemPricePerAmount = price / currentItemBaseAmount;
+        double otherItemPricePerAmount = other.getPrice() / otherItemBaseAmount;
+
+        return Double.compare(currentItemPricePerAmount, otherItemPricePerAmount);
     }
 
-    String getUnit();
-    void setUnit(String unit);
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        Item other = (Item) obj;
 
-    String getName();
-    void setName(String name);
+        return other.id.equals(id) && other.unit.equals(unit) && other.name.equals(name) && other.price == price && other.amount == amount;
+    }
 
-    double getPrice();
-    void setPrice(double price);
+    @Override
+    public int hashCode(){
+        // creating hashcode() with custom : starting point 1, prime multiplier 31
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((unit == null) ? 0 : unit.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + (int) price;
+        result = prime * result + (int) amount;
 
-    double getAmount();
-    void setAmount(double amount);
-
-    double getStandardAmount();
-    void setStandardAmount(double standardAmount);
-
+        return result;
+    }
 }
