@@ -18,8 +18,8 @@ public class ValueComparerController {
         return new ResponseEntity<UnitList>(valueComparerService.getList(), HttpStatus.OK);
     }
 
-    @GetMapping("/amount1/{amount1}/unit1/{unit1}/price1/{price1}/amount2/{amount2}/unit2/{unit2}/price2/{price2}")
-    public ResponseEntity<Item> getCheaper(@PathVariable Double amount1, @PathVariable String unit1, @PathVariable Double price1, @PathVariable Double amount2, @PathVariable String unit2, @PathVariable Double price2) {
-        return new ResponseEntity<Item>(valueComparerService.getCheaper(amount1, unit1, price1, amount2, unit2, price2), HttpStatus.OK);
+    @GetMapping("/unit1/{unit1}/price1/{price1}/amount1/{amount1}/unit2/{unit2}/price2/{price2}/amount2/{amount2}")
+    public ResponseEntity<Item> getCheaper(@PathVariable String unit1, @PathVariable double price1, @PathVariable double amount1, @PathVariable String unit2, @PathVariable double price2, @PathVariable double amount2) {
+        return new ResponseEntity<Item>(valueComparerService.getCheaper(unit1, price1, amount1, unit2, price2, amount2), HttpStatus.OK);
     }
 }

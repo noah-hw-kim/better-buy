@@ -18,6 +18,12 @@ public class Item implements Comparable<Item> {
     private double price;
     private double amount;
 
+    public Item(String unit, double price, double amount) {
+        this.unit = unit;
+        this.price = price;
+        this.amount = amount;
+    }
+
     @Override
     public int compareTo(Item other) {
         double currentItemBaseAmount = UnitList.get(unit) * amount;

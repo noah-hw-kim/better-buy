@@ -9,24 +9,14 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
 
-/*
-* Measurements Available:
-*
-*
-* */
-
 @Data
 @AllArgsConstructor
 public class UnitList {
 
     private static HashMap<String, Double> unitToStandardAmountMap;
-
     private HashSet<String> volumeSet;
-
     private HashSet<String> massSet;
-
     private HashSet<String> lengthSet;
-
     // represent a single unit
     private final BigDecimal ONE_UNIT = new BigDecimal("1");
 
