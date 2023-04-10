@@ -18,6 +18,7 @@ public class Item implements Comparable<Item> {
     private double price;
     private double amount;
 
+
     public Item(String unit, double price, double amount) {
         this.unit = unit;
         this.price = price;
@@ -26,13 +27,16 @@ public class Item implements Comparable<Item> {
 
     @Override
     public int compareTo(Item other) {
-        double currentItemBaseAmount = UnitList.get(unit) * amount;
-        double otherItemBaseAmount = UnitList.get(other.getUnit()) * other.getAmount();
-
-        double currentItemPricePerAmount = price / currentItemBaseAmount;
-        double otherItemPricePerAmount = other.getPrice() / otherItemBaseAmount;
+        double currentItemPricePerAmount = getPricePerBaseAmount();
+        double otherItemPricePerAmount = other.getPricePerBaseAmount();
 
         return Double.compare(currentItemPricePerAmount, otherItemPricePerAmount);
+    }
+
+    public double getPricePerBaseAmount() {
+        // amount that converted to the base unit
+        double baseAmount = UnitList.get(unit) * amount;
+        return price / baseAmount;
     }
 
     @Override

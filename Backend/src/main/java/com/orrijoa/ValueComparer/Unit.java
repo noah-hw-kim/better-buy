@@ -21,6 +21,5 @@ public class Unit {
     private Quantity Quantity;
     private String unitName;
     private String unitSymbol;
-    private BigDecimal
-
+    private BigDecimal bigDecimal;
 }
