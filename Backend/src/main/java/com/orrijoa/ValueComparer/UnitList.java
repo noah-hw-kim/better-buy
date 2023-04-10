@@ -42,16 +42,18 @@ public class UnitList {
         massSet = new HashSet<>();
         lengthSet = new HashSet<>();
 
-        volumeSet.add("gallon");
-        volumeSet.add("quart");
-        volumeSet.add("pint");
-        volumeSet.add("fluid ounces");
-        volumeSet.add("litter");
+        volumeSet.add("us liquid gallon");
+        volumeSet.add("us liquid quart");
+        volumeSet.add("us liquid pint");
+        volumeSet.add("us legal cup");
+        volumeSet.add("us fluid ounces");
+        volumeSet.add("liter");
         volumeSet.add("milliliter");
 
         massSet.add("pound");
-        massSet.add("gram ounces");
+        massSet.add("mass ounces");
         massSet.add("kilogram");
+        massSet.add("gram");
         massSet.add("milligram");
 
         lengthSet.add("kilometer");
@@ -76,16 +78,17 @@ public class UnitList {
         * */
         unitToStandardAmountMap = new HashMap<>();
 
-        unitToStandardAmountMap.put("gallon", convertToBaseVolume(Qudt.Units.GAL_US));
-        unitToStandardAmountMap.put("quart", convertToBaseVolume(Qudt.Units.QT_US));
-        unitToStandardAmountMap.put("pint", convertToBaseVolume(Qudt.Units.PINT_US));
+        unitToStandardAmountMap.put("us liquid gallon", convertToBaseVolume(Qudt.Units.GAL_US));
+        unitToStandardAmountMap.put("us liquid quart", convertToBaseVolume(Qudt.Units.QT_US));
+        unitToStandardAmountMap.put("us liquid pint", convertToBaseVolume(Qudt.Units.PINT_US));
+        unitToStandardAmountMap.put("us legal cup", convertToBaseVolume(Qudt.Units.CUP_US));
         unitToStandardAmountMap.put("fluid ounces", convertToBaseVolume(Qudt.Units.OZ_VOL_US));
         unitToStandardAmountMap.put("liter", convertToBaseVolume(Qudt.Units.L));
         unitToStandardAmountMap.put("milliliter", convertToBaseVolume(Qudt.Units.MilliL));
 
 
         unitToStandardAmountMap.put("pound", convertToBaseMass(Qudt.Units.LB));
-        unitToStandardAmountMap.put("gram ounces", convertToBaseMass(Qudt.Units.OZ));
+        unitToStandardAmountMap.put("mass ounces", convertToBaseMass(Qudt.Units.OZ));
         unitToStandardAmountMap.put("kilogram", convertToBaseMass(Qudt.Units.KiloGM));
         unitToStandardAmountMap.put("gram", convertToBaseMass(Qudt.Units.GM));
         unitToStandardAmountMap.put("milligram", convertToBaseMass(Qudt.Units.MilliGM));
