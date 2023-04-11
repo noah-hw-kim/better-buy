@@ -25,18 +25,22 @@ public class Item implements Comparable<Item> {
         this.amount = amount;
     }
 
+    public double getPricePerBaseAmount() {
+        // amount that converted to the base unit
+        double baseAmount = UnitList.get(unit) * amount;
+        return price / baseAmount;
+    }
+
     @Override
     public int compareTo(Item other) {
         double currentItemPricePerAmount = getPricePerBaseAmount();
         double otherItemPricePerAmount = other.getPricePerBaseAmount();
 
+//        compareTo method calculates each of the itemPricePerAmount and return
+//        - positive number. if i2 is cheaper than i1
+//        - 0. if i1 and i2 has same value
+//        - negative number. if i1 is cheaper than i2
         return Double.compare(currentItemPricePerAmount, otherItemPricePerAmount);
-    }
-
-    public double getPricePerBaseAmount() {
-        // amount that converted to the base unit
-        double baseAmount = UnitList.get(unit) * amount;
-        return price / baseAmount;
     }
 
     @Override

@@ -28,11 +28,6 @@ public class ValueComparerService {
 
         // compare Item 1 and Item 2's value and return the cheaper item
     private Comparison compareValue(Item item1, Item item2) {
-
-//        compareTo method calculates each of the itemPricePerAmount and return
-//        - positive num if i1 is cheaper than i2
-//        - 0 if i1 and i2 has same value
-//        - negative number. if i2 is cheaper than i1
         if (item1.compareTo(item2) > 0) {
             // item2 is cheaper
             return new Comparison(item2, item1);
