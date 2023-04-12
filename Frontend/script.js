@@ -13,7 +13,6 @@ let unitTypeDropdown2 = document.getElementById("unit-type-dropdown-2");
 let unitDropdown2 = document.getElementById("unit-dropdown-2");
 unitTypeDropdown2.addEventListener("change", () => genUnitDropdown(unitTypeDropdown2, unitDropdown2));
 
-
 /**
  * Generates list of unit types and units
  */
@@ -79,4 +78,13 @@ function regenerateChildren(elementType, elementsLst, parent) {
 
 /**
  * Get better value
+ */
+
+
+/**
+ * Test
+ * 1. Front - When the compare button clicks, send two items' information to the backend
+ * 2. Back - save two items' information and return the response with item info
+ * 3. Front - save two items' object id and send it to the backend
+ * 4. Back - search the item with the object id
  */

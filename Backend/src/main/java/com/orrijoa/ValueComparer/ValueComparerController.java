@@ -4,14 +4,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RestController
-@RequestMapping("/api/value-comparer")
+@RequestMapping("api/value-comparer")
 @CrossOrigin
 public class ValueComparerController {
 
     @Autowired
     ValueComparerService valueComparerService;
+
+//    This method is for the swagger api to test the app run
+    @ApiIgnore
+    @RequestMapping(value = "/")
+    public void redirect(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/swagger-ui/");
+    }
 
     @GetMapping("/unit-list")
     public ResponseEntity<UnitList> getUnitList() {
@@ -49,4 +60,5 @@ public class ValueComparerController {
 //    public ResponseEntity<Item> getCheaper(@PathVariable String unit1, @PathVariable double price1, @PathVariable double amount1, @PathVariable String unit2, @PathVariable double price2, @PathVariable double amount2) {
 //        return new ResponseEntity<Item>(valueComparerService.getCheaper(unit1, price1, amount1, unit2, price2, amount2), HttpStatus.OK);
 //    }
+
 }

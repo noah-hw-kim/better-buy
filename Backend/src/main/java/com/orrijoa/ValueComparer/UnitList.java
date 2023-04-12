@@ -4,22 +4,23 @@ import io.github.qudtlib.Qudt;
 import io.github.qudtlib.model.Unit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 @Data
 @Component
 @AllArgsConstructor
 public class UnitList {
 
-    private static HashMap<String, Double> unitToStandardAmountMap;
-    private HashSet<String> volumeSet;
-    private HashSet<String> massSet;
-    private HashSet<String> lengthSet;
+    private static Map<String, Double> unitToStandardAmountMap;
+    private Set<String> volumeSet;
+    private Set<String> massSet;
+    private Set<String> lengthSet;
     // represent a single unit
     private final BigDecimal ONE_UNIT = new BigDecimal("1");
 

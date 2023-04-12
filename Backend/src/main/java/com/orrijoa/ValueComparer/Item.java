@@ -68,7 +68,7 @@ public class Item implements Comparable<Item> {
         }
         Item other = (Item) obj;
 
-        return other.id.equals(id) && other.unit.equals(unit) && other.name.equals(name) && other.price == price && other.amount == amount;
+        return other.id.equals(id) && other.unit.equals(unit) && other.name.equals(name) && other.price == price && other.amount == amount && other.brand.equals(brand) && other.store.equals(store) && other.category.equals(category);
     }
 
     @Override
