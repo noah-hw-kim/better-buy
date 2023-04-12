@@ -3,16 +3,17 @@ package com.orrijoa.ValueComparer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Data
+@Component
 @AllArgsConstructor
 @NoArgsConstructor
-
 // this class will return the result of the value comparison
 public class Comparison {
-    private Item betterValueItem;
+    private Item betterValue;
     // private Item worseValueItem;
-    private Item[] itemArray;
+    private Item[] comparedList;
 //    this represents how much the betterValueItem is cheaper than the other item average
     private double valueComparison;
 
@@ -28,28 +29,28 @@ public class Comparison {
 //    1. save the array received as a global variable
 //    2. compare each item value to get the best value item
     public Comparison(Item... itemList) {
-        itemArray = itemList;
+        comparedList = itemList;
         double sumOfPricePerBaseAmount = 0;
         double avgOfPricePerBaseAmount;
 
         try {
 //            Determine the most valuable item by calculating the price per unit (price divided by amount) for each item and comparing them.
-            for (int i = 0; i < itemArray.length; i++) {
-                sumOfPricePerBaseAmount += itemArray[i].getPricePerBaseAmount();
+            for (int i = 0; i < comparedList.length; i++) {
+                sumOfPricePerBaseAmount += comparedList[i].getPricePerBaseAmount();
                 if (i == 0) {
-                    betterValueItem = itemArray[i];
+                    betterValue = comparedList[i];
                 }
                 else {
-                    if (betterValueItem.compareTo(itemArray[i]) > 0) {
-                        betterValueItem = itemArray[i];
+                    if (betterValue.compareTo(comparedList[i]) > 0) {
+                        betterValue = comparedList[i];
                     }
                 }
             }
 //            remove the better value item and calculate the average
-            sumOfPricePerBaseAmount -= betterValueItem.getPricePerBaseAmount();
-            avgOfPricePerBaseAmount = sumOfPricePerBaseAmount / (itemArray.length - 1);
+            sumOfPricePerBaseAmount -= betterValue.getPricePerBaseAmount();
+            avgOfPricePerBaseAmount = sumOfPricePerBaseAmount / (comparedList.length - 1);
 
-            valueComparison = betterValueItem.getPricePerBaseAmount() / avgOfPricePerBaseAmount;
+            valueComparison = betterValue.getPricePerBaseAmount() / avgOfPricePerBaseAmount;
 
         } catch (Exception e) {
             throw new RuntimeException(e);

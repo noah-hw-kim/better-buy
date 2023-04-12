@@ -4,12 +4,15 @@ import io.github.qudtlib.Qudt;
 import io.github.qudtlib.model.Unit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
 
 @Data
+@Component
 @AllArgsConstructor
 public class UnitList {
 

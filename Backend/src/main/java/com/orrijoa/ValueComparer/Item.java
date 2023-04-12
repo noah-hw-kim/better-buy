@@ -5,24 +5,41 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Component;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
+@Document(collection = "items")
 public class Item implements Comparable<Item> {
 
     @Id
     private ObjectId id;
     private String unit;
-    private String name;
     private double price;
     private double amount;
+    private String name;
+    private String brand;
+    private String store;
+    private String category;
 
 
     public Item(String unit, double price, double amount) {
         this.unit = unit;
         this.price = price;
         this.amount = amount;
+    }
+
+    public Item(String unit, double price, double amount, String name, String brand, String store, String category) {
+        this.unit = unit;
+        this.price = price;
+        this.amount = amount;
+        this.name = name;
+        this.brand = brand;
+        this.store = store;
+        this.category = category;
     }
 
     public double getPricePerBaseAmount() {

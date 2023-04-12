@@ -7,16 +7,25 @@ import org.springframework.stereotype.Service;
 public class ValueComparerService {
 
     @Autowired
-    ValueComparerRepository valueComparerRepository;
+    ItemRepository itemRepository;
 
     UnitList unitList = new UnitList();
 
+    public Item createItem(String unit, double price, double amount, String name, String brand, String store, String category) {
+        return itemRepository.save(new Item(unit, price, amount, name, brand, store, category));
+    }
+
         // create item 1 and item 2 objects with inputs and compare the value and return the cheaper item
     public Comparison getCheaper(String unit1, double price1, double amount1, String unit2, double price2, double amount2) {
-        Item item1 = new Item(unit1, price1, amount1);
-        Item item2 = new Item(unit2, price2, amount2);
+        Item item1 = itemRepository.findItemByUnitAndPriceAndAmount(unit1, price1, amount1);
+        Item item2 = itemRepository.findItemByUnitAndPriceAndAmount(unit2, price2, amount2);
 
         return new Comparison(item1, item2);
+
+//        Item item1 = new Item(unit1, price1, amount1);
+//        Item item2 = new Item(unit2, price2, amount2);
+//
+//        return new Comparison(item1, item2);
     }
 
     public Comparison getCheaper(String unit1, double price1, double amount1, String unit2, double price2, double amount2, String unit3, double price3, double amount3) {
