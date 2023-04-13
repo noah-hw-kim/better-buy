@@ -14,14 +14,17 @@ public class ValueComparerService {
     @Autowired
     ItemRepository itemRepository;
 
-    UnitList unitList;
-
     public Item createItem(String unit, double price, double amount, String name, String brand, String store, String category) {
         return itemRepository.save(new Item(unit, price, amount, name, brand, store, category));
     }
 
     public List<Item> getAllItems() {
-        return itemRepository.findAll();
+        return itemRepository.findAllByOrderByCategoryAscPricePerBaseAmountAsc();
+    }
+
+    public Map<String, Set<String>> getList() {
+        UnitList unitList = new UnitList();
+        return unitList.getUnitList();
     }
 
         // create item 1 and item 2 objects with inputs and compare the value and return the cheaper item
@@ -109,9 +112,6 @@ public class ValueComparerService {
 //        return item1;
 //    }
 
-    public Map<String, Set<String>> getList() {
-        unitList = new UnitList();
-        return unitList.getUnitList();
-    }
+
 
 }

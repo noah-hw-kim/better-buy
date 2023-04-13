@@ -23,12 +23,14 @@ public class Item implements Comparable<Item> {
     private String brand;
     private String store;
     private String category;
+    private double pricePerBaseAmount;
 
 
     public Item(String unit, double price, double amount) {
         this.unit = unit;
         this.price = price;
         this.amount = amount;
+        pricePerBaseAmount = calculatePricePerBaseAmount();
     }
 
     public Item(String unit, double price, double amount, String name, String brand, String store, String category) {
@@ -39,9 +41,10 @@ public class Item implements Comparable<Item> {
         this.brand = brand;
         this.store = store;
         this.category = category;
+        pricePerBaseAmount = calculatePricePerBaseAmount();
     }
 
-    public double getPricePerBaseAmount() {
+    private double calculatePricePerBaseAmount() {
         // amount that converted to the base unit
         double baseAmount = UnitList.get(unit) * amount;
         return price / baseAmount;
@@ -49,7 +52,7 @@ public class Item implements Comparable<Item> {
 
     @Override
     public int compareTo(Item other) {
-        double currentItemPricePerAmount = getPricePerBaseAmount();
+        double currentItemPricePerAmount = pricePerBaseAmount;
         double otherItemPricePerAmount = other.getPricePerBaseAmount();
 
 //        compareTo method calculates each of the itemPricePerAmount and return
@@ -78,8 +81,12 @@ public class Item implements Comparable<Item> {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((unit == null) ? 0 : unit.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((brand == null) ? 0 : brand.hashCode());
+        result = prime * result + ((store == null) ? 0 : store.hashCode());
+        result = prime * result + ((category == null) ? 0 : category.hashCode());
         result = prime * result + (int) price;
         result = prime * result + (int) amount;
+        result = prime * result + (int) pricePerBaseAmount;
 
         return result;
     }

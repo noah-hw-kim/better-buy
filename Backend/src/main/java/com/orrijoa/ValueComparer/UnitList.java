@@ -2,7 +2,6 @@ package com.orrijoa.ValueComparer;
 
 import io.github.qudtlib.Qudt;
 import io.github.qudtlib.model.Unit;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +12,11 @@ import java.util.*;
 @Component
 public class UnitList {
 
+    public enum unit {
+        US_LIQUID_GALLON,
+        
+    }
+
     private static Map<String, Double> unitToStandardAmountMap;
     private static Map<String, Set<String>> unitList;
 
@@ -20,9 +24,9 @@ public class UnitList {
     private final BigDecimal ONE_UNIT = new BigDecimal("1");
 
     // base units for each quantity
-    private final Unit BASE_VOLUME = Qudt.Units.MilliL;
-    private final Unit BASE_MASS = Qudt.Units.GM;
-    private final Unit BASE_LENGTH = Qudt.Units.M;
+    private final Unit BASE_VOLUME = Qudt.Units.OZ_VOL_US;
+    private final Unit BASE_MASS = Qudt.Units.OZ;
+    private final Unit BASE_LENGTH = Qudt.Units.IN;
 
     public UnitList() {
         /*
@@ -77,7 +81,7 @@ public class UnitList {
         unitToStandardAmountMap.put("us liquid quart", convertToBaseVolume(Qudt.Units.QT_US));
         unitToStandardAmountMap.put("us liquid pint", convertToBaseVolume(Qudt.Units.PINT_US));
         unitToStandardAmountMap.put("us legal cup", convertToBaseVolume(Qudt.Units.CUP_US));
-        unitToStandardAmountMap.put("fluid ounces", convertToBaseVolume(Qudt.Units.OZ_VOL_US));
+        unitToStandardAmountMap.put("us fluid ounces", convertToBaseVolume(Qudt.Units.OZ_VOL_US));
         unitToStandardAmountMap.put("liter", convertToBaseVolume(Qudt.Units.L));
         unitToStandardAmountMap.put("milliliter", convertToBaseVolume(Qudt.Units.MilliL));
 
