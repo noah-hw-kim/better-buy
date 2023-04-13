@@ -7,23 +7,19 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @Component
-@AllArgsConstructor
 public class UnitList {
 
     private static Map<String, Double> unitToStandardAmountMap;
-    private Set<String> volumeSet;
-    private Set<String> massSet;
-    private Set<String> lengthSet;
+    private static Map<String, Set<String>> unitList;
+
     // represent a single unit
     private final BigDecimal ONE_UNIT = new BigDecimal("1");
 
+    // base units for each quantity
     private final Unit BASE_VOLUME = Qudt.Units.MilliL;
     private final Unit BASE_MASS = Qudt.Units.GM;
     private final Unit BASE_LENGTH = Qudt.Units.M;
@@ -32,9 +28,10 @@ public class UnitList {
         /*
         * reference for the frontend. It will be loaded to show the list
         * */
-        volumeSet = new HashSet<>();
-        massSet = new HashSet<>();
-        lengthSet = new HashSet<>();
+        Set<String> volumeSet = new HashSet<>();
+        Set<String> massSet = new HashSet<>();
+        Set<String> lengthSet = new HashSet<>();
+        unitList = new HashMap<>();
 
         volumeSet.add("us liquid gallon");
         volumeSet.add("us liquid quart");
@@ -58,6 +55,10 @@ public class UnitList {
         lengthSet.add("yard");
         lengthSet.add("foot");
         lengthSet.add("inch");
+
+        unitList.put("volume", volumeSet);
+        unitList.put("mass", massSet);
+        unitList.put("length", lengthSet);
 
         /*
         * 1 unit : convert the current 1 unit to the base unit
@@ -112,5 +113,9 @@ public class UnitList {
 
     public static Double get(String unit) {
         return unitToStandardAmountMap.get(unit);
+    }
+
+    public Map<String, Set<String>> getUnitList() {
+        return unitList;
     }
 }

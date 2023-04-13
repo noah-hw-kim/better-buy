@@ -4,17 +4,24 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 @Service
 public class ValueComparerService {
 
     @Autowired
     ItemRepository itemRepository;
 
-    @Autowired
     UnitList unitList;
 
     public Item createItem(String unit, double price, double amount, String name, String brand, String store, String category) {
         return itemRepository.save(new Item(unit, price, amount, name, brand, store, category));
+    }
+
+    public List<Item> getAllItems() {
+        return itemRepository.findAll();
     }
 
         // create item 1 and item 2 objects with inputs and compare the value and return the cheaper item
@@ -102,8 +109,9 @@ public class ValueComparerService {
 //        return item1;
 //    }
 
-    public UnitList getList() {
-        return unitList;
+    public Map<String, Set<String>> getList() {
+        unitList = new UnitList();
+        return unitList.getUnitList();
     }
 
 }
