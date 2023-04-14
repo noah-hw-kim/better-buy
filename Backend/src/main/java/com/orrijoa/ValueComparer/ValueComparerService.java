@@ -1,6 +1,5 @@
 package com.orrijoa.ValueComparer;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +21,8 @@ public class ValueComparerService {
         return itemRepository.findAllByOrderByCategoryAscPricePerBaseAmountAsc();
     }
 
-    public Map<String, Set<String>> getList() {
-        UnitList unitList = new UnitList();
+    public Map<String, List<String>> getList() {
+        UnitConverter unitList = new UnitConverter();
         return unitList.getUnitList();
     }
 

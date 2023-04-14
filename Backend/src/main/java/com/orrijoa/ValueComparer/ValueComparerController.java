@@ -38,8 +38,8 @@ public class ValueComparerController {
     }
 
     @GetMapping("/unit-list")
-    public ResponseEntity<Map<String, Set<String>>> getUnitList() {
-        return new ResponseEntity<Map<String, Set<String>>>(valueComparerService.getList(), HttpStatus.OK);
+    public ResponseEntity<Map<String, List<String>>> getUnitList() {
+        return new ResponseEntity<Map<String, List<String>>>(valueComparerService.getList(), HttpStatus.OK);
     }
 
     @GetMapping("/unit1/{unit1}/price1/{price1}/amount1/{amount1}/unit2/{unit2}/price2/{price2}/amount2/{amount2}")

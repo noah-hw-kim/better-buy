@@ -10,70 +10,65 @@ import java.util.*;
 
 @Data
 @Component
-public class UnitList {
-
-    public enum unit {
-        US_LIQUID_GALLON,
-        
-    }
+public class UnitConverter {
 
     private static Map<String, Double> unitToStandardAmountMap;
-    private static Map<String, Set<String>> unitList;
+    private static Map<String, List<String>> unitList;
 
     // represent a single unit
-    private final BigDecimal ONE_UNIT = new BigDecimal("1");
+    private BigDecimal ONE_UNIT = new BigDecimal("1");
 
     // base units for each quantity
-    private final Unit BASE_VOLUME = Qudt.Units.OZ_VOL_US;
-    private final Unit BASE_MASS = Qudt.Units.OZ;
-    private final Unit BASE_LENGTH = Qudt.Units.IN;
+    private Unit BASE_VOLUME = Qudt.Units.OZ_VOL_US;
+    private Unit BASE_MASS = Qudt.Units.OZ;
+    private Unit BASE_LENGTH = Qudt.Units.IN;
 
-    public UnitList() {
+    public UnitConverter() {
         /*
         * reference for the frontend. It will be loaded to show the list
         * */
-        Set<String> volumeSet = new HashSet<>();
-        Set<String> massSet = new HashSet<>();
-        Set<String> lengthSet = new HashSet<>();
+        List<String> volumeUnitList = new ArrayList<>();
+        List<String> massUnitList = new ArrayList<>();
+        List<String> lengthUnitList = new ArrayList<>();
         unitList = new HashMap<>();
 
-        volumeSet.add("us liquid gallon");
-        volumeSet.add("us liquid quart");
-        volumeSet.add("us liquid pint");
-        volumeSet.add("us legal cup");
-        volumeSet.add("us fluid ounces");
-        volumeSet.add("liter");
-        volumeSet.add("milliliter");
+        volumeUnitList.add("us liquid gallon");
+        volumeUnitList.add("us liquid quart");
+        volumeUnitList.add("us liquid pint");
+        volumeUnitList.add("us legal cup");
+        volumeUnitList.add("us fluid ounces");
+        volumeUnitList.add("liter");
+        volumeUnitList.add("milliliter");
 
-        massSet.add("pound");
-        massSet.add("mass ounces");
-        massSet.add("kilogram");
-        massSet.add("gram");
-        massSet.add("milligram");
+        massUnitList.add("pound");
+        massUnitList.add("mass ounces");
+        massUnitList.add("kilogram");
+        massUnitList.add("gram");
+        massUnitList.add("milligram");
 
-        lengthSet.add("kilometer");
-        lengthSet.add("meter");
-        lengthSet.add("centimeter");
-        lengthSet.add("millimeter");
-        lengthSet.add("mile");
-        lengthSet.add("yard");
-        lengthSet.add("foot");
-        lengthSet.add("inch");
+        lengthUnitList.add("kilometer");
+        lengthUnitList.add("meter");
+        lengthUnitList.add("centimeter");
+        lengthUnitList.add("millimeter");
+        lengthUnitList.add("mile");
+        lengthUnitList.add("yard");
+        lengthUnitList.add("foot");
+        lengthUnitList.add("inch");
 
-        unitList.put("volume", volumeSet);
-        unitList.put("mass", massSet);
-        unitList.put("length", lengthSet);
+        unitList.put("volume", volumeUnitList);
+        unitList.put("mass", massUnitList);
+        unitList.put("length", lengthUnitList);
 
         /*
         * 1 unit : convert the current 1 unit to the base unit
-        * 1) volume: base unit - milliliter (ml)
-        * 2) mass: base unit - gram (g)
-        * 3) length: base unit - meter (m)
+        * 1) volume: base unit - us fluid ounces (vol oz)
+        * 2) mass: base unit - mass ounces (oz)
+        * 3) length: base unit - inches (in)
         *
         * e.g.)
-        * "gallon" : convert 1 gallon to milliliter (ml)
-        * "pound" : convert 1 pound to gram (g)
-        * "mile" : convert 1 mile to meter (m)
+        * "gallon" : convert 1 gallon to us fluid ounces (vol oz)
+        * "pound" : convert 1 pound to mass ounces (oz
+        * "mile" : convert 1 mile to inches (in)
         * */
         unitToStandardAmountMap = new HashMap<>();
 
@@ -119,7 +114,7 @@ public class UnitList {
         return unitToStandardAmountMap.get(unit);
     }
 
-    public Map<String, Set<String>> getUnitList() {
+    public Map<String, List<String>> getUnitList() {
         return unitList;
     }
 }

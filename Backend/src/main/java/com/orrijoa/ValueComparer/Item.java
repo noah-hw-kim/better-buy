@@ -14,6 +14,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "items")
 public class Item implements Comparable<Item> {
 
+
+
     @Id
     private ObjectId id;
     private String unit;
@@ -46,7 +48,7 @@ public class Item implements Comparable<Item> {
 
     private double calculatePricePerBaseAmount() {
         // amount that converted to the base unit
-        double baseAmount = UnitList.get(unit) * amount;
+        double baseAmount = UnitConverter.get(unit) * amount;
         return price / baseAmount;
     }
 
