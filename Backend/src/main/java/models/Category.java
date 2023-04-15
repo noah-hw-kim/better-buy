@@ -1,6 +1,7 @@
 package models;
 
 import lombok.Data;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -57,6 +58,7 @@ public class Category {
         categories.put("Pet Care", petCareSubCategory);
     }
 
+    @Bean
     public Map<String, List<String>> getCategories() {
         Map<String, List<String>> categoriesCopy = categories.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> List.copyOf(e.getValue())));
 

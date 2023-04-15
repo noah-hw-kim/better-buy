@@ -3,6 +3,7 @@ package models;
 import io.github.qudtlib.Qudt;
 import io.github.qudtlib.model.Unit;
 import lombok.Data;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -111,10 +112,11 @@ public class UnitConverter {
         return Qudt.convert(ONE_UNIT, unit1, BASE_LENGTH).doubleValue();
     }
 
-    public static Double get(String unit) {
+    public static Double getStandardAmount(String unit) {
         return unitToStandardAmountMap.get(unit);
     }
 
+    @Bean
     public Map<String, List<String>> getUnitList() {
         Map<String, List<String>> unitListCopy = unitList.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> List.copyOf(e.getValue())));
 

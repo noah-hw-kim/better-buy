@@ -1,7 +1,9 @@
 package com.orrijoa.ValueComparer;
 
+import models.Categories;
 import models.Comparison;
 import models.Item;
+import models.UnitList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,13 +37,13 @@ public class ValueComparerController {
     }
 
     @GetMapping("/categories")
-    public ResponseEntity<Map<String, List<String>>> getCategories() {
-        return new ResponseEntity<Map<String, List<String>>>(valueComparerService.getCategories(), HttpStatus.OK);
+    public ResponseEntity<Categories> getCategories() {
+        return new ResponseEntity<Categories>(valueComparerService.getCategories(), HttpStatus.OK);
     }
 
     @GetMapping("/unit-list")
-    public ResponseEntity<Map<String, List<String>>> getUnitList() {
-        return new ResponseEntity<Map<String, List<String>>>(valueComparerService.getUnitList(), HttpStatus.OK);
+    public ResponseEntity<UnitList> getUnitList() {
+        return new ResponseEntity<UnitList>(valueComparerService.getUnitList(), HttpStatus.OK);
     }
 
     @GetMapping("/all-items")

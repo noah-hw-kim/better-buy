@@ -1,9 +1,6 @@
 package com.orrijoa.ValueComparer;
 
-import models.Category;
-import models.Comparison;
-import models.Item;
-import models.UnitConverter;
+import models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +22,16 @@ public class ValueComparerService {
         return itemRepo.save(new Item(unit, price, amount, name, brand, store, category, subCategory));
     }
 
-    public Map<String, List<String>> getUnitList() {
-        return unitConverter.getUnitList();
+    public UnitList getUnitList() {
+        UnitList unitList = new UnitList();
+        unitList.setUnitList(unitConverter.getUnitList());
+        return unitList;
     }
 
-    public Map<String, List<String>> getCategories() {
-        return category.getCategories();
+    public Categories getCategories() {
+        Categories categories = new Categories();
+        categories.setCategories(category.getCategories());
+        return categories;
     }
 
     public Optional<List<Item>> getAllItems() {
