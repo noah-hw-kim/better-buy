@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -14,23 +13,19 @@ public class ValueComparerService {
     @Autowired
     ItemRepository itemRepo;
     @Autowired
-    UnitConverter unitConverter;
+    UnitList unitList;
     @Autowired
-    Category category;
+    Categories categories;
 
     public Item createItem(String unit, double price, double amount, String name, String brand, String store, String category, String subCategory) {
         return itemRepo.save(new Item(unit, price, amount, name, brand, store, category, subCategory));
     }
 
     public UnitList getUnitList() {
-        UnitList unitList = new UnitList();
-        unitList.setUnitList(unitConverter.getUnitList());
         return unitList;
     }
 
     public Categories getCategories() {
-        Categories categories = new Categories();
-        categories.setCategories(category.getCategories());
         return categories;
     }
 
