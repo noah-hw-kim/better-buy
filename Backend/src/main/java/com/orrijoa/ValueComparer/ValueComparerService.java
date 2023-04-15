@@ -16,18 +16,20 @@ public class ValueComparerService {
 
     @Autowired
     ItemRepository itemRepo;
+    @Autowired
+    UnitConverter unitConverter;
+    @Autowired
+    Category category;
 
     public Item createItem(String unit, double price, double amount, String name, String brand, String store, String category, String subCategory) {
         return itemRepo.save(new Item(unit, price, amount, name, brand, store, category, subCategory));
     }
 
     public Map<String, List<String>> getUnitList() {
-        UnitConverter unitList = new UnitConverter();
-        return unitList.getUnitList();
+        return unitConverter.getUnitList();
     }
 
     public Map<String, List<String>> getCategories() {
-        Category category = new Category();
         return category.getCategories();
     }
 

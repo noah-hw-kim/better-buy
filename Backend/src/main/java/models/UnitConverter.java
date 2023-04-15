@@ -7,16 +7,17 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Data
 @Component
 public class UnitConverter {
 
-    private static Map<String, Double> unitToStandardAmountMap;
     private static Map<String, List<String>> unitList;
+    private static Map<String, Double> unitToStandardAmountMap;
 
     // represent a single unit
-    private BigDecimal ONE_UNIT = new BigDecimal("1");
+    private final BigDecimal ONE_UNIT = new BigDecimal("1");
 
     // base units for each quantity
     private Unit BASE_VOLUME = Qudt.Units.OZ_VOL_US;
@@ -115,6 +116,8 @@ public class UnitConverter {
     }
 
     public Map<String, List<String>> getUnitList() {
-        return unitList;
+        Map<String, List<String>> unitListCopy = unitList.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> List.copyOf(e.getValue())));
+
+        return unitListCopy;
     }
 }

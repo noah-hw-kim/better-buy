@@ -1,5 +1,7 @@
 package com.orrijoa.ValueComparer;
 
+import models.Category;
+import models.UnitConverter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +32,18 @@ public class ValueComparerApplication {
 	public ApiInfo apiInfo() {
 		final ApiInfoBuilder builder = new ApiInfoBuilder();
 		return builder.build();
+	}
+
+	@Bean
+	public UnitConverter getUnitConverter() {
+		UnitConverter unitConverter = new UnitConverter();
+		return unitConverter;
+	}
+
+	@Bean
+	public Category getCategroy() {
+		Category category = new Category();
+		return category;
 	}
 
 	public static void main(String[] args) {
