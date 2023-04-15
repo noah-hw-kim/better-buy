@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/value-comparer")
@@ -27,19 +27,29 @@ public class ValueComparerController {
         response.sendRedirect("/swagger-ui/");
     }
 
-    @PostMapping("/create/unit/{unit}/name/{name}/price/{price}/amount/{amount}/brand/{brand}/store/{store}/category/{category}")
-    public ResponseEntity<Item> createItem(@PathVariable String unit, @PathVariable double price, @PathVariable double amount, @PathVariable String name, @PathVariable String brand, @PathVariable String store, @PathVariable String category) {
-        return new ResponseEntity<Item>(valueComparerService.createItem(unit, price, amount, name, brand, store, category), HttpStatus.OK);
+    @PostMapping("/create/unit/{unit}/name/{name}/price/{price}/amount/{amount}/brand/{brand}/store/{store}/category/{category}/sub-category/{subCategory}")
+    public ResponseEntity<Item> createItem(@PathVariable String unit, @PathVariable double price, @PathVariable double amount, @PathVariable String name, @PathVariable String brand, @PathVariable String store, @PathVariable String category, @PathVariable String subCategory) {
+        return new ResponseEntity<Item>(valueComparerService.createItem(unit, price, amount, name, brand, store, category, subCategory), HttpStatus.OK);
     }
 
-    @GetMapping("/all-items")
-    public ResponseEntity<List<Item>> getAllItems() {
-        return new ResponseEntity<List<Item>>(valueComparerService.getAllItems(),HttpStatus.OK);
+    @GetMapping("/categories")
+    public ResponseEntity<Map<String, List<String>>> getCategories() {
+        return new ResponseEntity<Map<String, List<String>>>(valueComparerService.getCategories(), HttpStatus.OK);
     }
 
     @GetMapping("/unit-list")
     public ResponseEntity<Map<String, List<String>>> getUnitList() {
-        return new ResponseEntity<Map<String, List<String>>>(valueComparerService.getList(), HttpStatus.OK);
+        return new ResponseEntity<Map<String, List<String>>>(valueComparerService.getUnitList(), HttpStatus.OK);
+    }
+
+    @GetMapping("/all-items")
+    public ResponseEntity<Optional<List<Item>>> getAllItems() {
+        return new ResponseEntity<Optional<List<Item>>>(valueComparerService.getAllItems(),HttpStatus.OK);
+    }
+
+    @GetMapping("/items/category/{category}/sub-category/{subCategory}")
+    public ResponseEntity<Optional<List<Item>>> getItemsByCateogryAndSubCategory(@PathVariable String category, @PathVariable String subCategory) {
+        return new ResponseEntity<Optional<List<Item>>>(valueComparerService.getItemsByCategoryAndSubCategory(category, subCategory), HttpStatus.OK);
     }
 
     @GetMapping("/unit1/{unit1}/price1/{price1}/amount1/{amount1}/unit2/{unit2}/price2/{price2}/amount2/{amount2}")

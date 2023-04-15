@@ -14,8 +14,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "items")
 public class Item implements Comparable<Item> {
 
-
-
     @Id
     private ObjectId id;
     private String unit;
@@ -25,6 +23,7 @@ public class Item implements Comparable<Item> {
     private String brand;
     private String store;
     private String category;
+    private String subCategory;
     private double pricePerBaseAmount;
 
 
@@ -35,7 +34,7 @@ public class Item implements Comparable<Item> {
         pricePerBaseAmount = calculatePricePerBaseAmount();
     }
 
-    public Item(String unit, double price, double amount, String name, String brand, String store, String category) {
+    public Item(String unit, double price, double amount, String name, String brand, String store, String category, String subCategory) {
         this.unit = unit;
         this.price = price;
         this.amount = amount;
@@ -43,6 +42,7 @@ public class Item implements Comparable<Item> {
         this.brand = brand;
         this.store = store;
         this.category = category;
+        this.subCategory = subCategory;
         pricePerBaseAmount = calculatePricePerBaseAmount();
     }
 
@@ -72,7 +72,7 @@ public class Item implements Comparable<Item> {
         }
         Item other = (Item) obj;
 
-        return other.id.equals(id) && other.unit.equals(unit) && other.name.equals(name) && other.price == price && other.amount == amount && other.brand.equals(brand) && other.store.equals(store) && other.category.equals(category);
+        return other.id.equals(id) && other.unit.equals(unit) && other.name.equals(name) && other.price == price && other.amount == amount && other.brand.equals(brand) && other.store.equals(store) && other.category.equals(category) && other.subCategory.equals(subCategory);
     }
 
     @Override
@@ -86,6 +86,7 @@ public class Item implements Comparable<Item> {
         result = prime * result + ((brand == null) ? 0 : brand.hashCode());
         result = prime * result + ((store == null) ? 0 : store.hashCode());
         result = prime * result + ((category == null) ? 0 : category.hashCode());
+        result = prime * result + ((subCategory == null) ? 0 : subCategory.hashCode());
         result = prime * result + (int) price;
         result = prime * result + (int) amount;
         result = prime * result + (int) pricePerBaseAmount;

@@ -8,9 +8,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ItemRepository extends MongoRepository<Item, ObjectId> {
+public interface ItemRepository extends MongoRepository<Item, String> {
 
-    List<Item> findAllByOrderByCategoryAscPricePerBaseAmountAsc();
+    Optional<List<Item>> findAllByOrderByCategoryAscPricePerBaseAmountAsc();
 
     Optional<Item> findItemByUnitAndPriceAndAmount(String unit, double price, double amount);
+
+    Optional<List<Item>> findAllByCategoryAndSubCategoryOrderByPricePerBaseAmountAsc(String category, String subCategory);
 }

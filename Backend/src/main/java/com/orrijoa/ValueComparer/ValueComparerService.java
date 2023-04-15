@@ -5,31 +5,40 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Optional;
 
 @Service
 public class ValueComparerService {
 
     @Autowired
-    ItemRepository itemRepository;
+    ItemRepository itemRepo;
 
-    public Item createItem(String unit, double price, double amount, String name, String brand, String store, String category) {
-        return itemRepository.save(new Item(unit, price, amount, name, brand, store, category));
+    public Item createItem(String unit, double price, double amount, String name, String brand, String store, String category, String subCategory) {
+        return itemRepo.save(new Item(unit, price, amount, name, brand, store, category, subCategory));
     }
 
-    public List<Item> getAllItems() {
-        return itemRepository.findAllByOrderByCategoryAscPricePerBaseAmountAsc();
-    }
-
-    public Map<String, List<String>> getList() {
+    public Map<String, List<String>> getUnitList() {
         UnitConverter unitList = new UnitConverter();
         return unitList.getUnitList();
     }
 
+    public Map<String, List<String>> getCategories() {
+        Category category = new Category();
+        return category.getCategories();
+    }
+
+    public Optional<List<Item>> getAllItems() {
+        return itemRepo.findAllByOrderByCategoryAscPricePerBaseAmountAsc();
+    }
+
+    public Optional<List<Item>> getItemsByCategoryAndSubCategory(String category, String subCategory) {
+        return itemRepo.findAllByCategoryAndSubCategoryOrderByPricePerBaseAmountAsc(category, subCategory);
+    }
+
         // create item 1 and item 2 objects with inputs and compare the value and return the cheaper item
     public Comparison getCheaper(String unit1, double price1, double amount1, String unit2, double price2, double amount2) {
-        Item item1 = itemRepository.findItemByUnitAndPriceAndAmount(unit1, price1, amount1).get();
-        Item item2 = itemRepository.findItemByUnitAndPriceAndAmount(unit2, price2, amount2).get();
+        Item item1 = itemRepo.findItemByUnitAndPriceAndAmount(unit1, price1, amount1).get();
+        Item item2 = itemRepo.findItemByUnitAndPriceAndAmount(unit2, price2, amount2).get();
 
         //item1 = itemRepository.findItemByItem(item1).get();
 
