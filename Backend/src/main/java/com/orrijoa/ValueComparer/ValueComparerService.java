@@ -1,5 +1,9 @@
 package com.orrijoa.ValueComparer;
 
+import models.Category;
+import models.Comparison;
+import models.Item;
+import models.UnitConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

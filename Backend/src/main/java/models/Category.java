@@ -1,4 +1,4 @@
-package com.orrijoa.ValueComparer;
+package models;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
