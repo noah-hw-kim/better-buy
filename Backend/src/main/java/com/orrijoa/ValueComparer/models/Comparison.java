@@ -13,6 +13,8 @@ public class Comparison {
     // private Item worseValueItem;
     private Item[] comparedItems;
 //    this represents how much the betterValueItem is cheaper than the other item average
+//    for example, item1's pricePerBaseAmount ~= 56.7 and item2's pricePerBaseAmount ~= 85
+//    item1 is approximately 0.33 times / 33% cheaper than item2
     private double valueComparison;
 
 
@@ -40,7 +42,7 @@ public class Comparison {
             sumOfPricePerBaseAmount -= betterValue.getPricePerBaseAmount();
             avgOfPricePerBaseAmount = sumOfPricePerBaseAmount / (comparedItems.length - 1);
 
-            valueComparison = betterValue.getPricePerBaseAmount() / avgOfPricePerBaseAmount;
+            valueComparison = 1 - (betterValue.getPricePerBaseAmount() / avgOfPricePerBaseAmount);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

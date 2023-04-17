@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Item implements Comparable<Item> {
 
     @Id
-    private String id;
+    private long id;
     private String unit;
     private double price;
     private double amount;
@@ -44,7 +44,6 @@ public class Item implements Comparable<Item> {
         this.category = category;
         this.subCategory = subCategory;
         pricePerBaseAmount = calculatePricePerBaseAmount();
-        System.out.println("constructor invoked. " + pricePerBaseAmount);
     }
 
     private double calculatePricePerBaseAmount() {
@@ -77,7 +76,7 @@ public class Item implements Comparable<Item> {
         }
         Item other = (Item) obj;
 
-        return other.id.equals(id) && other.unit.equals(unit) && other.name.equals(name) && other.price == price && other.amount == amount && other.brand.equals(brand) && other.store.equals(store) && other.category.equals(category) && other.subCategory.equals(subCategory);
+        return other.id == id && other.unit.equals(unit) && other.name.equals(name) && other.price == price && other.amount == amount && other.brand.equals(brand) && other.store.equals(store) && other.category.equals(category) && other.subCategory.equals(subCategory);
     }
 
     @Override
@@ -85,13 +84,13 @@ public class Item implements Comparable<Item> {
         // creating hashcode() with custom : starting point 1, prime multiplier 31
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((unit == null) ? 0 : unit.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((brand == null) ? 0 : brand.hashCode());
         result = prime * result + ((store == null) ? 0 : store.hashCode());
         result = prime * result + ((category == null) ? 0 : category.hashCode());
         result = prime * result + ((subCategory == null) ? 0 : subCategory.hashCode());
+        result = prime * result + (int) id;
         result = prime * result + (int) price;
         result = prime * result + (int) amount;
         result = prime * result + (int) pricePerBaseAmount;

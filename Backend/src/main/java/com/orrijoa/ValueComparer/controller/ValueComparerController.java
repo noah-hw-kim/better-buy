@@ -64,6 +64,18 @@ public class ValueComparerController {
         return new ResponseEntity<Optional<List<Item>>>(valueComparerService.getItemsByCategoryAndSubCategory(category, subCategory), HttpStatus.OK);
     }
 
+    @GetMapping("/item1id/{item1id}/item2id/{item2id}")
+    public ResponseEntity<Comparison> getCheaper(@PathVariable long item1id, @PathVariable long item2id) {
+        return new ResponseEntity<Comparison>(valueComparerService.getCheaper(item1id, item2id), HttpStatus.OK);
+    }
+
+    @GetMapping("/item1id/{item1id}/item2id/{item2id}/item3id/{item3id}")
+    public ResponseEntity<Comparison> getCheaper(@PathVariable long item1id, @PathVariable long item2id, @PathVariable long item3id) {
+        return new ResponseEntity<Comparison>(valueComparerService.getCheaper(item1id, item2id, item3id), HttpStatus.OK);
+    }
+
+
+
     @GetMapping("/unit1/{unit1}/price1/{price1}/amount1/{amount1}/unit2/{unit2}/price2/{price2}/amount2/{amount2}")
     public ResponseEntity<Comparison> getCheaper(@PathVariable String unit1, @PathVariable double price1, @PathVariable double amount1, @PathVariable String unit2, @PathVariable double price2, @PathVariable double amount2) {
         return new ResponseEntity<Comparison>(valueComparerService.getCheaper(unit1, price1, amount1, unit2, price2, amount2), HttpStatus.OK);

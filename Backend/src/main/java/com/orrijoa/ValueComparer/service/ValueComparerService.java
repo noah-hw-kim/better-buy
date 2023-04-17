@@ -40,7 +40,10 @@ public class ValueComparerService {
 
 
     public Item createItem(Item item) {
+        long idIndex = createNewId();
+
         Item saveItem = Item.builder()
+                .id(idIndex)
                 .unit(item.getUnit())
                 .price(item.getPrice())
                 .amount(item.getAmount())
@@ -51,7 +54,22 @@ public class ValueComparerService {
                 .subCategory(item.getSubCategory())
                 .pricePerBaseAmount(calculatePricePerBaseAmount(item))
                 .build();
+
         return itemRepo.save(saveItem);
+    }
+
+    private long createNewId() {
+        long idIndex;
+
+        // if the database is empty then return the item index 1 to start
+        if (itemRepo.count() == 0) {
+            idIndex = 1;
+        } else {
+            // if the database is not empty then return the highest Id + 1 to start new index
+            idIndex = itemRepo.findTop1ByOrderByIdDesc().getId() + 1;
+        }
+
+        return idIndex;
     }
 
     private double calculatePricePerBaseAmount(Item item) {
@@ -96,6 +114,41 @@ public class ValueComparerService {
 //
 //        return new Comparison(item1, item2);
     }
+
+    // create item 1 and item 2 objects with inputs and compare the value and return the cheaper item
+    public Comparison getCheaper(long item1id, long item2id) {
+        Item item1 = itemRepo.findItemById(item1id);
+        Item item2 = itemRepo.findItemById(item2id);
+
+
+
+        //item1 = itemRepository.findItemByItem(item1).get();
+
+        return new Comparison(item1, item2);
+
+//        Item item1 = new Item(unit1, price1, amount1);
+//        Item item2 = new Item(unit2, price2, amount2);
+//
+//        return new Comparison(item1, item2);
+    }
+
+    // create item 1 and item 2 objects with inputs and compare the value and return the cheaper item
+    public Comparison getCheaper(long item1id, long item2id, long item3id) {
+        Item item1 = itemRepo.findItemById(item1id);
+        Item item2 = itemRepo.findItemById(item2id);
+        Item item3 = itemRepo.findItemById(item3id);
+
+        //item1 = itemRepository.findItemByItem(item1).get();
+
+        return new Comparison(item1, item2, item3);
+
+//        Item item1 = new Item(unit1, price1, amount1);
+//        Item item2 = new Item(unit2, price2, amount2);
+//
+//        return new Comparison(item1, item2);
+    }
+
+
 
     public Comparison getCheaper(String unit1, double price1, double amount1, String unit2, double price2, double amount2, String unit3, double price3, double amount3) {
         Item item1 = new Item(unit1, price1, amount1);
