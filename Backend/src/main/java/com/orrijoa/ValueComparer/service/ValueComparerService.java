@@ -1,6 +1,7 @@
-package com.orrijoa.ValueComparer;
+package com.orrijoa.ValueComparer.service;
 
-import models.*;
+import com.orrijoa.ValueComparer.models.*;
+import com.orrijoa.ValueComparer.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +12,56 @@ import java.util.Optional;
 public class ValueComparerService {
 
     @Autowired
-    ItemRepository itemRepo;
+    private ItemRepository itemRepo;
     @Autowired
-    UnitList unitList;
+    private UnitList unitList;
     @Autowired
-    Categories categories;
+    private Categories categories;
 
+    /*
     public Item createItem(String unit, double price, double amount, String name, String brand, String store, String category, String subCategory) {
-        return itemRepo.save(new Item(unit, price, amount, name, brand, store, category, subCategory));
+        Item item = Item.builder()
+                .unit(unit)
+                .price(price)
+                .amount(amount)
+                .name(name)
+                .brand(brand)
+                .store(store)
+                .category(category)
+                .subCategory(subCategory)
+                .build();
+
+
+
+        return itemRepo.save(item);
+    }
+
+     */
+
+
+    public Item createItem(Item item) {
+        Item saveItem = Item.builder()
+                .unit(item.getUnit())
+                .price(item.getPrice())
+                .amount(item.getAmount())
+                .name(item.getName())
+                .brand(item.getBrand())
+                .store(item.getStore())
+                .category(item.getCategory())
+                .subCategory(item.getSubCategory())
+                .pricePerBaseAmount(calculatePricePerBaseAmount(item))
+                .build();
+        return itemRepo.save(saveItem);
+    }
+
+    private double calculatePricePerBaseAmount(Item item) {
+        // amount that converted to the base unit
+        double result = -1;
+        double baseAmount = UnitConverter.getStandardAmount(item.getUnit()) * item.getAmount();
+        if (baseAmount != 0) {
+            result = item.getPrice() / baseAmount;
+        }
+        return result;
     }
 
     public UnitList getUnitList() {
@@ -41,6 +84,8 @@ public class ValueComparerService {
     public Comparison getCheaper(String unit1, double price1, double amount1, String unit2, double price2, double amount2) {
         Item item1 = itemRepo.findItemByUnitAndPriceAndAmount(unit1, price1, amount1).get();
         Item item2 = itemRepo.findItemByUnitAndPriceAndAmount(unit2, price2, amount2).get();
+
+
 
         //item1 = itemRepository.findItemByItem(item1).get();
 
@@ -89,6 +134,8 @@ public class ValueComparerService {
 //        return new Comparison(item1, item2);
         return new Comparison(item1, item2);
     }
+
+
 
 
 //    // create item 1 and item 2 objects with inputs and compare the value and return the cheaper item

@@ -1,9 +1,10 @@
-package com.orrijoa.ValueComparer;
+package com.orrijoa.ValueComparer.controller;
 
-import models.Categories;
-import models.Comparison;
-import models.Item;
-import models.UnitList;
+import com.orrijoa.ValueComparer.service.ValueComparerService;
+import com.orrijoa.ValueComparer.models.Categories;
+import com.orrijoa.ValueComparer.models.Comparison;
+import com.orrijoa.ValueComparer.models.Item;
+import com.orrijoa.ValueComparer.models.UnitList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,6 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -22,7 +22,7 @@ import java.util.Optional;
 public class ValueComparerController {
 
     @Autowired
-    ValueComparerService valueComparerService;
+    private ValueComparerService valueComparerService;
 
 //    This method is for the swagger api to test the app run
     @ApiIgnore
@@ -31,9 +31,17 @@ public class ValueComparerController {
         response.sendRedirect("/swagger-ui/");
     }
 
+    /*
     @PostMapping("/create/unit/{unit}/name/{name}/price/{price}/amount/{amount}/brand/{brand}/store/{store}/category/{category}/sub-category/{subCategory}")
     public ResponseEntity<Item> createItem(@PathVariable String unit, @PathVariable double price, @PathVariable double amount, @PathVariable String name, @PathVariable String brand, @PathVariable String store, @PathVariable String category, @PathVariable String subCategory) {
-        return new ResponseEntity<Item>(valueComparerService.createItem(unit, price, amount, name, brand, store, category, subCategory), HttpStatus.OK);
+        return new ResponseEntity<Item>(valueComparerService.createItem(unit, price, amount, name, brand, store, category, subCategory), HttpStatus.CREATED);
+    }
+
+     */
+
+    @PostMapping("/create")
+    public ResponseEntity<Item> createItem(@RequestBody Item item) {
+        return new ResponseEntity<Item>(valueComparerService.createItem(item), HttpStatus.CREATED);
     }
 
     @GetMapping("/categories")

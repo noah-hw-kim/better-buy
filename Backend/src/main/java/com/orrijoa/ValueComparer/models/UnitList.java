@@ -1,4 +1,4 @@
-package models;
+package com.orrijoa.ValueComparer.models;
 
 import lombok.Data;
 

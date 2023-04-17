@@ -1,12 +1,9 @@
-package models;
+package com.orrijoa.ValueComparer.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import models.Item;
-import org.springframework.stereotype.Component;
 
-@Component
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

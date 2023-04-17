@@ -1,4 +1,4 @@
-package models;
+package com.orrijoa.ValueComparer.models;
 
 import lombok.Data;
 import org.springframework.context.annotation.Bean;
@@ -8,7 +8,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Data
-@Component
 public class Category {
 
     private static Map<String, List<String>> categories;

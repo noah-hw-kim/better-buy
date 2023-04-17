@@ -1,4 +1,4 @@
-package models;
+package com.orrijoa.ValueComparer.models;
 
 import io.github.qudtlib.Qudt;
 import io.github.qudtlib.model.Unit;
@@ -11,7 +11,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Data
-@Component
 public class UnitConverter {
 
     private static Map<String, List<String>> unitList;

@@ -1,21 +1,22 @@
-package models;
+package com.orrijoa.ValueComparer.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
+// @Accessors allows to chainning the setter methods. For example, new Student().setAmount(123).price(456).
+//@Accessors(chain = true)
+// @Builder allows to create an immutable object with the builder design pattern. Don't need to follow the constructor sequence when creating an object.
+@Builder
 @Document(collection = "items")
 public class Item implements Comparable<Item> {
 
     @Id
-    private ObjectId id;
+    private String id;
     private String unit;
     private double price;
     private double amount;
@@ -25,7 +26,6 @@ public class Item implements Comparable<Item> {
     private String category;
     private String subCategory;
     private double pricePerBaseAmount;
-
 
     public Item(String unit, double price, double amount) {
         this.unit = unit;
@@ -44,6 +44,7 @@ public class Item implements Comparable<Item> {
         this.category = category;
         this.subCategory = subCategory;
         pricePerBaseAmount = calculatePricePerBaseAmount();
+        System.out.println("constructor invoked. " + pricePerBaseAmount);
     }
 
     private double calculatePricePerBaseAmount() {

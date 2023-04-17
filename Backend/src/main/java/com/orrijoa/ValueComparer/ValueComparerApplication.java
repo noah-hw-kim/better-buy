@@ -1,9 +1,9 @@
 package com.orrijoa.ValueComparer;
 
-import models.Categories;
-import models.Category;
-import models.UnitConverter;
-import models.UnitList;
+import com.orrijoa.ValueComparer.models.Categories;
+import com.orrijoa.ValueComparer.models.Category;
+import com.orrijoa.ValueComparer.models.UnitConverter;
+import com.orrijoa.ValueComparer.models.UnitList;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
