@@ -149,7 +149,7 @@ function regenerateChildren(elementType, elementsLst, parent) {
 
 async function saveItem() {
     let item1 = document.getElementById("item1");
-    item1.
+    let inputs = document.querySelectorAll
 }
 
 async function compareItemValues() {

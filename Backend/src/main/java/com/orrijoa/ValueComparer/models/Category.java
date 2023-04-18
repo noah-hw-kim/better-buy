@@ -2,7 +2,6 @@ package com.orrijoa.ValueComparer.models;
 
 import lombok.Data;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;

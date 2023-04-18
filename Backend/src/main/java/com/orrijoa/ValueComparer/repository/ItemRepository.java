@@ -10,13 +10,11 @@ import java.util.Optional;
 @Repository
 public interface ItemRepository extends MongoRepository<Item, Long> {
 
-    List<Item> findAllByOrderByCategoryAscPricePerBaseAmountAsc();
-
     Item findItemByUnitAndPriceAndAmount(String unit, double price, double amount);
 
     List<Item> findAllByCategoryAndSubCategoryOrderByPricePerBaseAmountAsc(String category, String subCategory);
 
     Item findItemById(long itemId);
 
-    Item findTop1ByOrderByIdDesc();
+//    Item findTop1ByOrderByIdDesc();
 }

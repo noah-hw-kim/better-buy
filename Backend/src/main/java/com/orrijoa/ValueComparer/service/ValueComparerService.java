@@ -3,6 +3,7 @@ package com.orrijoa.ValueComparer.service;
 import com.orrijoa.ValueComparer.models.*;
 import com.orrijoa.ValueComparer.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,10 +41,11 @@ public class ValueComparerService {
 
 
     public Item createItem(Item item) {
-        long idIndex = createNewId();
+//        long idIndex = createNewId();
 
+        // use item's hashcode for the id to prevent the duplicates
         Item saveItem = Item.builder()
-                .id(idIndex)
+                .id(item.hashCode())
                 .unit(item.getUnit())
                 .price(item.getPrice())
                 .amount(item.getAmount())
@@ -58,6 +60,7 @@ public class ValueComparerService {
         return itemRepo.save(saveItem);
     }
 
+    /*
     private long createNewId() {
         long idIndex;
 
@@ -71,6 +74,8 @@ public class ValueComparerService {
 
         return idIndex;
     }
+
+     */
 
     private double calculatePricePerBaseAmount(Item item) {
         // amount that converted to the base unit
@@ -91,7 +96,7 @@ public class ValueComparerService {
     }
 
     public List<Item> getAllItems() {
-        return itemRepo.findAllByOrderByCategoryAscPricePerBaseAmountAsc();
+        return itemRepo.findAll(Sort.by(Sort.Direction.ASC, "category").and(Sort.by(Sort.Direction.ASC, "pricePerBaseAmount")));
     }
 
     public List<Item> getItemsByCategoryAndSubCategory(String category, String subCategory) {
