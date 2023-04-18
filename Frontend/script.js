@@ -19,8 +19,15 @@ unitTypeDropdown2.addEventListener("change", () => genUnitDropdown(unitTypeDropd
 
 let compareBtn = document.getElementById("compare-button");
 compareBtn.addEventListener("click", () => {
-    saveItem();
-    compareItemValues();
+    let item1Div = document.getElementById("item1")
+    let item2Div = document.getElementById("item2")
+    
+    // let jsonResponse1 = saveItem(item1Div);
+    // let jsonResponse2 = saveItem(item2Div);
+
+    // compare function needs to wait for the jsonResponse 1 and 2
+    compareItemValues(item1Div, item2Div, saveItem);
+
 });
 
 
@@ -147,13 +154,61 @@ function regenerateChildren(elementType, elementsLst, parent) {
     }
 }
 
-async function saveItem() {
-    let item1 = document.getElementById("item1");
-    let inputs = document.querySelectorAll
+/**
+ * post json data to the database by sending it to the backend API 
+ */
+
+async function saveItem(targetDiv) {
+    let jsonData = formatToJson(targetDiv);
+
+    let response = await fetch("http://localhost:8081/api/value-comparer/create", {method: "POST", headers: {
+        "Content-Type": "application/json",
+      }, body:JSON.stringify(jsonData)});
+    let responseJson = await response.json();
+
+    return responseJson;
 }
 
-async function compareItemValues() {
+/**
+ * need to handle both inputs and selects elements in the targetDiv, based on the name and value, converts to the Json obj and return it.
+ */
 
+function formatToJson(targetDiv) {
+    let jsonData = {};
+    let divInputs = targetDiv.getElementsByTagName('input');
+    let divSelects = targetDiv.getElementsByTagName('select');
+
+    for (let i = 0; i < divInputs.length; i++) {
+        // change the value type from string to float if the fileds are amount and price.
+        if (divInputs[i].name.includes("amount") || divInputs[i].name.includes("price")) {
+            jsonData[divInputs[i].name] = parseFloat(divInputs[i].value);
+        }
+        else {
+            jsonData[divInputs[i].name] = divInputs[i].value;
+        }
+    }
+
+    for (let i = 0; i < divSelects.length; i++) {
+        if (divSelects[i].name != "unit-type") {
+            jsonData[divSelects[i].name] = divSelects[i].value;
+        }
+    }
+    return jsonData;
+}
+
+async function compareItemValues(item1Div, item2Div, saveItem) {
+    let jsonResponse1 = await saveItem(item1Div);
+    let jsonResponse2 = await saveItem(item2Div);
+
+    let id1 = jsonResponse1.id;
+    let id2 = jsonResponse2.id;
+    
+    let response = await fetch(`http://localhost:8081/api/value-comparer/item1id/${id1}/item2id/${id2}`);
+    let responseJson = await response.json();
+
+    console.log(responseJson);
+
+    // return responseJson;
 }
 
 
