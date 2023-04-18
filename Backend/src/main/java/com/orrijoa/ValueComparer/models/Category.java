@@ -33,6 +33,7 @@ public class Category {
         List<String> householdAndCleaningSuppliesSubCategory = Arrays.asList("Laundry detergent", "dish soap", "dishwashing liquid", "paper towels", "tissues", "trash bags", "aluminum foil", "zip bags", "etc");
         List<String> babyItemsSubCategory = Arrays.asList("Baby food", "diapers", "wet wipes", "lotion", "etc");
         List<String> petCareSubCategory = Arrays.asList("Pet food", "kitty litter", "chew toys", "pet treats", "pet shampoo", "etc");
+        List<String> etcSubCategory = Arrays.asList("");
 
         categories = new HashMap<>();
 
@@ -55,6 +56,7 @@ public class Category {
         categories.put("Household and Cleaning Supplies", householdAndCleaningSuppliesSubCategory);
         categories.put("Baby Items", babyItemsSubCategory);
         categories.put("Pet Care", petCareSubCategory);
+        categories.put("Etc", etcSubCategory);
     }
 
     @Bean

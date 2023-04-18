@@ -17,37 +17,54 @@
         <p>Use this tool to determine the product with a better value.</p>
         <div id="compare-section">
             <form id="compare-form">
-                <div class="item">
+                <div class="item" id="item1">
                     <h2>Item 1</h2>
+                    <label>Name</label>
+                    <input required><br>
                     <label>Amount</label>
-                    <input><br>
+                    <input required><br>
                     <label>Price</label>
-                    <input><br>
+                    <input required><br>
                     <label>Unit Type</label>
-                    <select class="select-unit-type" id="unit-type-dropdown-1">
-                        <option>length</option>
-                        <option>mass</option>
+                    <select class="select-unit-type" id="unit-type-dropdown-1" value="length">
+                        <option selected="selected">mass</option>
                         <option>volume</option>
+                        <option>length</option>
                     </select><br>
                     <label>Unit</label>
                     <select id="unit-dropdown-1">
                     </select><br>
+                    <label>Brand</label>
+                    <input><br>
+                    <label>Store</label>
+                    <input><br>
+                    <label>Category</label>
+                    <select id="category-dropdown-1">
+                    </select><br>
                 </div>
-                <div class="item">
+                <div class="item" id="item2">
                     <h2>Item 2</h2>
+                    <label>Name</label>
+                    <input required><br>
                     <label>Amount</label>
-                    <input><br>
+                    <input required><br>
                     <label>Price</label>
-                    <input><br>
+                    <input required><br>
                     <label>Unit Type</label>
                     <select class="select-unit-type" id="unit-type-dropdown-2">
-                        <option>length</option>
-                        <option>mass</option>
+                        <option selected="selected">mass</option>
                         <option>volume</option>
+                        <option>length</option>
                     </select><br>
                     <label>Unit</label>
                     <select id="unit-dropdown-2">
-                        
+                    </select><br>
+                    <label>Brand</label>
+                    <input><br>
+                    <label>Store</label>
+                    <input><br>
+                    <label>Category</label>
+                    <select id="category-dropdown-2">
                     </select><br>
                 </div>
                 <button id="compare-button">Compare</button>

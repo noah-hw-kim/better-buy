@@ -90,18 +90,18 @@ public class ValueComparerService {
         return categories;
     }
 
-    public Optional<List<Item>> getAllItems() {
+    public List<Item> getAllItems() {
         return itemRepo.findAllByOrderByCategoryAscPricePerBaseAmountAsc();
     }
 
-    public Optional<List<Item>> getItemsByCategoryAndSubCategory(String category, String subCategory) {
+    public List<Item> getItemsByCategoryAndSubCategory(String category, String subCategory) {
         return itemRepo.findAllByCategoryAndSubCategoryOrderByPricePerBaseAmountAsc(category, subCategory);
     }
 
         // create item 1 and item 2 objects with inputs and compare the value and return the cheaper item
     public Comparison getCheaper(String unit1, double price1, double amount1, String unit2, double price2, double amount2) {
-        Item item1 = itemRepo.findItemByUnitAndPriceAndAmount(unit1, price1, amount1).get();
-        Item item2 = itemRepo.findItemByUnitAndPriceAndAmount(unit2, price2, amount2).get();
+        Item item1 = itemRepo.findItemByUnitAndPriceAndAmount(unit1, price1, amount1);
+        Item item2 = itemRepo.findItemByUnitAndPriceAndAmount(unit2, price2, amount2);
 
 
 

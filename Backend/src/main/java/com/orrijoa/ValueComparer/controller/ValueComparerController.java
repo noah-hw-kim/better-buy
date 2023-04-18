@@ -55,13 +55,13 @@ public class ValueComparerController {
     }
 
     @GetMapping("/all-items")
-    public ResponseEntity<Optional<List<Item>>> getAllItems() {
-        return new ResponseEntity<Optional<List<Item>>>(valueComparerService.getAllItems(),HttpStatus.OK);
+    public ResponseEntity<List<Item>> getAllItems() {
+        return new ResponseEntity<List<Item>>(valueComparerService.getAllItems(),HttpStatus.OK);
     }
 
     @GetMapping("/items/category/{category}/sub-category/{subCategory}")
-    public ResponseEntity<Optional<List<Item>>> getItemsByCateogryAndSubCategory(@PathVariable String category, @PathVariable String subCategory) {
-        return new ResponseEntity<Optional<List<Item>>>(valueComparerService.getItemsByCategoryAndSubCategory(category, subCategory), HttpStatus.OK);
+    public ResponseEntity<List<Item>> getItemsByCateogryAndSubCategory(@PathVariable String category, @PathVariable String subCategory) {
+        return new ResponseEntity<List<Item>>(valueComparerService.getItemsByCategoryAndSubCategory(category, subCategory), HttpStatus.OK);
     }
 
     @GetMapping("/item1id/{item1id}/item2id/{item2id}")
