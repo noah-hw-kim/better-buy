@@ -19,17 +19,42 @@ unitTypeDropdown2.addEventListener("change", () => genUnitDropdown(unitTypeDropd
 
 let compareBtn = document.getElementById("compare-button");
 compareBtn.addEventListener("click", () => {
-    let item1Div = document.getElementById("item1")
-    let item2Div = document.getElementById("item2")
+    let itemDivs = document.getElementsByTagName('div')
     
     // let jsonResponse1 = saveItem(item1Div);
     // let jsonResponse2 = saveItem(item2Div);
 
     // compare function needs to wait for the jsonResponse 1 and 2
-    compareItemValues(item1Div, item2Div, saveItem);
+    compareTwoItems(itemDivs, saveItem);
 
+
+
+    // getAllUnits();
 });
 
+getAllUnits();
+
+
+
+
+
+
+
+
+
+// create an item class
+class Item{
+    constructor(id, name, amount, price, unit, brand, store, category) {
+        this.id = id;
+        this.name = name;
+        this.amount = amount;
+        this.price = price;
+        this.unit = unit;
+        this.brand = brand;
+        this.store = store;
+        this.category = category;
+    }
+}
 
 
 /**
@@ -155,7 +180,7 @@ function regenerateChildren(elementType, elementsLst, parent) {
 }
 
 /**
- * post json data to the database by sending it to the backend API 
+ * post json data to the database by sending data to the backend API 
  */
 
 async function saveItem(targetDiv) {
@@ -196,19 +221,137 @@ function formatToJson(targetDiv) {
     return jsonData;
 }
 
-async function compareItemValues(item1Div, item2Div, saveItem) {
-    let jsonResponse1 = await saveItem(item1Div);
-    let jsonResponse2 = await saveItem(item2Div);
-
-    let id1 = jsonResponse1.id;
-    let id2 = jsonResponse2.id;
+async function compareTwoItems(itemDivs, saveItem) {
+    // hard code to save 2 items
+    let jsonSavedItem1 = await saveItem(itemDivs[1]);
+    let jsonSavedItem2 = await saveItem(itemDivs[2]);
+    let item1Id = jsonSavedItem1.id;
+    let item2Id = jsonSavedItem2.id;
     
-    let response = await fetch(`http://localhost:8081/api/value-comparer/item1id/${id1}/item2id/${id2}`);
+    // hard code to compare 2 items
+    let response = await fetch(`http://localhost:8081/api/value-comparer/item1id/${item1Id}/item2id/${item2Id}`);
     let responseJson = await response.json();
 
-    console.log(responseJson);
+    betterItem(responseJson)
+}
 
-    // return responseJson;
+function betterItem(responseJson) {
+    let result = document.getElementById("compare-result");
+    let betterItem = responseJson.betterValue;
+    let comparedItemsList = responseJson.comparedItems;
+    // how much the better item is cheaper than the average
+    let valueComparison = responseJson.valueComparison;
+    let compareItemNames = "";
+
+    for (let i = 0; i < comparedItemsList.length; i++) {
+        // make a string for the compared item list except the better value item
+        if (comparedItemsList[i].name != betterItem.name) {
+            compareItemNames += comparedItemsList[i].name + ", ";
+        }
+    }
+
+    let elem = createElementWithText("p", `${betterItem.name} is ${valueComparison} times cheaper than the average of the other items(${compareItemNames})`);
+
+    result.appendChild(elem);
+}
+
+async function getAllUnits(clearTable) {
+    let response = await fetch("http://localhost:8081/api/value-comparer/all-items");
+    let responseJson = await response.json();
+    
+    // push item objs to the itemArray to easily generate the table
+    let itemArr = [];
+
+    for (let i = 0; i < responseJson.length; i++) {
+        itemArr.push(responseJson[i]);
+    }
+    createTable(itemArr);
+}
+
+function createElementWithText(tag, text) {
+    let element = document.createElement(tag);
+    element.innerText = text;
+
+    return element;
+}
+
+function createTableHeaderRow() {
+    // create table row for the header
+    let tr = document.createElement("tr");
+
+    // create table headers and attach to the tr
+    let thId = createElementWithText("th", "id");
+    let thName = createElementWithText("th", "name");
+    let thAmount = createElementWithText("th", "amount");
+    let thPrice = createElementWithText("th", "price");
+    let thBrand = createElementWithText("th", "brand");
+    let thStore = createElementWithText("th", "store");
+    let thCategory = createElementWithText("th", "category");
+    let thPricePerBaseAmount = createElementWithText("th", "Price Per BaseAmount");
+
+    tr.appendChild(thId);
+    tr.appendChild(thName);
+    tr.appendChild(thAmount);
+    tr.appendChild(thPrice);
+    tr.appendChild(thBrand);
+    tr.appendChild(thStore);
+    tr.appendChild(thCategory);
+    tr.appendChild(thPricePerBaseAmount);
+
+    return tr;
+}
+
+function createTableDataRows(itemArr) {
+    let trArr = [];
+
+    for (let i = 0; i < itemArr.length; i++) {
+        let tr = document.createElement("tr");
+
+        let tdId = createElementWithText("td", itemArr[i].id);
+        let tdName = createElementWithText("td", itemArr[i].name);
+        let tdAmount = createElementWithText("td", itemArr[i].amount);
+        let tdPrice = createElementWithText("td", itemArr[i].price);
+        let tdBrand = createElementWithText("td", itemArr[i].brand);
+        let tdStore = createElementWithText("td", itemArr[i].store);
+        let tdCategory = createElementWithText("td", itemArr[i].category);
+        let tdPricePerBaseAmount;
+
+        // check if the item's base unit is mass/volume/length
+        if (massUnitsLst.includes(itemArr[i].unit)) {
+            tdPricePerBaseAmount = createElementWithText("td", `$${itemArr[i].pricePerBaseAmount.toFixed(3)}/oz`);
+        }
+
+        tr.appendChild(tdId);
+        tr.appendChild(tdName);
+        tr.appendChild(tdAmount);
+        tr.appendChild(tdPrice);
+        tr.appendChild(tdBrand);
+        tr.appendChild(tdStore);
+        tr.appendChild(tdCategory);
+        tr.appendChild(tdPricePerBaseAmount);
+
+        trArr.push(tr);
+    }
+
+    return trArr;
+}
+
+function createTable(itemArr) {
+    let itemTable = document.getElementById("item-table");
+
+    let tableHeaderRow = createTableHeaderRow();
+    itemTable.appendChild(tableHeaderRow);
+
+    let tableDataRowArr = createTableDataRows(itemArr);
+
+    for (let i = 0; i < tableDataRowArr.length; i++) {
+        itemTable.appendChild(tableDataRowArr[i]);
+    }
+}
+
+function clearTable() {
+    let itemTable = document.getElementById("item-table");
+    itemTable.replaceChildren();
 }
 
 

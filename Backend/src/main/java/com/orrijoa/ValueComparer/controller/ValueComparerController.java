@@ -59,10 +59,10 @@ public class ValueComparerController {
         return new ResponseEntity<List<Item>>(valueComparerService.getAllItems(),HttpStatus.OK);
     }
 
-    @GetMapping("/items/category/{category}/sub-category/{subCategory}")
-    public ResponseEntity<List<Item>> getItemsByCateogryAndSubCategory(@PathVariable String category, @PathVariable String subCategory) {
-        return new ResponseEntity<List<Item>>(valueComparerService.getItemsByCategoryAndSubCategory(category, subCategory), HttpStatus.OK);
-    }
+//    @GetMapping("/items/category/{category}/sub-category/{subCategory}")
+//    public ResponseEntity<List<Item>> getItemsByCateogryAndSubCategory(@PathVariable String category, @PathVariable String subCategory) {
+//        return new ResponseEntity<List<Item>>(valueComparerService.getItemsByCategoryAndSubCategory(category, subCategory), HttpStatus.OK);
+//    }
 
     @GetMapping("/item1id/{item1id}/item2id/{item2id}")
     public ResponseEntity<Comparison> getCheaper(@PathVariable long item1id, @PathVariable long item2id) {
