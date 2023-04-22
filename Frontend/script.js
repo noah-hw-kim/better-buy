@@ -25,7 +25,7 @@ compareBtn.addEventListener("click", () => {
     // let jsonResponse2 = saveItem(item2Div);
 
     // compare function needs to wait for the jsonResponse 1 and 2
-    compareTwoItems(itemDivs, saveItem);
+    compareTwoItems(itemDivs, saveItems);
 
 
 
@@ -33,13 +33,6 @@ compareBtn.addEventListener("click", () => {
 });
 
 getAllUnits();
-
-
-
-
-
-
-
 
 
 // create an item class
@@ -55,7 +48,6 @@ class Item{
         this.category = category;
     }
 }
-
 
 /**
  * Generates list of unit types and units
@@ -186,7 +178,7 @@ function regenerateChildren(elementType, elementsLst, parent) {
 async function saveItem(targetDiv) {
     let jsonData = formatToJson(targetDiv);
 
-    let response = await fetch("http://localhost:8081/api/value-comparer/create", {method: "POST", headers: {
+    let response = await fetch("http://localhost:8081/api/value-comparer/new-item", {method: "POST", headers: {
         "Content-Type": "application/json",
       }, body:JSON.stringify(jsonData)});
     let responseJson = await response.json();
@@ -221,18 +213,63 @@ function formatToJson(targetDiv) {
     return jsonData;
 }
 
-async function compareTwoItems(itemDivs, saveItem) {
-    // hard code to save 2 items
-    let jsonSavedItem1 = await saveItem(itemDivs[1]);
-    let jsonSavedItem2 = await saveItem(itemDivs[2]);
-    let item1Id = jsonSavedItem1.id;
-    let item2Id = jsonSavedItem2.id;
+async function saveItems(targetDiv) {
+    let jsonData = formatToJsonTwoItems(targetDiv);
+    let response = await fetch("http://localhost:8081/api/value-comparer/new-items", {method: "POST", headers: {
+        "Content-Type": "application/json",
+      }, body:JSON.stringify(jsonData)});
+    let responseJson = await response.json();
+
+    return responseJson;
+}
+
+/**
+ * need to handle both inputs and selects elements in the targetDiv, based on the name and value, converts to the Json obj and return it.
+ */
+
+function formatToJsonTwoItems(targetDiv) {
+    let jsonList = [];
+
+    for (let i = 0; i < 2; i++) {
+        let jsonData = {};
+        let divInputs = targetDiv[i].getElementsByTagName('input');
+        let divSelects = targetDiv[i].getElementsByTagName('select');
+
+        for (let i = 0; i < divInputs.length; i++) {
+            // change the value type from string to float if the fileds are amount and price.
+            if (divInputs[i].name.includes("amount") || divInputs[i].name.includes("price")) {
+                jsonData[divInputs[i].name] = parseFloat(divInputs[i].value);
+            }
+            else {
+                jsonData[divInputs[i].name] = divInputs[i].value;
+            }
+        }
+
+        for (let i = 0; i < divSelects.length; i++) {
+            if (divSelects[i].name != "unit-type") {
+                jsonData[divSelects[i].name] = divSelects[i].value;
+            }
+        }
+
+        jsonList.push(jsonData);
+    }
+    
+    return jsonList;
+}
+
+async function compareTwoItems(itemDivs, saveItems) {
+    let jsonItem = await saveItems(itemDivs);
+
+    console.log(jsonItem);
+
+    let item1Id = jsonItem[0].id;
+    let item2Id = jsonItem[1].id;
     
     // hard code to compare 2 items
     let response = await fetch(`http://localhost:8081/api/value-comparer/item1id/${item1Id}/item2id/${item2Id}`);
     let responseJson = await response.json();
 
-    betterItem(responseJson)
+    betterItem(responseJson);
 }
 
 function betterItem(responseJson) {
@@ -244,13 +281,16 @@ function betterItem(responseJson) {
     let compareItemNames = "";
 
     for (let i = 0; i < comparedItemsList.length; i++) {
-        // make a string for the compared item list except the better value item
+        // exclude the better item from the compared Item List and format it
         if (comparedItemsList[i].name != betterItem.name) {
             compareItemNames += comparedItemsList[i].name + ", ";
         }
     }
 
-    let elem = createElementWithText("p", `${betterItem.name} is ${valueComparison} times cheaper than the average of the other items(${compareItemNames})`);
+    // format the item names
+    compareItemNames = compareItemNames.trim().substring(0, compareItemNames.length-2);
+
+    let elem = genElement("p", `${betterItem.name} is ${valueComparison.toFixed(3)} times cheaper than the average of the other items(${compareItemNames})`);
 
     result.appendChild(elem);
 }
@@ -268,30 +308,25 @@ async function getAllUnits(clearTable) {
     createTable(itemArr);
 }
 
-function createElementWithText(tag, text) {
-    let element = document.createElement(tag);
-    element.innerText = text;
-
-    return element;
-}
-
 function createTableHeaderRow() {
     // create table row for the header
     let tr = document.createElement("tr");
 
     // create table headers and attach to the tr
-    let thId = createElementWithText("th", "id");
-    let thName = createElementWithText("th", "name");
-    let thAmount = createElementWithText("th", "amount");
-    let thPrice = createElementWithText("th", "price");
-    let thBrand = createElementWithText("th", "brand");
-    let thStore = createElementWithText("th", "store");
-    let thCategory = createElementWithText("th", "category");
-    let thPricePerBaseAmount = createElementWithText("th", "Price Per BaseAmount");
+    let thId = genElement("th", "id");
+    let thName = genElement("th", "name");
+    let thAmount = genElement("th", "amount");
+    let thUnit = genElement("th", "unit");
+    let thPrice = genElement("th", "price");
+    let thBrand = genElement("th", "brand");
+    let thStore = genElement("th", "store");
+    let thCategory = genElement("th", "category");
+    let thPricePerBaseAmount = genElement("th", "$ per base unit (oz/in)");
 
     tr.appendChild(thId);
     tr.appendChild(thName);
     tr.appendChild(thAmount);
+    tr.appendChild(thUnit);
     tr.appendChild(thPrice);
     tr.appendChild(thBrand);
     tr.appendChild(thStore);
@@ -307,23 +342,27 @@ function createTableDataRows(itemArr) {
     for (let i = 0; i < itemArr.length; i++) {
         let tr = document.createElement("tr");
 
-        let tdId = createElementWithText("td", itemArr[i].id);
-        let tdName = createElementWithText("td", itemArr[i].name);
-        let tdAmount = createElementWithText("td", itemArr[i].amount);
-        let tdPrice = createElementWithText("td", itemArr[i].price);
-        let tdBrand = createElementWithText("td", itemArr[i].brand);
-        let tdStore = createElementWithText("td", itemArr[i].store);
-        let tdCategory = createElementWithText("td", itemArr[i].category);
+        let tdId = genElement("td", itemArr[i].id);
+        let tdName = genElement("td", itemArr[i].name);
+        let tdAmount = genElement("td", itemArr[i].amount);
+        let tdUnit = genElement("td", itemArr[i].unit);
+        let tdPrice = genElement("td", itemArr[i].price);
+        let tdBrand = genElement("td", itemArr[i].brand);
+        let tdStore = genElement("td", itemArr[i].store);
+        let tdCategory = genElement("td", itemArr[i].category);
         let tdPricePerBaseAmount;
 
         // check if the item's base unit is mass/volume/length
-        if (massUnitsLst.includes(itemArr[i].unit)) {
-            tdPricePerBaseAmount = createElementWithText("td", `$${itemArr[i].pricePerBaseAmount.toFixed(3)}/oz`);
+        if (massUnitsLst.includes(itemArr[i].unit) || volumeUnitsLst.includes(itemArr[i].unit)) {
+            tdPricePerBaseAmount = genElement("td", `$${itemArr[i].pricePerBaseAmount.toFixed(3)} / oz`);
+        } else if (lengthUnitsLst.includes(itemArr[i].unit)) {
+            tdPricePerBaseAmount = genElement("td", `$${itemArr[i].pricePerBaseAmount.toFixed(3)} / in`);
         }
 
         tr.appendChild(tdId);
         tr.appendChild(tdName);
         tr.appendChild(tdAmount);
+        tr.appendChild(tdUnit);
         tr.appendChild(tdPrice);
         tr.appendChild(tdBrand);
         tr.appendChild(tdStore);

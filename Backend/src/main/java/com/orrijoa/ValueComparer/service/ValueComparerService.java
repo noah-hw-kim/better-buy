@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -57,6 +58,29 @@ public class ValueComparerService {
                 .build();
 
         return itemRepo.save(saveItem);
+    }
+
+    public List<Item> createItems(List<Item> item) {
+        // use item's hashcode for the id to prevent the duplicates
+        List<Item> formatItem = new ArrayList<>();
+
+        for (Item i : item) {
+            Item saveItem = Item.builder()
+                    .id(i.hashCode())
+                    .unit(i.getUnit())
+                    .price(i.getPrice())
+                    .amount(i.getAmount())
+                    .name(i.getName())
+                    .brand(i.getBrand())
+                    .store(i.getStore())
+                    .category(i.getCategory())
+                    .subCategory(i.getSubCategory())
+                    .pricePerBaseAmount(calculatePricePerBaseAmount(i))
+                    .build();
+
+            formatItem.add(saveItem);
+        }
+        return itemRepo.saveAll(formatItem);
     }
 
     /*

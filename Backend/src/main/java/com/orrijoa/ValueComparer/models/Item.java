@@ -25,6 +25,9 @@ public class Item implements Comparable<Item> {
     private String store;
     private String category;
     private String subCategory;
+//         1) volume: base unit - us fluid ounces (vol oz)
+//         2) mass: base unit - mass ounces (oz)
+//         3) length: base unit - inches (in)
     private double pricePerBaseAmount;
 
     public Item(String unit, double price, double amount) {

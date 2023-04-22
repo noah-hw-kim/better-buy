@@ -39,9 +39,14 @@ public class ValueComparerController {
 
      */
 
-    @PostMapping("/create")
+    @PostMapping("/new-item")
     public ResponseEntity<Item> createItem(@RequestBody Item item) {
         return new ResponseEntity<Item>(valueComparerService.createItem(item), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/new-items")
+    public ResponseEntity<List<Item>> createItems(@RequestBody List<Item> items) {
+        return new ResponseEntity<List<Item>>(valueComparerService.createItems(items), HttpStatus.CREATED);
     }
 
     @GetMapping("/categories")
