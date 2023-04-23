@@ -1,47 +1,35 @@
 let unitTypeLst = [];
-let categoryLst = [];
 let massUnitsLst = [];
 let volumeUnitsLst = [];
 let lengthUnitsLst = [];
+let categoryLst = [];
 
-defaultUnitSetting();
-
-let categoryDropdown1 = document.getElementById("category-dropdown-1");
-let categoryDropdown2 = document.getElementById("category-dropdown-2");
-
-let unitTypeDropdown1 = document.getElementById("unit-type-dropdown-1");
-let unitDropdown1 = document.getElementById("unit-dropdown-1");
-unitTypeDropdown1.addEventListener("change", () => genUnitDropdown(unitTypeDropdown1, unitDropdown1));
-
-let unitTypeDropdown2 = document.getElementById("unit-type-dropdown-2");
-let unitDropdown2 = document.getElementById("unit-dropdown-2");
-unitTypeDropdown2.addEventListener("change", () => genUnitDropdown(unitTypeDropdown2, unitDropdown2));
+setUp();
 
 let compareBtn = document.getElementById("compare-button");
-compareBtn.addEventListener("click", () => {
-    let items = document.getElementsByClassName("item");
+compareBtn.addEventListener("click", async () => {
+    let itemArr = document.getElementsByClassName("item");
     
-    // compare function needs to wait for the jsonResponse 1 and 2
-    compareItems(items, saveItems);
+    let itemArrJson = await saveItems(itemArr);
+    let updateditemArr = await getAllItems();
+    
+    clearTable();
+    createTable(updateditemArr);
+
+    await compareItems(itemArrJson);
 
     // getAllUnits();
 });
 
-getAllUnits();
 
 
-// create an item class
-class Item{
-    constructor(id, name, amount, price, unit, brand, store, category) {
-        this.id = id;
-        this.name = name;
-        this.amount = amount;
-        this.price = price;
-        this.unit = unit;
-        this.brand = brand;
-        this.store = store;
-        this.category = category;
-    }
+// load unitType, unit, and the category from the server 
+async function setUp() {
+    await genCategory();
+    await genUnits();
+
+    let itemArr = await getAllItems();
+    createTable(itemArr);
 }
 
 /**
@@ -68,7 +56,10 @@ async function genUnitLists() {
     }
 }
 
-async function genCategory() {
+/**
+ * Generates list of categories
+ */
+async function genCategoryList() {
     let response = await fetch("http://localhost:8081/api/value-comparer/categories");
     let responseJson = await response.json();
 
@@ -81,42 +72,62 @@ async function genCategory() {
     }
 }
 
+async function genCategory() {
+    await genCategoryList();
 
-/**
- * Wait to generate UnitLists and generates first unit Type dropdown and its corresponding unit dropdown (default = "mass")
- */
-async function defaultUnitSetting() {
-    const result1 = await genUnitLists();
-    const result2 = await genCategory();
-
+    let categoryDropdown1 = document.getElementById("category-dropdown-1");
+    let categoryDropdown2 = document.getElementById("category-dropdown-2");
     genCategoryDropdown(categoryDropdown1);
     genCategoryDropdown(categoryDropdown2);
+}
+
+async function genUnits() {
+    await genUnitLists();
+
+    let unitTypeDropdown1 = document.getElementById("unit-type-dropdown-1");
+    let unitDropdown1 = document.getElementById("unit-dropdown-1");
+
+    let unitTypeDropdown2 = document.getElementById("unit-type-dropdown-2");
+    let unitDropdown2 = document.getElementById("unit-dropdown-2");
+
     genUnitDropdown(unitTypeDropdown1, unitDropdown1);
     genUnitDropdown(unitTypeDropdown2, unitDropdown2);
+
+    unitTypeDropdown1.addEventListener("change", () => genUnitDropdown(unitTypeDropdown1, unitDropdown1));
+    unitTypeDropdown2.addEventListener("change", () => genUnitDropdown(unitTypeDropdown2, unitDropdown2));
 }
 
 /**
  * Generates Category dropdown 
  */
-
 function genCategoryDropdown(categoryDropdown) {
     regenerateChildren("option", categoryLst, categoryDropdown);
 }
-
 
 /**
  * Generates Unit Type dropdown and its corresponding unit dropdown
  */
 function genUnitDropdown(unitTypeDropdown, unitDropdown) {
-    //let unitTypeDropdown = document.getElementById("unit-type-dropdown-1");
-    //let unitDropdown = document.getElementById("unit-dropdown-1");
-
     if (unitTypeDropdown.value == "length") {
         regenerateChildren("option", lengthUnitsLst, unitDropdown);
     } else if (unitTypeDropdown.value == "mass") {
         regenerateChildren("option", massUnitsLst, unitDropdown);
     } else if (unitTypeDropdown.value == "volume") {
         regenerateChildren("option", volumeUnitsLst, unitDropdown);
+    }
+}
+
+// create an item class
+class Item{
+    constructor(id, name, amount, price, unit, brand, store, category) {
+        this.id = id;
+        this.name = name;
+        this.amount = amount;
+        this.price = price;
+        this.unit = unit;
+        this.brand = brand;
+        this.store = store;
+        this.category = category;
     }
 }
 
@@ -142,27 +153,29 @@ function regenerateChildren(elementType, elementsLst, parent) {
     }
 }
 
-async function saveItems(itemDivs) {
-    let jsonData = formatToJson(itemDivs);
+// send item info to the backend api and getting back the reflection of the item with the id
+async function saveItems(itemArr) {
+    let jsonData = itemArrToJson(itemArr);
+
     let response = await fetch("http://localhost:8081/api/value-comparer/new-items", {method: "POST", headers: {
         "Content-Type": "application/json",
       }, body:JSON.stringify(jsonData)});
-    
-    let responseJson = await response.json();
-    return responseJson;
+    let itemArrJson = await response.json();
+
+    return itemArrJson;
 }
 
 /**
  * need to handle both inputs and selects elements in the targetDiv, based on the name and value, converts to the Json obj and return it.
  */
 
-function formatToJson(items) {
+function itemArrToJson(itemArr) {
     let jsonData = [];
 
-    for (let i = 0; i < items.length; i++) {
+    for (let i = 0; i < itemArr.length; i++) {
         let jsonElem = {};
-        let divInputs = items[i].getElementsByTagName('input');
-        let divSelects = items[i].getElementsByTagName('select');
+        let divInputs = itemArr[i].getElementsByTagName('input');
+        let divSelects = itemArr[i].getElementsByTagName('select');
 
         for (let i = 0; i < divInputs.length; i++) {
             // change the value type from string to float if the fileds are amount and price.
@@ -185,23 +198,29 @@ function formatToJson(items) {
     return jsonData;
 }
 
-async function compareItems(items, saveItems) {
-    let jsonItem = await saveItems(items);
+async function compareItems(itemArrJson) {
+    // let itemArrJson = await saveItems(itemArr);
+    let idStr = itemArrJsonToIdStr(itemArrJson);
 
-    let itemIdList = "";
-    for (i = 0; i < jsonItem.length; i++) {
-        itemIdList += jsonItem[i].id + ",";
-    }
-
-    itemIdList = itemIdList.substring(0, itemIdList.length - 1);
-
-    let response = await fetch(`http://localhost:8081/api/value-comparer/item-comparison/${itemIdList}`)
+    let response = await fetch(`http://localhost:8081/api/value-comparer/item-comparison/${idStr}`)
     let responseJson = await response.json();
 
-    betterItem(responseJson);
+    updateCompareResult(responseJson);
 }
 
-function betterItem(responseJson) {
+function itemArrJsonToIdStr(itemArrJson) {
+    let idStr = "";
+
+    for (i = 0; i < itemArrJson.length; i++) {
+        idStr += itemArrJson[i].id + ",";
+    }
+
+    idStr = idStr.substring(0, idStr.length - 1);
+
+    return idStr;
+}
+
+function updateCompareResult(responseJson) {
     let result = document.getElementById("compare-result");
     let betterItem = responseJson.betterValue;
     let comparedItemsList = responseJson.comparedItemsList;
@@ -219,13 +238,13 @@ function betterItem(responseJson) {
     // format the item names
     compareItemNames = compareItemNames.trim().substring(0, compareItemNames.length-2);
 
-    let elem = genElement("p", `${betterItem.name} is ${valueComparison.toFixed(3)} times cheaper than the average of the other items(${compareItemNames})`);
+    let elem = genElement("p", `${betterItem.name} is ${valueComparison.toFixed(3) * 100}% cheaper than the average of the other items(${compareItemNames})`);
 
     result.replaceChildren();
     result.appendChild(elem);
 }
 
-async function getAllUnits(clearTable) {
+async function getAllItems(clearTable) {
     let response = await fetch("http://localhost:8081/api/value-comparer/all-items");
     let responseJson = await response.json();
     
@@ -235,7 +254,8 @@ async function getAllUnits(clearTable) {
     for (let i = 0; i < responseJson.length; i++) {
         itemArr.push(responseJson[i]);
     }
-    createTable(itemArr);
+
+    return itemArr;
 }
 
 function createTableHeaderRow() {

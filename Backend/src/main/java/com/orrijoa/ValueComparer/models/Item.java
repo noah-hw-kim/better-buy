@@ -30,24 +30,24 @@ public class Item implements Comparable<Item> {
 //         3) length: base unit - inches (in)
     private double pricePerBaseAmount;
 
-    public Item(String unit, double price, double amount) {
-        this.unit = unit;
-        this.price = price;
-        this.amount = amount;
-        pricePerBaseAmount = calculatePricePerBaseAmount();
-    }
-
-    public Item(String unit, double price, double amount, String name, String brand, String store, String category, String subCategory) {
-        this.unit = unit;
-        this.price = price;
-        this.amount = amount;
-        this.name = name;
-        this.brand = brand;
-        this.store = store;
-        this.category = category;
-        this.subCategory = subCategory;
-        pricePerBaseAmount = calculatePricePerBaseAmount();
-    }
+//    public Item(String unit, double price, double amount) {
+//        this.unit = unit;
+//        this.price = price;
+//        this.amount = amount;
+//        pricePerBaseAmount = calculatePricePerBaseAmount();
+//    }
+//
+//    public Item(String unit, double price, double amount, String name, String brand, String store, String category, String subCategory) {
+//        this.unit = unit;
+//        this.price = price;
+//        this.amount = amount;
+//        this.name = name;
+//        this.brand = brand;
+//        this.store = store;
+//        this.category = category;
+//        this.subCategory = subCategory;
+//        pricePerBaseAmount = calculatePricePerBaseAmount();
+//    }
 
     private double calculatePricePerBaseAmount() {
         // amount that converted to the base unit

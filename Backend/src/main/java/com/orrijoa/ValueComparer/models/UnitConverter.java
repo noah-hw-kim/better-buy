@@ -4,7 +4,6 @@ import io.github.qudtlib.Qudt;
 import io.github.qudtlib.model.Unit;
 import lombok.Data;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.*;
