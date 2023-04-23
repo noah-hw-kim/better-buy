@@ -30,6 +30,7 @@ public class ValueComparerController {
         response.sendRedirect("/swagger-ui/");
     }
 
+//    add new items
     @PostMapping("/new-items")
     public ResponseEntity<List<Item>> createItems(@RequestBody List<Item> items) {
         return new ResponseEntity<List<Item>>(valueComparerService.createItems(items), HttpStatus.CREATED);
@@ -86,8 +87,6 @@ public class ValueComparerController {
         return new ResponseEntity<Comparison>(valueComparerService.getCheaper(unit1, price1, amount1, unit2, price2, amount2, unit3, price3, amount3, unit4, price4, amount4, unit5, price5, amount5), HttpStatus.OK);
     }
 
-     */
-
 //    @GetMapping("/unit1/{unit1}/price1/{price1}/amount1/{amount1}/unit2/{unit2}/price2/{price2}/amount2/{amount2}")
 //    public ResponseEntity<Item> getCheaper(@PathVariable String unit1, @PathVariable double price1, @PathVariable double amount1, @PathVariable String unit2, @PathVariable double price2, @PathVariable double amount2) {
 //        return new ResponseEntity<Item>(valueComparerService.getCheaper(unit1, price1, amount1, unit2, price2, amount2), HttpStatus.OK);
@@ -98,13 +97,10 @@ public class ValueComparerController {
 //        return new ResponseEntity<List<Item>>(valueComparerService.getItemsByCategoryAndSubCategory(category, subCategory), HttpStatus.OK);
 //    }
 
-    /*
     @PostMapping("/create/unit/{unit}/name/{name}/price/{price}/amount/{amount}/brand/{brand}/store/{store}/category/{category}/sub-category/{subCategory}")
     public ResponseEntity<Item> createItem(@PathVariable String unit, @PathVariable double price, @PathVariable double amount, @PathVariable String name, @PathVariable String brand, @PathVariable String store, @PathVariable String category, @PathVariable String subCategory) {
         return new ResponseEntity<Item>(valueComparerService.createItem(unit, price, amount, name, brand, store, category, subCategory), HttpStatus.CREATED);
     }
-
-
 
     @PostMapping("/new-item")
     public ResponseEntity<Item> createItem(@RequestBody Item item) {

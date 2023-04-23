@@ -19,10 +19,10 @@ unitTypeDropdown2.addEventListener("change", () => genUnitDropdown(unitTypeDropd
 
 let compareBtn = document.getElementById("compare-button");
 compareBtn.addEventListener("click", () => {
-    let itemDivs = document.getElementsByTagName('div')
+    let items = document.getElementsByClassName("item");
     
     // compare function needs to wait for the jsonResponse 1 and 2
-    compareItems(itemDivs, saveItems);
+    compareItems(items, saveItems);
 
     // getAllUnits();
 });
@@ -142,8 +142,8 @@ function regenerateChildren(elementType, elementsLst, parent) {
     }
 }
 
-async function saveItems(targetDiv) {
-    let jsonData = formatToJson(targetDiv);
+async function saveItems(itemDivs) {
+    let jsonData = formatToJson(itemDivs);
     let response = await fetch("http://localhost:8081/api/value-comparer/new-items", {method: "POST", headers: {
         "Content-Type": "application/json",
       }, body:JSON.stringify(jsonData)});
@@ -156,13 +156,13 @@ async function saveItems(targetDiv) {
  * need to handle both inputs and selects elements in the targetDiv, based on the name and value, converts to the Json obj and return it.
  */
 
-function formatToJson(targetDiv) {
+function formatToJson(items) {
     let jsonData = [];
 
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < items.length; i++) {
         let jsonElem = {};
-        let divInputs = targetDiv[i].getElementsByTagName('input');
-        let divSelects = targetDiv[i].getElementsByTagName('select');
+        let divInputs = items[i].getElementsByTagName('input');
+        let divSelects = items[i].getElementsByTagName('select');
 
         for (let i = 0; i < divInputs.length; i++) {
             // change the value type from string to float if the fileds are amount and price.
@@ -185,8 +185,8 @@ function formatToJson(targetDiv) {
     return jsonData;
 }
 
-async function compareItems(itemDivs, saveItems) {
-    let jsonItem = await saveItems(itemDivs);
+async function compareItems(items, saveItems) {
+    let jsonItem = await saveItems(items);
 
     let itemIdList = "";
     for (i = 0; i < jsonItem.length; i++) {
@@ -221,6 +221,7 @@ function betterItem(responseJson) {
 
     let elem = genElement("p", `${betterItem.name} is ${valueComparison.toFixed(3)} times cheaper than the average of the other items(${compareItemNames})`);
 
+    result.replaceChildren();
     result.appendChild(elem);
 }
 
