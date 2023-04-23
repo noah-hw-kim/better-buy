@@ -21,13 +21,8 @@ let compareBtn = document.getElementById("compare-button");
 compareBtn.addEventListener("click", () => {
     let itemDivs = document.getElementsByTagName('div')
     
-    // let jsonResponse1 = saveItem(item1Div);
-    // let jsonResponse2 = saveItem(item2Div);
-
     // compare function needs to wait for the jsonResponse 1 and 2
-    compareTwoItems(itemDivs, saveItems);
-
-
+    compareItems(itemDivs, saveItems);
 
     // getAllUnits();
 });
@@ -71,30 +66,6 @@ async function genUnitLists() {
             lengthUnitsLst.push(...jsonUnitList[currKey]);
         }
     }
-    // let jsonVals = Object.values(responseJson);
-
-    // for (let i=0;i<jsonVals.length;i++) {
-    //     let jsonValKeys = Object.keys(jsonVals[i]);
-    //     jsonList = jsonValKeys;
-    // }
-
-    // let jsonKeys = Object.keys(responseJson);   // returns array of keys
-    // console.log(jsonKeys);
-
-    // for (let i=0; i< jsonKeys.length; i++) {    // for each item in jsonKeys
-    //     let currKey = jsonKeys[i];              // get the key
-
-    //     if (currKey.includes("mass")) {
-    //         unitTypeLst.push("mass");
-    //         massUnitsLst.push(...responseJson[currKey]);
-    //     } else if (currKey.includes("volume")) {
-    //         unitTypeLst.push("volume");
-    //         volumeUnitsLst.push(...responseJson[currKey]);
-    //     } else if (currKey.includes("length")) {
-    //         unitTypeLst.push("length");
-    //         lengthUnitsLst.push(...responseJson[currKey]);
-    //     }
-    // }
 }
 
 async function genCategory() {
@@ -171,18 +142,13 @@ function regenerateChildren(elementType, elementsLst, parent) {
     }
 }
 
-/**
- * post json data to the database by sending data to the backend API 
- */
-
-async function saveItem(targetDiv) {
+async function saveItems(targetDiv) {
     let jsonData = formatToJson(targetDiv);
-
-    let response = await fetch("http://localhost:8081/api/value-comparer/new-item", {method: "POST", headers: {
+    let response = await fetch("http://localhost:8081/api/value-comparer/new-items", {method: "POST", headers: {
         "Content-Type": "application/json",
       }, body:JSON.stringify(jsonData)});
+    
     let responseJson = await response.json();
-
     return responseJson;
 }
 
@@ -191,82 +157,45 @@ async function saveItem(targetDiv) {
  */
 
 function formatToJson(targetDiv) {
-    let jsonData = {};
-    let divInputs = targetDiv.getElementsByTagName('input');
-    let divSelects = targetDiv.getElementsByTagName('select');
-
-    for (let i = 0; i < divInputs.length; i++) {
-        // change the value type from string to float if the fileds are amount and price.
-        if (divInputs[i].name.includes("amount") || divInputs[i].name.includes("price")) {
-            jsonData[divInputs[i].name] = parseFloat(divInputs[i].value);
-        }
-        else {
-            jsonData[divInputs[i].name] = divInputs[i].value;
-        }
-    }
-
-    for (let i = 0; i < divSelects.length; i++) {
-        if (divSelects[i].name != "unit-type") {
-            jsonData[divSelects[i].name] = divSelects[i].value;
-        }
-    }
-    return jsonData;
-}
-
-async function saveItems(targetDiv) {
-    let jsonData = formatToJsonTwoItems(targetDiv);
-    let response = await fetch("http://localhost:8081/api/value-comparer/new-items", {method: "POST", headers: {
-        "Content-Type": "application/json",
-      }, body:JSON.stringify(jsonData)});
-    let responseJson = await response.json();
-
-    return responseJson;
-}
-
-/**
- * need to handle both inputs and selects elements in the targetDiv, based on the name and value, converts to the Json obj and return it.
- */
-
-function formatToJsonTwoItems(targetDiv) {
-    let jsonList = [];
+    let jsonData = [];
 
     for (let i = 0; i < 2; i++) {
-        let jsonData = {};
+        let jsonElem = {};
         let divInputs = targetDiv[i].getElementsByTagName('input');
         let divSelects = targetDiv[i].getElementsByTagName('select');
 
         for (let i = 0; i < divInputs.length; i++) {
             // change the value type from string to float if the fileds are amount and price.
             if (divInputs[i].name.includes("amount") || divInputs[i].name.includes("price")) {
-                jsonData[divInputs[i].name] = parseFloat(divInputs[i].value);
+                jsonElem[divInputs[i].name] = parseFloat(divInputs[i].value);
             }
             else {
-                jsonData[divInputs[i].name] = divInputs[i].value;
+                jsonElem[divInputs[i].name] = divInputs[i].value;
             }
         }
 
         for (let i = 0; i < divSelects.length; i++) {
             if (divSelects[i].name != "unit-type") {
-                jsonData[divSelects[i].name] = divSelects[i].value;
+                jsonElem[divSelects[i].name] = divSelects[i].value;
             }
         }
 
-        jsonList.push(jsonData);
+        jsonData.push(jsonElem);
     }
-    
-    return jsonList;
+    return jsonData;
 }
 
-async function compareTwoItems(itemDivs, saveItems) {
+async function compareItems(itemDivs, saveItems) {
     let jsonItem = await saveItems(itemDivs);
 
-    console.log(jsonItem);
+    let itemIdList = "";
+    for (i = 0; i < jsonItem.length; i++) {
+        itemIdList += jsonItem[i].id + ",";
+    }
 
-    let item1Id = jsonItem[0].id;
-    let item2Id = jsonItem[1].id;
-    
-    // hard code to compare 2 items
-    let response = await fetch(`http://localhost:8081/api/value-comparer/item1id/${item1Id}/item2id/${item2Id}`);
+    itemIdList = itemIdList.substring(0, itemIdList.length - 1);
+
+    let response = await fetch(`http://localhost:8081/api/value-comparer/item-comparison/${itemIdList}`)
     let responseJson = await response.json();
 
     betterItem(responseJson);
@@ -275,7 +204,7 @@ async function compareTwoItems(itemDivs, saveItems) {
 function betterItem(responseJson) {
     let result = document.getElementById("compare-result");
     let betterItem = responseJson.betterValue;
-    let comparedItemsList = responseJson.comparedItems;
+    let comparedItemsList = responseJson.comparedItemsList;
     // how much the better item is cheaper than the average
     let valueComparison = responseJson.valueComparison;
     let compareItemNames = "";
@@ -392,5 +321,7 @@ function clearTable() {
     let itemTable = document.getElementById("item-table");
     itemTable.replaceChildren();
 }
+
+
 
 

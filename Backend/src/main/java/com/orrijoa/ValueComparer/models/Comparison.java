@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,6 +15,7 @@ public class Comparison {
     private Item betterValue;
     // private Item worseValueItem;
     private Item[] comparedItems;
+    private List<Item> comparedItemsList;
 //    this represents how much the betterValueItem is cheaper than the other item average
 //    for example, item1's pricePerBaseAmount ~= 56.7 and item2's pricePerBaseAmount ~= 85
 //    item1 is approximately 0.33 times / 33% cheaper than item2
@@ -48,4 +52,34 @@ public class Comparison {
             throw new RuntimeException(e);
         }
     }
+
+    public Comparison(List<Item> itemList) {
+        comparedItemsList = new ArrayList<>(itemList);
+        double sumOfPricePerBaseAmount = 0;
+        double avgOfPricePerBaseAmount;
+
+        try {
+//            Determine the most valuable item by calculating the price per unit (price divided by amount) for each item and comparing them.
+            for (int i = 0; i < comparedItemsList.size(); i++) {
+                sumOfPricePerBaseAmount += comparedItemsList.get(i).getPricePerBaseAmount();
+                if (i == 0) {
+                    betterValue = comparedItemsList.get(i);
+                }
+                else {
+                    if (betterValue.compareTo(comparedItemsList.get(i)) > 0) {
+                        betterValue = comparedItemsList.get(i);
+                    }
+                }
+            }
+//            remove the better value item and calculate the average
+            sumOfPricePerBaseAmount -= betterValue.getPricePerBaseAmount();
+            avgOfPricePerBaseAmount = sumOfPricePerBaseAmount / (comparedItemsList.size() - 1);
+
+            valueComparison = 1 - (betterValue.getPricePerBaseAmount() / avgOfPricePerBaseAmount);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

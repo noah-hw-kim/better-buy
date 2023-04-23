@@ -19,47 +19,6 @@ public class ValueComparerService {
     @Autowired
     private Categories categories;
 
-    /*
-    public Item createItem(String unit, double price, double amount, String name, String brand, String store, String category, String subCategory) {
-        Item item = Item.builder()
-                .unit(unit)
-                .price(price)
-                .amount(amount)
-                .name(name)
-                .brand(brand)
-                .store(store)
-                .category(category)
-                .subCategory(subCategory)
-                .build();
-
-
-
-        return itemRepo.save(item);
-    }
-
-     */
-
-
-    public Item createItem(Item item) {
-//        long idIndex = createNewId();
-
-        // use item's hashcode for the id to prevent the duplicates
-        Item saveItem = Item.builder()
-                .id(item.hashCode())
-                .unit(item.getUnit())
-                .price(item.getPrice())
-                .amount(item.getAmount())
-                .name(item.getName())
-                .brand(item.getBrand())
-                .store(item.getStore())
-                .category(item.getCategory())
-                .subCategory(item.getSubCategory())
-                .pricePerBaseAmount(calculatePricePerBaseAmount(item))
-                .build();
-
-        return itemRepo.save(saveItem);
-    }
-
     public List<Item> createItems(List<Item> item) {
         // use item's hashcode for the id to prevent the duplicates
         List<Item> formatItem = new ArrayList<>();
@@ -82,23 +41,6 @@ public class ValueComparerService {
         }
         return itemRepo.saveAll(formatItem);
     }
-
-    /*
-    private long createNewId() {
-        long idIndex;
-
-        // if the database is empty then return the item index 1 to start
-        if (itemRepo.count() == 0) {
-            idIndex = 1;
-        } else {
-            // if the database is not empty then return the highest Id + 1 to start new index
-            idIndex = itemRepo.findTop1ByOrderByIdDesc().getId() + 1;
-        }
-
-        return idIndex;
-    }
-
-     */
 
     private double calculatePricePerBaseAmount(Item item) {
         // amount that converted to the base unit
@@ -158,6 +100,15 @@ public class ValueComparerService {
 //        Item item2 = new Item(unit2, price2, amount2);
 //
 //        return new Comparison(item1, item2);
+    }
+
+    // create item 1 and item 2 objects with inputs and compare the value and return the cheaper item
+    public Comparison getCheaper(String[] itemIdList) {
+        List<Item> itemList = new ArrayList<>();
+        for (int i = 0; i < itemIdList.length; i++) {
+            itemList.add(itemRepo.findItemById(Long.parseLong(itemIdList[i])));
+        }
+        return new Comparison(itemList);
     }
 
     // create item 1 and item 2 objects with inputs and compare the value and return the cheaper item
