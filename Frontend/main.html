@@ -18,7 +18,7 @@
         <div id="compare-section">
             <form id="compare-form">
                 <div class="item" id="item1">
-                    <h2>Item 1</h2>
+                    <h2 name="item-index">Item 1</h2>
                     <label>Name</label>
                     <input name="name" required><br>
                     <label>Amount</label>
@@ -43,7 +43,7 @@
                     </select><br>
                 </div>
                 <div class="item" id="item2">
-                    <h2>Item 2</h2>
+                    <h2 name="item-index">Item 2</h2>
                     <label>Name</label>
                     <input name="name" required><br>
                     <label>Amount</label>
@@ -67,9 +67,12 @@
                     <select id="category-dropdown-2" name="category">
                     </select><br>
                 </div>
-                <button type="button" id="compare-button">Compare</button>
+                
         </div>
         </form>
+        <button type="button" id="add-item-button">+</button>
+        <button type="button" id="subtract-item-button" style="visibility: hidden;">-</button>
+        <button type="button" id="compare-button">Compare</button>
         <br>
 
         <div id="compare-result">

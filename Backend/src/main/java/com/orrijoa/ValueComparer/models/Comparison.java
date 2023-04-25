@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 // this class will return the result of the value comparison
 public class Comparison {
-    private Item betterValue;
+    private Item betterItem;
     private List<Item> comparedItemsList;
 //    this represents how much the betterValueItem is cheaper than the other item average
 //    for example, item1's pricePerBaseAmount ~= 56.7 and item2's pricePerBaseAmount ~= 85
@@ -29,19 +29,19 @@ public class Comparison {
             for (int i = 0; i < comparedItemsList.size(); i++) {
                 sumOfPricePerBaseAmount += comparedItemsList.get(i).getPricePerBaseAmount();
                 if (i == 0) {
-                    betterValue = comparedItemsList.get(i);
+                    betterItem = comparedItemsList.get(i);
                 }
                 else {
-                    if (betterValue.compareTo(comparedItemsList.get(i)) > 0) {
-                        betterValue = comparedItemsList.get(i);
+                    if (betterItem.compareTo(comparedItemsList.get(i)) > 0) {
+                        betterItem = comparedItemsList.get(i);
                     }
                 }
             }
 //            remove the better value item and calculate the average
-            sumOfPricePerBaseAmount -= betterValue.getPricePerBaseAmount();
+            sumOfPricePerBaseAmount -= betterItem.getPricePerBaseAmount();
             avgOfPricePerBaseAmount = sumOfPricePerBaseAmount / (comparedItemsList.size() - 1);
 
-            valueComparison = 1 - (betterValue.getPricePerBaseAmount() / avgOfPricePerBaseAmount);
+            valueComparison = 1 - (betterItem.getPricePerBaseAmount() / avgOfPricePerBaseAmount);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

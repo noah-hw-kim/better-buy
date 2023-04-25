@@ -1,3 +1,6 @@
+// indicate current number of items
+let itemCount = 2;
+
 let unitTypeLst = [];
 let massUnitsLst = [];
 let volumeUnitsLst = [];
@@ -9,24 +12,118 @@ setUp();
 let compareBtn = document.getElementById("compare-button");
 compareBtn.addEventListener("click", async () => {
     let itemArr = document.getElementsByClassName("item");
-    
+
     let itemArrJson = await saveItems(itemArr);
-    let updateditemArr = await getAllItems();
-    
+    let updatedItemArr = await getAllItems();
+
     clearTable();
-    createTable(updateditemArr);
+    createTable(updatedItemArr);
 
-    await compareItems(itemArrJson);
+    let comparisionResult = await compareItems(itemArrJson);
 
-    // getAllUnits();
+    updateCompareResult(comparisionResult);
 });
 
+// let itemTable = document.getElementById("item-table");
 
+// let tableHeader = createTableHeader();
+// itemTable.appendChild(tableHeader);
+
+let addItemBtn = document.getElementById("add-item-button");
+let removeItemBtn = document.getElementById("subtract-item-button");
+
+addItemBtn.addEventListener("click", () => {
+    itemCount++;
+
+    addNewItem();
+
+    if (itemCount >= 3) {
+        removeItemBtn.style.visibility = "visible";
+    }
+    if (itemCount >= 5) {
+        addItemBtn.style.visibility = "hidden";
+    }
+})
+
+removeItemBtn.addEventListener("click", () => {
+    removeItem();
+
+    itemCount--;
+
+    if (itemCount < 3) {
+        removeItemBtn.style.visibility = "hidden";
+    }
+    if (itemCount < 5) {
+        addItemBtn.style.visibility = "visible";
+    }
+})
+
+
+
+function addNewItem() {
+    let item1Div = document.getElementById("item1");
+    let newItemDiv = item1Div.cloneNode(true); // true means clone all childNodes and all event handlers
+    newItemDiv.id = `item${itemCount}`;
+
+    let h2AndSelectElem = newItemDiv.querySelectorAll("h2, select");
+    for (i = 0; i < h2AndSelectElem.length; i++) {
+        // change item-index
+        if (h2AndSelectElem[i].getAttribute("name") == "item-index") {
+            h2AndSelectElem[i].innerHTML = `Item${itemCount}`;
+        }
+        // change ids
+        if (h2AndSelectElem[i].getAttribute("name") == "unit-type") {
+            h2AndSelectElem[i].id = `unit-type-dropdown-${itemCount}`;
+        } else if (h2AndSelectElem[i].getAttribute("name") == "unit") {
+            h2AndSelectElem[i].id = `unit-dropdown-${itemCount}`;
+        } else if (h2AndSelectElem[i].getAttribute("name") == "category") {
+            h2AndSelectElem[i].id = `category-dropdown-${itemCount}`
+        }
+    }
+
+    let formElem = document.getElementById("compare-form");
+    formElem.appendChild(newItemDiv);
+
+    let newCategoryDropdown = document.getElementById(`category-dropdown-${itemCount}`);
+    genCategoryDropdown(newCategoryDropdown);
+
+    let newUnitTypeDropdown = document.getElementById(`unit-type-dropdown-${itemCount}`);
+    let newUnitDropdown = document.getElementById(`unit-dropdown-${itemCount}`);
+
+    genUnitDropdown(newUnitTypeDropdown, newUnitDropdown);
+
+    newUnitTypeDropdown.addEventListener("change", () => genUnitDropdown(newUnitTypeDropdown, newUnitDropdown));
+}
+
+function removeItem() {
+    let formElem = document.getElementById("compare-form");
+    let targetItem = document.getElementById(`item${itemCount}`);
+
+    formElem.removeChild(targetItem);
+}
 
 // load unitType, unit, and the category from the server 
 async function setUp() {
-    await genCategory();
-    await genUnits();
+    await genCategoryList();
+
+    let categoryDropdown1 = document.getElementById("category-dropdown-1");
+    let categoryDropdown2 = document.getElementById("category-dropdown-2");
+    genCategoryDropdown(categoryDropdown1);
+    genCategoryDropdown(categoryDropdown2);
+
+    await genUnitLists();
+
+    let unitTypeDropdown1 = document.getElementById("unit-type-dropdown-1");
+    let unitDropdown1 = document.getElementById("unit-dropdown-1");
+
+    let unitTypeDropdown2 = document.getElementById("unit-type-dropdown-2");
+    let unitDropdown2 = document.getElementById("unit-dropdown-2");
+
+    genUnitDropdown(unitTypeDropdown1, unitDropdown1);
+    genUnitDropdown(unitTypeDropdown2, unitDropdown2);
+
+    unitTypeDropdown1.addEventListener("change", () => genUnitDropdown(unitTypeDropdown1, unitDropdown1));
+    unitTypeDropdown2.addEventListener("change", () => genUnitDropdown(unitTypeDropdown2, unitDropdown2));
 
     let itemArr = await getAllItems();
     createTable(itemArr);
@@ -72,31 +169,6 @@ async function genCategoryList() {
     }
 }
 
-async function genCategory() {
-    await genCategoryList();
-
-    let categoryDropdown1 = document.getElementById("category-dropdown-1");
-    let categoryDropdown2 = document.getElementById("category-dropdown-2");
-    genCategoryDropdown(categoryDropdown1);
-    genCategoryDropdown(categoryDropdown2);
-}
-
-async function genUnits() {
-    await genUnitLists();
-
-    let unitTypeDropdown1 = document.getElementById("unit-type-dropdown-1");
-    let unitDropdown1 = document.getElementById("unit-dropdown-1");
-
-    let unitTypeDropdown2 = document.getElementById("unit-type-dropdown-2");
-    let unitDropdown2 = document.getElementById("unit-dropdown-2");
-
-    genUnitDropdown(unitTypeDropdown1, unitDropdown1);
-    genUnitDropdown(unitTypeDropdown2, unitDropdown2);
-
-    unitTypeDropdown1.addEventListener("change", () => genUnitDropdown(unitTypeDropdown1, unitDropdown1));
-    unitTypeDropdown2.addEventListener("change", () => genUnitDropdown(unitTypeDropdown2, unitDropdown2));
-}
-
 /**
  * Generates Category dropdown 
  */
@@ -118,7 +190,7 @@ function genUnitDropdown(unitTypeDropdown, unitDropdown) {
 }
 
 // create an item class
-class Item{
+class Item {
     constructor(id, name, amount, price, unit, brand, store, category) {
         this.id = id;
         this.name = name;
@@ -157,9 +229,11 @@ function regenerateChildren(elementType, elementsLst, parent) {
 async function saveItems(itemArr) {
     let jsonData = itemArrToJson(itemArr);
 
-    let response = await fetch("http://localhost:8081/api/value-comparer/new-items", {method: "POST", headers: {
-        "Content-Type": "application/json",
-      }, body:JSON.stringify(jsonData)});
+    let response = await fetch("http://localhost:8081/api/value-comparer/new-items", {
+        method: "POST", headers: {
+            "Content-Type": "application/json",
+        }, body: JSON.stringify(jsonData)
+    });
     let itemArrJson = await response.json();
 
     return itemArrJson;
@@ -203,9 +277,9 @@ async function compareItems(itemArrJson) {
     let idStr = itemArrJsonToIdStr(itemArrJson);
 
     let response = await fetch(`http://localhost:8081/api/value-comparer/item-comparison/${idStr}`)
-    let responseJson = await response.json();
+    let comparisionResult = await response.json();
 
-    updateCompareResult(responseJson);
+    return comparisionResult;
 }
 
 function itemArrJsonToIdStr(itemArrJson) {
@@ -222,32 +296,35 @@ function itemArrJsonToIdStr(itemArrJson) {
 
 function updateCompareResult(responseJson) {
     let result = document.getElementById("compare-result");
-    let betterItem = responseJson.betterValue;
+    // how to change the hardCode to get the betterItem, comparedItemsList, and valueComparision
+    let betterItem = responseJson.betterItem;
     let comparedItemsList = responseJson.comparedItemsList;
-    // how much the better item is cheaper than the average
+    // valueComparison shows how much the better item is cheaper than the average
     let valueComparison = responseJson.valueComparison;
-    let compareItemNames = "";
+
+    let comparedItemsStr = "";
 
     for (let i = 0; i < comparedItemsList.length; i++) {
         // exclude the better item from the compared Item List and format it
         if (comparedItemsList[i].name != betterItem.name) {
-            compareItemNames += comparedItemsList[i].name + ", ";
+            comparedItemsStr += comparedItemsList[i].name + ", ";
         }
     }
 
     // format the item names
-    compareItemNames = compareItemNames.trim().substring(0, compareItemNames.length-2);
-
-    let elem = genElement("p", `${betterItem.name} is ${valueComparison.toFixed(3) * 100}% cheaper than the average of the other items(${compareItemNames})`);
+    comparedItemsStr = comparedItemsStr.substring(0, comparedItemsStr.length - 2);
+    let compareResultStr = genElement("p", `${betterItem.name} is around ${Math.floor(valueComparison*100)}% cheaper than the average of the other items(${comparedItemsStr})`);
 
     result.replaceChildren();
-    result.appendChild(elem);
+    result.appendChild(compareResultStr);
 }
 
-async function getAllItems(clearTable) {
+
+
+async function getAllItems() {
     let response = await fetch("http://localhost:8081/api/value-comparer/all-items");
     let responseJson = await response.json();
-    
+
     // push item objs to the itemArray to easily generate the table
     let itemArr = [];
 
@@ -258,7 +335,7 @@ async function getAllItems(clearTable) {
     return itemArr;
 }
 
-function createTableHeaderRow() {
+function createTableHeader() {
     // create table row for the header
     let tr = document.createElement("tr");
 
@@ -266,72 +343,74 @@ function createTableHeaderRow() {
     let thId = genElement("th", "id");
     let thName = genElement("th", "name");
     let thAmount = genElement("th", "amount");
-    let thUnit = genElement("th", "unit");
     let thPrice = genElement("th", "price");
+    let thUnit = genElement("th", "unit");
     let thBrand = genElement("th", "brand");
     let thStore = genElement("th", "store");
     let thCategory = genElement("th", "category");
-    let thPricePerBaseAmount = genElement("th", "$ per base unit (oz/in)");
+    let thPricePerBaseAmount = genElement("th", "unit price");
 
     tr.appendChild(thId);
     tr.appendChild(thName);
     tr.appendChild(thAmount);
-    tr.appendChild(thUnit);
     tr.appendChild(thPrice);
+    tr.appendChild(thUnit);
     tr.appendChild(thBrand);
     tr.appendChild(thStore);
     tr.appendChild(thCategory);
     tr.appendChild(thPricePerBaseAmount);
 
+    tr.id = "item-table-header";
     return tr;
 }
 
-function createTableDataRows(itemArr) {
+function createTableBody(itemArr) {
     let trArr = [];
 
-    for (let i = 0; i < itemArr.length; i++) {
-        let tr = document.createElement("tr");
+    if (itemArr.length != 0) {
+        for (let i = 0; i < itemArr.length; i++) {
+            let tr = document.createElement("tr");
 
-        let tdId = genElement("td", itemArr[i].id);
-        let tdName = genElement("td", itemArr[i].name);
-        let tdAmount = genElement("td", itemArr[i].amount);
-        let tdUnit = genElement("td", itemArr[i].unit);
-        let tdPrice = genElement("td", itemArr[i].price);
-        let tdBrand = genElement("td", itemArr[i].brand);
-        let tdStore = genElement("td", itemArr[i].store);
-        let tdCategory = genElement("td", itemArr[i].category);
-        let tdPricePerBaseAmount;
+            let tdId = genElement("td", itemArr[i].id);
+            let tdName = genElement("td", itemArr[i].name);
+            let tdAmount = genElement("td", itemArr[i].amount);
+            let tdPrice = genElement("td", `$${itemArr[i].price}`);
+            let tdUnit = genElement("td", itemArr[i].unit);
+            let tdBrand = genElement("td", itemArr[i].brand);
+            let tdStore = genElement("td", itemArr[i].store);
+            let tdCategory = genElement("td", itemArr[i].category);
+            let tdPricePerBaseAmount;
 
-        // check if the item's base unit is mass/volume/length
-        if (massUnitsLst.includes(itemArr[i].unit) || volumeUnitsLst.includes(itemArr[i].unit)) {
-            tdPricePerBaseAmount = genElement("td", `$${itemArr[i].pricePerBaseAmount.toFixed(3)} / oz`);
-        } else if (lengthUnitsLst.includes(itemArr[i].unit)) {
-            tdPricePerBaseAmount = genElement("td", `$${itemArr[i].pricePerBaseAmount.toFixed(3)} / in`);
+            // check if the item's base unit is mass/volume/length
+            if (massUnitsLst.includes(itemArr[i].unit) || volumeUnitsLst.includes(itemArr[i].unit)) {
+                tdPricePerBaseAmount = genElement("td", `$${itemArr[i].pricePerBaseAmount.toFixed(3)} / oz`);
+            } else if (lengthUnitsLst.includes(itemArr[i].unit)) {
+                tdPricePerBaseAmount = genElement("td", `$${itemArr[i].pricePerBaseAmount.toFixed(3)} / in`);
+            }
+
+            tr.appendChild(tdId);
+            tr.appendChild(tdName);
+            tr.appendChild(tdAmount);
+            tr.appendChild(tdPrice);
+            tr.appendChild(tdUnit);
+            tr.appendChild(tdBrand);
+            tr.appendChild(tdStore);
+            tr.appendChild(tdCategory);
+            tr.appendChild(tdPricePerBaseAmount);
+
+            trArr.push(tr);
         }
-
-        tr.appendChild(tdId);
-        tr.appendChild(tdName);
-        tr.appendChild(tdAmount);
-        tr.appendChild(tdUnit);
-        tr.appendChild(tdPrice);
-        tr.appendChild(tdBrand);
-        tr.appendChild(tdStore);
-        tr.appendChild(tdCategory);
-        tr.appendChild(tdPricePerBaseAmount);
-
-        trArr.push(tr);
     }
-
     return trArr;
 }
 
 function createTable(itemArr) {
     let itemTable = document.getElementById("item-table");
 
-    let tableHeaderRow = createTableHeaderRow();
-    itemTable.appendChild(tableHeaderRow);
+    let tableHeader = createTableHeader();
+    itemTable.appendChild(tableHeader);
 
-    let tableDataRowArr = createTableDataRows(itemArr);
+    let tableDataRowArr = createTableBody(itemArr);
 
     for (let i = 0; i < tableDataRowArr.length; i++) {
         itemTable.appendChild(tableDataRowArr[i]);
@@ -340,6 +419,10 @@ function createTable(itemArr) {
 
 function clearTable() {
     let itemTable = document.getElementById("item-table");
+    // while (itemTable.rows.length > 0) {
+    //     itemTable.deleteRow(0);
+    // }
+
     itemTable.replaceChildren();
 }
 
