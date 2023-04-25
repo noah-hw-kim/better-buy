@@ -1,16 +1,52 @@
 // indicate current number of items
-let itemCount = 2;
-
 let unitTypeLst = [];
 let massUnitsLst = [];
 let volumeUnitsLst = [];
 let lengthUnitsLst = [];
 let categoryLst = [];
 
-setUp();
+let itemCount = 2;
 
-let compareBtn = document.getElementById("compare-button");
-compareBtn.addEventListener("click", async () => {
+setUpListsAndDB();
+setUpBtns();
+
+function setUpBtns() {
+    let compareBtn = document.getElementById("compare-button");
+    compareBtn.addEventListener("click", () => {
+        setUpCompareBtn();
+    });
+
+    let addItemBtn = document.getElementById("add-item-button");
+    let removeItemBtn = document.getElementById("remove-item-button");
+
+    addItemBtn.addEventListener("click", () => {
+        itemCount++;
+    
+        addNewItem();
+
+        if (itemCount >= 3) {
+            removeItemBtn.style.visibility = "visible";
+        }
+        if (itemCount >= 5) {
+            addItemBtn.style.visibility = "hidden";
+        }
+    })
+
+    removeItemBtn.addEventListener("click", () => {
+        removeItem();
+    
+        itemCount--;
+
+        if (itemCount < 3) {
+            removeItemBtn.style.visibility = "hidden";
+        }
+        if (itemCount < 5) {
+            addItemBtn.style.visibility = "visible";
+        }
+    })
+}
+
+async function setUpCompareBtn() {
     let itemArr = document.getElementsByClassName("item");
 
     let itemArrJson = await saveItems(itemArr);
@@ -22,43 +58,7 @@ compareBtn.addEventListener("click", async () => {
     let comparisionResult = await compareItems(itemArrJson);
 
     updateCompareResult(comparisionResult);
-});
-
-// let itemTable = document.getElementById("item-table");
-
-// let tableHeader = createTableHeader();
-// itemTable.appendChild(tableHeader);
-
-let addItemBtn = document.getElementById("add-item-button");
-let removeItemBtn = document.getElementById("subtract-item-button");
-
-addItemBtn.addEventListener("click", () => {
-    itemCount++;
-
-    addNewItem();
-
-    if (itemCount >= 3) {
-        removeItemBtn.style.visibility = "visible";
-    }
-    if (itemCount >= 5) {
-        addItemBtn.style.visibility = "hidden";
-    }
-})
-
-removeItemBtn.addEventListener("click", () => {
-    removeItem();
-
-    itemCount--;
-
-    if (itemCount < 3) {
-        removeItemBtn.style.visibility = "hidden";
-    }
-    if (itemCount < 5) {
-        addItemBtn.style.visibility = "visible";
-    }
-})
-
-
+}
 
 function addNewItem() {
     let item1Div = document.getElementById("item1");
@@ -67,16 +67,18 @@ function addNewItem() {
 
     let h2AndSelectElem = newItemDiv.querySelectorAll("h2, select");
     for (i = 0; i < h2AndSelectElem.length; i++) {
-        // change item-index
-        if (h2AndSelectElem[i].getAttribute("name") == "item-index") {
+        let currName = h2AndSelectElem[i].getAttribute("name");
+        
+        // change item-index innerHTML
+        if (currName == "item-index") {
             h2AndSelectElem[i].innerHTML = `Item${itemCount}`;
-        }
+        } 
         // change ids
-        if (h2AndSelectElem[i].getAttribute("name") == "unit-type") {
+        else if (currName == "unit-type") {
             h2AndSelectElem[i].id = `unit-type-dropdown-${itemCount}`;
-        } else if (h2AndSelectElem[i].getAttribute("name") == "unit") {
+        } else if (currName == "unit") {
             h2AndSelectElem[i].id = `unit-dropdown-${itemCount}`;
-        } else if (h2AndSelectElem[i].getAttribute("name") == "category") {
+        } else if (currName == "category") {
             h2AndSelectElem[i].id = `category-dropdown-${itemCount}`
         }
     }
@@ -89,7 +91,6 @@ function addNewItem() {
 
     let newUnitTypeDropdown = document.getElementById(`unit-type-dropdown-${itemCount}`);
     let newUnitDropdown = document.getElementById(`unit-dropdown-${itemCount}`);
-
     genUnitDropdown(newUnitTypeDropdown, newUnitDropdown);
 
     newUnitTypeDropdown.addEventListener("change", () => genUnitDropdown(newUnitTypeDropdown, newUnitDropdown));
@@ -103,7 +104,7 @@ function removeItem() {
 }
 
 // load unitType, unit, and the category from the server 
-async function setUp() {
+async function setUpListsAndDB() {
     await genCategoryList();
 
     let categoryDropdown1 = document.getElementById("category-dropdown-1");
