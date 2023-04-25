@@ -76,6 +76,13 @@ public class ValueComparerService {
         }
         return new Comparison(itemList);
     }
+
+    // remove an item from the db with itemId
+    public void removeItem(String itemId) {
+        itemRepo.deleteById(Long.parseLong(itemId));
+    }
+
+
 //
 //        // create item 1 and item 2 objects with inputs and compare the value and return the cheaper item
 //    public Comparison getCheaper(String unit1, double price1, double amount1, String unit2, double price2, double amount2) {

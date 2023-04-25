@@ -56,6 +56,11 @@ public class ValueComparerController {
         return new ResponseEntity<Comparison>(valueComparerService.getCheaper(itemIdList), HttpStatus.OK);
     }
 
+    @DeleteMapping("/item/{itemId}")
+    public void deleteItem(@PathVariable String itemId) {
+        valueComparerService.removeItem(itemId);
+    }
+
     /*
     @GetMapping("/item1id/{item1id}/item2id/{item2id}")
     public ResponseEntity<Comparison> getCheaper(@PathVariable long item1id, @PathVariable long item2id) {

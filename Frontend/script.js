@@ -21,7 +21,7 @@ function setUpBtns() {
 
     addItemBtn.addEventListener("click", () => {
         itemCount++;
-    
+
         addNewItem();
 
         if (itemCount >= 3) {
@@ -34,7 +34,7 @@ function setUpBtns() {
 
     removeItemBtn.addEventListener("click", () => {
         removeItem();
-    
+
         itemCount--;
 
         if (itemCount < 3) {
@@ -68,11 +68,11 @@ function addNewItem() {
     let h2AndSelectElem = newItemDiv.querySelectorAll("h2, select");
     for (i = 0; i < h2AndSelectElem.length; i++) {
         let currName = h2AndSelectElem[i].getAttribute("name");
-        
+
         // change item-index innerHTML
         if (currName == "item-index") {
             h2AndSelectElem[i].innerHTML = `Item${itemCount}`;
-        } 
+        }
         // change ids
         else if (currName == "unit-type") {
             h2AndSelectElem[i].id = `unit-type-dropdown-${itemCount}`;
@@ -314,7 +314,7 @@ function updateCompareResult(responseJson) {
 
     // format the item names
     comparedItemsStr = comparedItemsStr.substring(0, comparedItemsStr.length - 2);
-    let compareResultStr = genElement("p", `${betterItem.name} is around ${Math.floor(valueComparison*100)}% cheaper than the average of the other items(${comparedItemsStr})`);
+    let compareResultStr = genElement("p", `${betterItem.name} is around ${Math.floor(valueComparison * 100)}% cheaper than the average of the other items(${comparedItemsStr})`);
 
     result.replaceChildren();
     result.appendChild(compareResultStr);
@@ -389,6 +389,12 @@ function createTableBody(itemArr) {
                 tdPricePerBaseAmount = genElement("td", `$${itemArr[i].pricePerBaseAmount.toFixed(3)} / in`);
             }
 
+            // create deleteBtn so that the user can delete the item from the database
+            let tdDeleteBtn = genElement("button", "Delete");
+            tdDeleteBtn.addEventListener("click", () => {
+                deleteItem(itemArr[i].id);
+            })
+
             tr.appendChild(tdId);
             tr.appendChild(tdName);
             tr.appendChild(tdAmount);
@@ -398,6 +404,7 @@ function createTableBody(itemArr) {
             tr.appendChild(tdStore);
             tr.appendChild(tdCategory);
             tr.appendChild(tdPricePerBaseAmount);
+            tr.appendChild(tdDeleteBtn);
 
             trArr.push(tr);
         }
@@ -425,6 +432,14 @@ function clearTable() {
     // }
 
     itemTable.replaceChildren();
+}
+
+async function deleteItem(itemId) {
+    let response = await fetch(`http://localhost:8081/api/value-comparer/item/${itemId}`, { method: "DELETE" });
+    clearTable();
+
+    let itemArr = await getAllItems();
+    createTable(itemArr);
 }
 
 
