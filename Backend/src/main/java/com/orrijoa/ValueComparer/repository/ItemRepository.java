@@ -16,5 +16,7 @@ public interface ItemRepository extends MongoRepository<Item, Long> {
 
     Item findItemById(long itemId);
 
+    List<Item> findAllByNameOrderByPricePerBaseAmountAsc(String name);
+
 //    Item findTop1ByOrderByIdDesc();
 }

@@ -16,12 +16,12 @@ public class UnitConverter {
     private static Map<String, Double> unitToStandardAmountMap;
 
     // represent a single unit
-    private final BigDecimal ONE_UNIT = new BigDecimal("1");
+    private static final BigDecimal ONE_UNIT = new BigDecimal("1");
 
     // base units for each quantity
-    private Unit BASE_VOLUME = Qudt.Units.OZ_VOL_US;
-    private Unit BASE_MASS = Qudt.Units.OZ;
-    private Unit BASE_LENGTH = Qudt.Units.IN;
+    private static final Unit BASE_VOLUME = Qudt.Units.OZ_VOL_US;
+    private static final Unit BASE_MASS = Qudt.Units.OZ;
+    private static final Unit BASE_LENGTH = Qudt.Units.IN;
 
     public UnitConverter() {
         /*

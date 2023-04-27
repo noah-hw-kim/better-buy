@@ -49,6 +49,7 @@ public class ValueComparerService {
         if (baseAmount != 0) {
             result = item.getPrice() / baseAmount;
         }
+
         return result;
     }
 
@@ -62,6 +63,10 @@ public class ValueComparerService {
 
     public List<Item> getAllItems() {
         return itemRepo.findAll(Sort.by(Sort.Direction.ASC, "category").and(Sort.by(Sort.Direction.ASC, "pricePerBaseAmount")));
+    }
+
+    public List<Item> getItemsWithName(String name) {
+        return itemRepo.findAllByNameOrderByPricePerBaseAmountAsc(name);
     }
 
     public List<Item> getItemsByCategoryAndSubCategory(String category, String subCategory) {

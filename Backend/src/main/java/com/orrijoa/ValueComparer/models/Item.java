@@ -49,15 +49,15 @@ public class Item implements Comparable<Item> {
 //        pricePerBaseAmount = calculatePricePerBaseAmount();
 //    }
 
-    private double calculatePricePerBaseAmount() {
-        // amount that converted to the base unit
-        double result = -1;
-        double baseAmount = UnitConverter.getStandardAmount(unit) * amount;
-        if (baseAmount != 0) {
-            result = price / baseAmount;
-        }
-        return result;
-    }
+//    private double calculatePricePerBaseAmount() {
+//        // amount that converted to the base unit
+//        double result = -1;
+//        double baseAmount = UnitConverter.getStandardAmount(unit) * amount;
+//        if (baseAmount != 0) {
+//            result = price / baseAmount;
+//        }
+//        return result;
+//    }
 
     @Override
     public int compareTo(Item other) {

@@ -10,6 +10,33 @@ let itemCount = 2;
 setUpListsAndDB();
 setUpBtns();
 
+// load unitType, unit, and the category from the server 
+async function setUpListsAndDB() {
+    await genCategoryList();
+
+    let categoryDropdown1 = document.getElementById("category-dropdown-1");
+    let categoryDropdown2 = document.getElementById("category-dropdown-2");
+    genCategoryDropdown(categoryDropdown1);
+    genCategoryDropdown(categoryDropdown2);
+
+    await genUnitLists();
+
+    let unitTypeDropdown1 = document.getElementById("unit-type-dropdown-1");
+    let unitDropdown1 = document.getElementById("unit-dropdown-1");
+
+    let unitTypeDropdown2 = document.getElementById("unit-type-dropdown-2");
+    let unitDropdown2 = document.getElementById("unit-dropdown-2");
+
+    genUnitDropdown(unitTypeDropdown1, unitDropdown1);
+    genUnitDropdown(unitTypeDropdown2, unitDropdown2);
+
+    unitTypeDropdown1.addEventListener("change", () => genUnitDropdown(unitTypeDropdown1, unitDropdown1));
+    unitTypeDropdown2.addEventListener("change", () => genUnitDropdown(unitTypeDropdown2, unitDropdown2));
+
+    let itemArr = await getAllItems();
+    createTable(itemArr);
+}
+
 function setUpBtns() {
     let compareBtn = document.getElementById("compare-button");
     compareBtn.addEventListener("click", () => {
@@ -71,7 +98,7 @@ function addNewItem() {
 
         // change item-index innerHTML
         if (currName == "item-index") {
-            h2AndSelectElem[i].innerHTML = `Item${itemCount}`;
+            h2AndSelectElem[i].textContent = `Item${itemCount}`;
         }
         // change ids
         else if (currName == "unit-type") {
@@ -101,33 +128,6 @@ function removeItem() {
     let targetItem = document.getElementById(`item${itemCount}`);
 
     formElem.removeChild(targetItem);
-}
-
-// load unitType, unit, and the category from the server 
-async function setUpListsAndDB() {
-    await genCategoryList();
-
-    let categoryDropdown1 = document.getElementById("category-dropdown-1");
-    let categoryDropdown2 = document.getElementById("category-dropdown-2");
-    genCategoryDropdown(categoryDropdown1);
-    genCategoryDropdown(categoryDropdown2);
-
-    await genUnitLists();
-
-    let unitTypeDropdown1 = document.getElementById("unit-type-dropdown-1");
-    let unitDropdown1 = document.getElementById("unit-dropdown-1");
-
-    let unitTypeDropdown2 = document.getElementById("unit-type-dropdown-2");
-    let unitDropdown2 = document.getElementById("unit-dropdown-2");
-
-    genUnitDropdown(unitTypeDropdown1, unitDropdown1);
-    genUnitDropdown(unitTypeDropdown2, unitDropdown2);
-
-    unitTypeDropdown1.addEventListener("change", () => genUnitDropdown(unitTypeDropdown1, unitDropdown1));
-    unitTypeDropdown2.addEventListener("change", () => genUnitDropdown(unitTypeDropdown2, unitDropdown2));
-
-    let itemArr = await getAllItems();
-    createTable(itemArr);
 }
 
 /**
@@ -314,7 +314,7 @@ function updateCompareResult(responseJson) {
 
     // format the item names
     comparedItemsStr = comparedItemsStr.substring(0, comparedItemsStr.length - 2);
-    let compareResultStr = genElement("p", `${betterItem.name} is around ${Math.floor(valueComparison * 100)}% cheaper than the average of the other items(${comparedItemsStr})`);
+    let compareResultStr = genElement("p", `${betterItem.name} is approximately ${Math.floor(valueComparison * 100)}% cheaper than the average of the other items(${comparedItemsStr})`);
 
     result.replaceChildren();
     result.appendChild(compareResultStr);
@@ -391,8 +391,12 @@ function createTableBody(itemArr) {
 
             // create deleteBtn so that the user can delete the item from the database
             let tdDeleteBtn = genElement("button", "Delete");
-            tdDeleteBtn.addEventListener("click", () => {
-                deleteItem(itemArr[i].id);
+            tdDeleteBtn.addEventListener("click", async() => {
+                await deleteItem(itemArr[i].id);
+                clearTable();
+
+                let updatedItemArr = await getAllItems();
+                createTable(updatedItemArr);
             })
 
             tr.appendChild(tdId);
@@ -436,10 +440,6 @@ function clearTable() {
 
 async function deleteItem(itemId) {
     let response = await fetch(`http://localhost:8081/api/value-comparer/item/${itemId}`, { method: "DELETE" });
-    clearTable();
-
-    let itemArr = await getAllItems();
-    createTable(itemArr);
 }
 
 
