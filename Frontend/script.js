@@ -37,6 +37,7 @@ async function setUpListsAndDB() {
     createTable(itemArr);
 }
 
+// add events to the buttons
 function setUpBtns() {
     let compareBtn = document.getElementById("compare-button");
     compareBtn.addEventListener("click", () => {
@@ -73,6 +74,7 @@ function setUpBtns() {
     })
 }
 
+// set up compare button event
 async function setUpCompareBtn() {
     let itemArr = document.getElementsByClassName("item");
 
@@ -87,6 +89,7 @@ async function setUpCompareBtn() {
     updateCompareResult(comparisionResult);
 }
 
+// set up add item button event
 function addNewItem() {
     let item1Div = document.getElementById("item1");
     let newItemDiv = item1Div.cloneNode(true); // true means clone all childNodes and all event handlers
@@ -123,6 +126,7 @@ function addNewItem() {
     newUnitTypeDropdown.addEventListener("change", () => genUnitDropdown(newUnitTypeDropdown, newUnitDropdown));
 }
 
+// set up remove item button event
 function removeItem() {
     let formElem = document.getElementById("compare-form");
     let targetItem = document.getElementById(`item${itemCount}`);
@@ -187,20 +191,6 @@ function genUnitDropdown(unitTypeDropdown, unitDropdown) {
         regenerateChildren("option", massUnitsLst, unitDropdown);
     } else if (unitTypeDropdown.value == "volume") {
         regenerateChildren("option", volumeUnitsLst, unitDropdown);
-    }
-}
-
-// create an item class
-class Item {
-    constructor(id, name, amount, price, unit, brand, store, category) {
-        this.id = id;
-        this.name = name;
-        this.amount = amount;
-        this.price = price;
-        this.unit = unit;
-        this.brand = brand;
-        this.store = store;
-        this.category = category;
     }
 }
 
@@ -273,6 +263,7 @@ function itemArrToJson(itemArr) {
     return jsonData;
 }
 
+// send comparing items' id as a string to the back end and receive the comparison obj that contains the better value item, compared item list, and the value comparision that shows how much the better value item is cheaper than the other items in the list
 async function compareItems(itemArrJson) {
     // let itemArrJson = await saveItems(itemArr);
     let idStr = itemArrJsonToIdStr(itemArrJson);
@@ -283,6 +274,7 @@ async function compareItems(itemArrJson) {
     return comparisionResult;
 }
 
+// receive item Array list as Json format and covert it to the id string connect with "," (comma)
 function itemArrJsonToIdStr(itemArrJson) {
     let idStr = "";
 
@@ -295,9 +287,10 @@ function itemArrJsonToIdStr(itemArrJson) {
     return idStr;
 }
 
+// with comparision result from the back end, update the compare-result div content
 function updateCompareResult(responseJson) {
     let result = document.getElementById("compare-result");
-    // how to change the hardCode to get the betterItem, comparedItemsList, and valueComparision
+    // for later: how to change the hardCode to get the betterItem, comparedItemsList, and valueComparision
     let betterItem = responseJson.betterItem;
     let comparedItemsList = responseJson.comparedItemsList;
     // valueComparison shows how much the better item is cheaper than the average
@@ -321,7 +314,7 @@ function updateCompareResult(responseJson) {
 }
 
 
-
+// receive all items in the db from the back end
 async function getAllItems() {
     let response = await fetch("http://localhost:8081/api/value-comparer/all-items");
     let responseJson = await response.json();
@@ -336,6 +329,7 @@ async function getAllItems() {
     return itemArr;
 }
 
+// create table row for the header
 function createTableHeader() {
     // create table row for the header
     let tr = document.createElement("tr");
@@ -365,6 +359,7 @@ function createTableHeader() {
     return tr;
 }
 
+// create table row for the body
 function createTableBody(itemArr) {
     let trArr = [];
 
@@ -416,6 +411,7 @@ function createTableBody(itemArr) {
     return trArr;
 }
 
+// update the table header and the body with itemArr received
 function createTable(itemArr) {
     let itemTable = document.getElementById("item-table");
 
@@ -429,6 +425,7 @@ function createTable(itemArr) {
     }
 }
 
+// delete all contents from the table
 function clearTable() {
     let itemTable = document.getElementById("item-table");
     // while (itemTable.rows.length > 0) {
@@ -438,6 +435,7 @@ function clearTable() {
     itemTable.replaceChildren();
 }
 
+// delete an item in the db sending a request to the back end
 async function deleteItem(itemId) {
     let response = await fetch(`http://localhost:8081/api/value-comparer/item/${itemId}`, { method: "DELETE" });
 }
