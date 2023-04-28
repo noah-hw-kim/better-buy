@@ -19,11 +19,11 @@
             <form id="compare-form">
                 <div class="item" id="item1">
                     <h2 name="item-index">Item 1</h2>
-                    <label>Name</label>
+                    <label>*Name</label>
                     <input name="name" required><br>
-                    <label>Amount</label>
+                    <label>*Amount</label>
                     <input name="amount" required><br>
-                    <label>Price</label>
+                    <label>*Price</label>
                     <input name="price" required><br>
                     <label>Unit Type</label>
                     <select class="select-unit-type" id="unit-type-dropdown-1" name="unit-type">
@@ -44,11 +44,11 @@
                 </div>
                 <div class="item" id="item2">
                     <h2 name="item-index">Item 2</h2>
-                    <label>Name</label>
+                    <label>*Name</label>
                     <input name="name" required><br>
-                    <label>Amount</label>
+                    <label>*Amount</label>
                     <input name="amount" required><br>
-                    <label>Price</label>
+                    <label>*Price</label>
                     <input name="price" required><br>
                     <label>Unit Type</label>
                     <select class="select-unit-type" id="unit-type-dropdown-2" name="unit-type">
@@ -67,25 +67,31 @@
                     <select id="category-dropdown-2" name="category">
                     </select><br>
                 </div>
+                
+                
                 <button type="button" id="add-item-button" style="display: flex; align-items: center; justify-content: center;">+</button>
-                <button type="button" id="remove-item-button" style="visibility: hidden;">-</button> 
+                <button type="button" id="remove-item-button" style="visibility: hidden;">-</button>
+
+                
             </form>
         </div>
-        
-        
-        <button type="button" id="compare-button">Compare</button>
-        <br>
+        <h4>*Field 'Name', 'Amount', and 'Price' must be filled in</h4>
 
+        <button type="button1" id="compare-button">Compare</button>
+        <br>
+        
         <div id="compare-result">
-            
         </div>
         <br>
 
-        <h3>Search History</h3>
-        <table id="item-table" border="1px">
-            <!-- will be created based on the item compare history -->
-        </table>
+        <div id="search-history">
+            <h3>Search History</h3>
+            <table id="item-table" border="1px">
+                <!-- will be created based on the item compare history -->
+            </table>
+        </div>
 
+        <div class="search-wrapper"></div>
 
         <script src="script.js" async defer></script>
     </body>

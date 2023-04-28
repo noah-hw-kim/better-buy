@@ -1,3 +1,5 @@
+// need to add required feature for name, price, and amount when + and -
+
 // indicate current number of items
 let unitTypeLst = [];
 let massUnitsLst = [];
@@ -78,15 +80,19 @@ function setUpBtns() {
 async function setUpCompareBtn() {
     let itemArr = document.getElementsByClassName("item");
 
-    let itemArrJson = await saveItems(itemArr);
-    let updatedItemArr = await getAllItems();
+    if (validateItemArr(itemArr) != false) {
+        let itemArrJson = await saveItems(itemArr);
+        let updatedItemArr = await getAllItems();
 
-    clearTable();
-    createTable(updatedItemArr);
+        clearTable();
+        createTable(updatedItemArr);
 
-    let comparisionResult = await compareItems(itemArrJson);
+        let comparisionResult = await compareItems(itemArrJson);
 
-    updateCompareResult(comparisionResult);
+        updateCompareResult(comparisionResult);
+    } else {
+        alert("Field 'Name', 'Amount', and 'Price' must be filled in");
+    }
 }
 
 // set up add item button event
@@ -112,6 +118,8 @@ function addNewItem() {
             h2AndSelectElem[i].id = `category-dropdown-${itemCount}`
         }
     }
+
+    console.log(newItemDiv);
 
     let formElem = document.getElementById("compare-form");
     formElem.appendChild(newItemDiv);
@@ -261,6 +269,29 @@ function itemArrToJson(itemArr) {
         jsonData.push(jsonElem);
     }
     return jsonData;
+}
+
+function validateItemArr(itemArr) {
+    isValid = true; 
+    
+    for (let i = 0; i < itemArr.length; i++) {
+        let divInputs = itemArr[i].getElementsByTagName('input');
+
+        for (let i = 0; i < divInputs.length; i++) {
+            if (divInputs[i].name.includes("name") || divInputs[i].name.includes("amount") || divInputs[i].name.includes("price")) {
+                if (divInputs[i].value == "") {
+                    isValid = false;
+                    break; 
+                }
+            }
+        }
+
+        if (isValid == false) {
+            break;
+        }
+    }
+
+    return isValid;
 }
 
 // send comparing items' id as a string to the back end and receive the comparison obj that contains the better value item, compared item list, and the value comparision that shows how much the better value item is cheaper than the other items in the list
