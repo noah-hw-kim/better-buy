@@ -66,9 +66,9 @@ public class ValueComparerController {
         return new ResponseEntity<List<Item>>(valueComparerService.getItemsWithName(itemName), HttpStatus.OK);
     }
 
-    @GetMapping("/item-search/{searchType}/{text}")
-    public ResponseEntity<List<Item>> getItems(@PathVariable String searchType, @PathVariable String text) {
-        return new ResponseEntity<List<Item>>(valueComparerService.getItems(searchType, text), HttpStatus.OK);
+    @GetMapping("/item-search/{text}")
+    public ResponseEntity<List<Item>> getItems(@PathVariable String text) {
+        return new ResponseEntity<List<Item>>(valueComparerService.getItems(text), HttpStatus.OK);
     }
 
 

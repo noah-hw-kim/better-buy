@@ -73,8 +73,8 @@ public class ValueComparerService {
     }
 
 
-    public List<Item> getItems(String searchType, String text) {
-        return searchRepo.findByText(searchType, text);
+    public List<Item> getItems(String text) {
+        return searchRepo.findByText(text);
     }
 
 

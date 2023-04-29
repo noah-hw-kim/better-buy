@@ -11,6 +11,9 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="styles.css">
+        <!-- Load icon library -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     </head>
     <body>
         <h1>Value Comparer</h1>
@@ -67,15 +70,14 @@
                     <select id="category-dropdown-2" name="category">
                     </select><br>
                 </div>
-                
+                <h4>*Field 'Name', 'Amount', and 'Price' must be filled in</h4>
                 
                 <button type="button" id="add-item-button" style="display: flex; align-items: center; justify-content: center;">+</button>
                 <button type="button" id="remove-item-button" style="visibility: hidden;">-</button>
 
-                
             </form>
         </div>
-        <h4>*Field 'Name', 'Amount', and 'Price' must be filled in</h4>
+        
 
         <button type="button1" id="compare-button">Compare</button>
         <br>
@@ -90,8 +92,13 @@
                 <!-- will be created based on the item compare history -->
             </table>
         </div>
+        <br>
 
-        <div class="search-wrapper"></div>
+        <!-- Search form -->
+        <form class="example">
+            <input id="search-text" type="text" placeholder="Search name, brand, store, category, etc..." name="search">
+            <button id="search-item-button" type="button"><i class="fa fa-search"></i></button>
+        </form>
 
         <script src="script.js" async defer></script>
     </body>

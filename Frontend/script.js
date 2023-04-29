@@ -42,13 +42,15 @@ async function setUpListsAndDB() {
 // add events to the buttons
 function setUpBtns() {
     let compareBtn = document.getElementById("compare-button");
+    let addItemBtn = document.getElementById("add-item-button");
+    let removeItemBtn = document.getElementById("remove-item-button");
+    let searchItemBtn = document.getElementById("search-item-button");
+
     compareBtn.addEventListener("click", () => {
         setUpCompareBtn();
     });
 
-    let addItemBtn = document.getElementById("add-item-button");
-    let removeItemBtn = document.getElementById("remove-item-button");
-
+    
     addItemBtn.addEventListener("click", () => {
         itemCount++;
 
@@ -72,6 +74,16 @@ function setUpBtns() {
         }
         if (itemCount < 5) {
             addItemBtn.style.visibility = "visible";
+        }
+    })
+
+    searchItemBtn.addEventListener("click", async() => {
+        let itemArr = await searchItems();
+
+        clearTable();
+
+        if (itemArr.length > 0) {
+            createTable(itemArr);
         }
     })
 }
@@ -119,8 +131,6 @@ function addNewItem() {
         }
     }
 
-    console.log(newItemDiv);
-
     let formElem = document.getElementById("compare-form");
     formElem.appendChild(newItemDiv);
 
@@ -140,6 +150,29 @@ function removeItem() {
     let targetItem = document.getElementById(`item${itemCount}`);
 
     formElem.removeChild(targetItem);
+}
+
+async function searchItems() {
+    let text = document.getElementById("search-text").value;
+
+    // push item objs to the itemArray to easily generate the table
+    let itemArr = [];
+
+    // user search nothing
+    if (text == "") {
+        return getAllItems();
+    }
+
+    else {
+        let response = await fetch(`http://localhost:8081/api/value-comparer/item-search/${text}`);
+        let responseJson = await response.json();
+
+        for (let i = 0; i < responseJson.length; i++) {
+            itemArr.push(responseJson[i]);
+        }
+    }
+
+    return itemArr; 
 }
 
 /**

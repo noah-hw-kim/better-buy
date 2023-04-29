@@ -29,7 +29,7 @@ public class SearchRepositoryImpl implements SearchRepository {
     private String dbName;
 
     @Override
-    public List<Item> findByText(String searchType, String text) {
+    public List<Item> findByText(String text) {
         final List<Item> items = new ArrayList<>();
 
         MongoDatabase database = client.getDatabase(dbName);
@@ -38,7 +38,7 @@ public class SearchRepositoryImpl implements SearchRepository {
                 new Document("$search",
                 new Document("text",
                 new Document("query", text)
-                .append("path", Arrays.asList(searchType)))),
+                .append("path", Arrays.asList("name", "brand", "store", "category")))),
                 new Document("$sort",
                 new Document("pricePerBaseAmount", 1L))));
 
