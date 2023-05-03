@@ -12,6 +12,46 @@ let itemCount = 2;
 setUpListsAndDB();
 setUpBtns();
 
+/**
+ * Generates list of unit types and units
+ */
+async function genUnitLists() {
+    let response = await fetch("http://localhost:8081/api/value-comparer/unit-list");
+    let responseJson = await response.json();
+
+    let jsonUnitList = responseJson["unitList"];        // get unitList Map
+
+    let jsonUnitListKeys = Object.keys(jsonUnitList);
+    for (let i = 0; i < jsonUnitListKeys.length; i++) { // for each keys in jsonUnitListKeys
+        let currKey = jsonUnitListKeys[i];              // get the key ("mass", "volume", "length", and etc)
+        unitTypeLst.push(currKey);                      // save the key
+
+        if (currKey.includes("mass")) {
+            massUnitsLst.push(...jsonUnitList[currKey]);    // save each items in mass
+        } else if (currKey.includes("volume")) {
+            volumeUnitsLst.push(...jsonUnitList[currKey]);
+        } else if (currKey.includes("length")) {
+            lengthUnitsLst.push(...jsonUnitList[currKey]);
+        }
+    }
+}
+
+/**
+ * Generates list of categories
+ */
+async function genCategoryList() {
+    let response = await fetch("http://localhost:8081/api/value-comparer/categories");
+    let responseJson = await response.json();
+
+    let jsonCategoryList = responseJson["categories"];        // get category 
+    let jsonCategoryKeys = Object.keys(jsonCategoryList);
+
+    for (let i = 0; i < jsonCategoryKeys.length; i++) { // for each keys in jsonCategoryKeys
+        let currKey = jsonCategoryKeys[i];              // get the key
+        categoryLst.push(currKey);                      // save the key
+    }
+}
+
 // load unitType, unit, and the category from the server 
 async function setUpListsAndDB() {
     await genCategoryList();
@@ -175,45 +215,7 @@ async function searchItems() {
     return itemArr; 
 }
 
-/**
- * Generates list of unit types and units
- */
-async function genUnitLists() {
-    let response = await fetch("http://localhost:8081/api/value-comparer/unit-list");
-    let responseJson = await response.json();
 
-    let jsonUnitList = responseJson["unitList"];        // get unitList Map
-
-    let jsonUnitListKeys = Object.keys(jsonUnitList);
-    for (let i = 0; i < jsonUnitListKeys.length; i++) { // for each keys in jsonUnitListKeys
-        let currKey = jsonUnitListKeys[i];              // get the key ("mass", "volume", "length", and etc)
-        unitTypeLst.push(currKey);                      // save the key
-
-        if (currKey.includes("mass")) {
-            massUnitsLst.push(...jsonUnitList[currKey]);    // save each items in mass
-        } else if (currKey.includes("volume")) {
-            volumeUnitsLst.push(...jsonUnitList[currKey]);
-        } else if (currKey.includes("length")) {
-            lengthUnitsLst.push(...jsonUnitList[currKey]);
-        }
-    }
-}
-
-/**
- * Generates list of categories
- */
-async function genCategoryList() {
-    let response = await fetch("http://localhost:8081/api/value-comparer/categories");
-    let responseJson = await response.json();
-
-    let jsonCategoryList = responseJson["categories"];        // get category 
-    let jsonCategoryKeys = Object.keys(jsonCategoryList);
-
-    for (let i = 0; i < jsonCategoryKeys.length; i++) { // for each keys in jsonCategoryKeys
-        let currKey = jsonCategoryKeys[i];              // get the key
-        categoryLst.push(currKey);                      // save the key
-    }
-}
 
 /**
  * Generates Category dropdown 
@@ -478,15 +480,20 @@ function createTableBody(itemArr) {
 // update the table header and the body with itemArr received
 function createTable(itemArr) {
     let itemTable = document.getElementById("item-table");
+    let itemHeader = document.createElement("thead");
+    let itemBody = document.createElement("tbody");
 
     let tableHeader = createTableHeader();
-    itemTable.appendChild(tableHeader);
+    itemHeader.appendChild(tableHeader);
+    itemTable.appendChild(itemHeader);
 
+    
     let tableDataRowArr = createTableBody(itemArr);
 
     for (let i = 0; i < tableDataRowArr.length; i++) {
-        itemTable.appendChild(tableDataRowArr[i]);
+        itemBody.appendChild(tableDataRowArr[i]);
     }
+    itemTable.appendChild(itemBody);
 }
 
 // delete all contents from the table
