@@ -5,7 +5,7 @@ let unitTypeLst = [];
 let massUnitsLst = [];
 let volumeUnitsLst = [];
 let lengthUnitsLst = [];
-let categoryLst = [];
+let categoryLst = [" "];
 
 let itemCount = 2;
 
@@ -85,35 +85,56 @@ function setUpBtns() {
     let addItemBtn = document.getElementById("add-item-button");
     let removeItemBtn = document.getElementById("remove-item-button");
     let searchItemBtn = document.getElementById("search-item-button");
+    let resetBtn = document.getElementById("reset-button");
+    let compareForm = document.getElementById("compare-form");
 
-    compareBtn.addEventListener("click", () => {
+    const forms = document.querySelectorAll('.needs-validation');
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      
+        event.preventDefault();
+      if (!form.checkValidity()) {
+        event.stopPropagation();
+      } 
+      else {
+        form.classList.add('was-validated')
         setUpCompareBtn();
-    });
+      }
+    }, false)})
 
-    
+
+
+    /* comments:
+    2. try to use the actual numbers we're dealing with (e.x., if our thought is "we allow min 2 items" 
+    then do something with 2 (e.x., if >2 then allow remove rather than if at least 3 then allow remove).
+    same result but first one is more intuitive and simple.
+    3. Disable rather than hide, I think. User exp wise I feel that I get confused when a button is suddenly gone.
+    */
     addItemBtn.addEventListener("click", () => {
         itemCount++;
-
         addNewItem();
 
-        if (itemCount >= 3) {
-            removeItemBtn.style.visibility = "visible";
+        if (itemCount > 2) {
+            /*removeItemBtn.style.visibility = "visible";*/
+            removeItemBtn.disabled = false;
         }
-        if (itemCount >= 5) {
-            addItemBtn.style.visibility = "hidden";
+        if (itemCount >= 4) {
+            /*addItemBtn.style.visibility = "hidden";*/
+            addItemBtn.disabled = true;
         }
     })
 
     removeItemBtn.addEventListener("click", () => {
         removeItem();
-
         itemCount--;
 
-        if (itemCount < 3) {
-            removeItemBtn.style.visibility = "hidden";
+        if (itemCount <= 2) {
+            removeItemBtn.disabled = true;
         }
-        if (itemCount < 5) {
-            addItemBtn.style.visibility = "visible";
+        if (itemCount < 4) {
+            addItemBtn.disabled = false;
         }
     })
 
@@ -126,10 +147,15 @@ function setUpBtns() {
             createTable(itemArr);
         }
     })
+
+    resetBtn.addEventListener("click", () => {
+        compareForm.reset();
+    })
 }
 
 // set up compare button event
 async function setUpCompareBtn() {
+    console.log("got to setUpCompareBtn")
     let itemArr = document.getElementsByClassName("item");
 
     if (validateItemArr(itemArr) != false) {
@@ -139,12 +165,13 @@ async function setUpCompareBtn() {
         clearTable();
         createTable(updatedItemArr);
 
+        console.log(itemArrJson);
         let comparisionResult = await compareItems(itemArrJson);
 
         updateCompareResult(comparisionResult);
-    } else {
+    } /*else {
         alert("Field 'Name', 'Amount', and 'Price' must be filled in");
-    }
+    }*/
 }
 
 // set up add item button event
@@ -153,25 +180,26 @@ function addNewItem() {
     let newItemDiv = item1Div.cloneNode(true); // true means clone all childNodes and all event handlers
     newItemDiv.id = `item${itemCount}`;
 
-    let h2AndSelectElem = newItemDiv.querySelectorAll("h2, select");
-    for (i = 0; i < h2AndSelectElem.length; i++) {
-        let currName = h2AndSelectElem[i].getAttribute("name");
+    let h5AndSelectElem = newItemDiv.querySelectorAll("h5, select");
+
+    for (i = 0; i < h5AndSelectElem.length; i++) {
+        let currName = h5AndSelectElem[i].getAttribute("name");
 
         // change item-index innerHTML
         if (currName == "item-index") {
-            h2AndSelectElem[i].textContent = `Item${itemCount}`;
+            h5AndSelectElem[i].textContent = `Item ${itemCount}`;
         }
         // change ids
         else if (currName == "unit-type") {
-            h2AndSelectElem[i].id = `unit-type-dropdown-${itemCount}`;
+            h5AndSelectElem[i].id = `unit-type-dropdown-${itemCount}`;
         } else if (currName == "unit") {
-            h2AndSelectElem[i].id = `unit-dropdown-${itemCount}`;
+            h5AndSelectElem[i].id = `unit-dropdown-${itemCount}`;
         } else if (currName == "category") {
-            h2AndSelectElem[i].id = `category-dropdown-${itemCount}`
+            h5AndSelectElem[i].id = `category-dropdown-${itemCount}`
         }
     }
 
-    let formElem = document.getElementById("compare-form");
+    let formElem = document.getElementById("form-body");
     formElem.appendChild(newItemDiv);
 
     let newCategoryDropdown = document.getElementById(`category-dropdown-${itemCount}`);
@@ -186,7 +214,7 @@ function addNewItem() {
 
 // set up remove item button event
 function removeItem() {
-    let formElem = document.getElementById("compare-form");
+    let formElem = document.getElementById("form-body");
     let targetItem = document.getElementById(`item${itemCount}`);
 
     formElem.removeChild(targetItem);
@@ -410,6 +438,8 @@ function createTableHeader() {
     let thStore = genElement("th", "store");
     let thCategory = genElement("th", "category");
     let thPricePerBaseAmount = genElement("th", "unit price");
+    let thClearButton = genElement("button", "Clear");
+    thClearButton.id = "clear-button";
 
     tr.appendChild(thId);
     tr.appendChild(thName);
@@ -420,6 +450,7 @@ function createTableHeader() {
     tr.appendChild(thStore);
     tr.appendChild(thCategory);
     tr.appendChild(thPricePerBaseAmount);
+    tr.appendChild(thClearButton);
 
     tr.id = "item-table-header";
     return tr;
@@ -451,8 +482,9 @@ function createTableBody(itemArr) {
             }
 
             // create deleteBtn so that the user can delete the item from the database
-            let tdDeleteBtn = genElement("button", "Delete");
+            let tdDeleteBtn = genElement("button", "x");
             tdDeleteBtn.addEventListener("click", async() => {
+                
                 await deleteItem(itemArr[i].id);
                 clearTable();
 
@@ -510,7 +542,4 @@ function clearTable() {
 async function deleteItem(itemId) {
     let response = await fetch(`http://localhost:8081/api/value-comparer/item/${itemId}`, { method: "DELETE" });
 }
-
-
-
 

@@ -1,95 +1,67 @@
-body {
-    text-align: center;
-    font-family:Arial, Helvetica, sans-serif
-}
-
-h1 {
+/* ------------------ General ------------------ */
+h4 {
+    text-align: left;
     text-transform: uppercase;
 }
 
-
-#compare-section {
-    border-style: solid;
-    border-radius: 15px;
-    /*background-color: yellow;*/
-    display: inline-block;
-    padding: 10px;
-
+/* ------------------ Header ------------------ */
+#title {
+    background-color: #e9eef2;
+    padding: 25px;
 }
 
-#compare-form {
-    overflow: hidden;
+/* ------------------ Comparison Section ------------------ */
+#compare-section {
+    padding: 25px;
+}
+
+.card {
+    padding: 20px;
 }
 
 .item {
-    /*background-color: blue;*/
+    margin: 6px;
+}
+
+.item h5 {
+    color: #333738;
+}
+
+#description {
     float: left;
-    padding: 10px;
-    margin-bottom: 25px;
+}
+
+#buttons {
+    float: right;
+}
+
+.col-form-label {
+    text-align: right;
+}
+
+.required:after { 
+    color: #cf1541;
+    content: "*";
 }
 
 #compare-button {
-    display: block;
-    clear: both; /*sets whether an element must be moved below (cleared) floating elements that precede it*/
-    margin: 10px auto;
+    background-color: #4d6b20;
+    border: #4d6b20;
 }
 
-label {
-    display: inline-block;
-    width: 80px;
-    float: left;
-    clear: left;
-    text-align: right;
-    margin: 3px;
+/* ------------------ Search History Section ------------------ */
+
+#search-history {
+    background: #e9eef2;
+    padding: 25px;
+    font-size: 14px;
 }
 
-#compare-section input {
-    display: inline-block;
-    /*float: left;*/ /*causes issue */
-    margin: 3px;
+#search-text {
+    width: 40%;
 }
 
-* {
-    box-sizing: border-box;
+#search-history button {
+    width:53px;
 }
 
-/* Style the search field */
-form.example input[type=text] {
-    padding: 3px;
-    font-size: 17px;
-    border: 1px solid grey;
-    margin-left: auto;
-    margin-right: auto;
-    width:  40%;
-    background: #f1f1f1;
-}
-
-/* Style the submit button */
-form.example button {
-    margin-left: auto;
-    margin-right: auto;
-    width: 10%;
-    padding: 3px;
-    background: #2196F3;
-    color: white;
-    font-size: 17px;
-    border: 1px solid grey;
-    border-left: none; /* Prevent double borders */
-    cursor: pointer;
-}
-
-form.example button:hover {
-    background: #0b7dda;
-}
-
-/* Clear floats */
-form.example::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-
-#item-table {
-    margin-left: auto;
-    margin-right: auto;
-}
