@@ -44,12 +44,9 @@ async function genCategoryList() {
     let responseJson = await response.json();
 
     let jsonCategoryList = responseJson["categories"];        // get category 
-    let jsonCategoryKeys = Object.keys(jsonCategoryList);
+    let jsonCategoryValues = Object.values(jsonCategoryList);
 
-    for (let i = 0; i < jsonCategoryKeys.length; i++) { // for each keys in jsonCategoryKeys
-        let currKey = jsonCategoryKeys[i];              // get the key
-        categoryLst.push(currKey);                      // save the key
-    }
+    categoryLst.push(...jsonCategoryValues);                  // save values
 }
 
 // load unitType, unit, and the category from the server 

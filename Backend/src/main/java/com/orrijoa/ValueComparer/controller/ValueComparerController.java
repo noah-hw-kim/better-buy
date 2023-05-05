@@ -23,49 +23,40 @@ public class ValueComparerController {
     @Autowired
     private ValueComparerService valueComparerService;
 
-//    This method is for the swagger api to test the app run
-    @ApiIgnore
-    @RequestMapping(value = "/")
-    public void redirect(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/swagger-ui/");
-    }
-
-//    add new items
+    /*
+    * Methods for item CRUD operations -----------------------------------------------------------------------------------------------
+    * */
+    // add new items in mongoDB
     @PostMapping("/items")
     public ResponseEntity<List<Item>> createItems(@RequestBody List<Item> items) {
         return new ResponseEntity<List<Item>>(valueComparerService.createItems(items), HttpStatus.CREATED);
     }
 
+    // delete a single item in mongoDB
     @DeleteMapping("/item/{itemId}")
     public void deleteItem(@PathVariable String itemId) {
         valueComparerService.deleteItem(itemId);
     }
 
+    // delete all items in mongoDB
     @DeleteMapping("/items")
     public void deleteItems() {
         valueComparerService.deleteAllItems();
     }
 
+    // get all items in mongoDB
     @GetMapping("/all-items")
     public ResponseEntity<List<Item>> getAllItems() {
         return new ResponseEntity<List<Item>>(valueComparerService.getAllItems(),HttpStatus.OK);
     }
 
-    @GetMapping("/item-comparison/{itemIdList}")
-    public ResponseEntity<Comparison> getCheaper(@PathVariable String[] itemIdList) {
-        return new ResponseEntity<Comparison>(valueComparerService.getCheaper(itemIdList), HttpStatus.OK);
-    }
-
-//    @GetMapping("/item-find/{itemName}")
-//    public ResponseEntity<List<Item>> getItemsWithName(@PathVariable String itemName) {
-//        return new ResponseEntity<List<Item>>(valueComparerService.getItemsWithName(itemName), HttpStatus.OK);
-//    }
-
+    // get searched items in mongoDB
     @GetMapping("/items/{text}")
     public ResponseEntity<List<Item>> getItems(@PathVariable String text) {
         return new ResponseEntity<List<Item>>(valueComparerService.getItems(text), HttpStatus.OK);
     }
 
+    // get category lists from the "models" package
     @GetMapping("/categories")
     public ResponseEntity<Categories> getCategories() {
         return new ResponseEntity<Categories>(valueComparerService.getCategories(), HttpStatus.OK);
@@ -76,7 +67,23 @@ public class ValueComparerController {
         return new ResponseEntity<UnitList>(valueComparerService.getUnitList(), HttpStatus.OK);
     }
 
+    @GetMapping("/item-comparison/{itemIdList}")
+    public ResponseEntity<Comparison> getCheaper(@PathVariable String[] itemIdList) {
+        return new ResponseEntity<Comparison>(valueComparerService.getCheaper(itemIdList), HttpStatus.OK);
+    }
 
+    //    This method is for the swagger api to test the app run
+    @ApiIgnore
+    @RequestMapping(value = "/")
+    public void redirect(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/swagger-ui/");
+    }
+
+
+    //    @GetMapping("/item-find/{itemName}")
+//    public ResponseEntity<List<Item>> getItemsWithName(@PathVariable String itemName) {
+//        return new ResponseEntity<List<Item>>(valueComparerService.getItemsWithName(itemName), HttpStatus.OK);
+//    }
 
     /*
     @GetMapping("/item1id/{item1id}/item2id/{item2id}")

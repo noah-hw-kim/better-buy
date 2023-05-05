@@ -20,7 +20,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class ValueComparerApplication {
 
-	//    This method is for the swagger api to test the app run
+	// use for swagger api for testing
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
@@ -29,13 +29,14 @@ public class ValueComparerApplication {
 				.useDefaultResponseMessages(false);
 	}
 
-	//    This method is for the swagger api to test the app run
+	// helper method for api()
 	@Bean
 	public ApiInfo apiInfo() {
 		final ApiInfoBuilder builder = new ApiInfoBuilder();
 		return builder.build();
 	}
 
+	// Cache Unitlist which stays same once created
 	@Bean
 	public UnitList getUnitList() {
 		UnitConverter unitConverter = new UnitConverter();
@@ -45,12 +46,10 @@ public class ValueComparerApplication {
 		return unitList;
 	}
 
+	// Cache Categories which stays same once created
 	@Bean
 	public Categories getCategroy() {
-		Category category = new Category();
 		Categories categories = new Categories();
-		categories.setCategories(category.getCategories());
-
 		return categories;
 	}
 
