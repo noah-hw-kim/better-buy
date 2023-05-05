@@ -31,29 +31,9 @@ public class ValueComparerController {
     }
 
 //    add new items
-    @PostMapping("/new-items")
+    @PostMapping("/items")
     public ResponseEntity<List<Item>> createItems(@RequestBody List<Item> items) {
         return new ResponseEntity<List<Item>>(valueComparerService.createItems(items), HttpStatus.CREATED);
-    }
-
-    @GetMapping("/categories")
-    public ResponseEntity<Categories> getCategories() {
-        return new ResponseEntity<Categories>(valueComparerService.getCategories(), HttpStatus.OK);
-    }
-
-    @GetMapping("/unit-list")
-    public ResponseEntity<UnitList> getUnitList() {
-        return new ResponseEntity<UnitList>(valueComparerService.getUnitList(), HttpStatus.OK);
-    }
-
-    @GetMapping("/all-items")
-    public ResponseEntity<List<Item>> getAllItems() {
-        return new ResponseEntity<List<Item>>(valueComparerService.getAllItems(),HttpStatus.OK);
-    }
-
-    @GetMapping("/item-comparison/{itemIdList}")
-    public ResponseEntity<Comparison> getCheaper(@PathVariable String[] itemIdList) {
-        return new ResponseEntity<Comparison>(valueComparerService.getCheaper(itemIdList), HttpStatus.OK);
     }
 
     @DeleteMapping("/item/{itemId}")
@@ -66,14 +46,34 @@ public class ValueComparerController {
         valueComparerService.deleteAllItems();
     }
 
-    @GetMapping("/item-find/{itemName}")
-    public ResponseEntity<List<Item>> getItemsWithName(@PathVariable String itemName) {
-        return new ResponseEntity<List<Item>>(valueComparerService.getItemsWithName(itemName), HttpStatus.OK);
+    @GetMapping("/all-items")
+    public ResponseEntity<List<Item>> getAllItems() {
+        return new ResponseEntity<List<Item>>(valueComparerService.getAllItems(),HttpStatus.OK);
     }
 
-    @GetMapping("/item-search/{text}")
+    @GetMapping("/item-comparison/{itemIdList}")
+    public ResponseEntity<Comparison> getCheaper(@PathVariable String[] itemIdList) {
+        return new ResponseEntity<Comparison>(valueComparerService.getCheaper(itemIdList), HttpStatus.OK);
+    }
+
+//    @GetMapping("/item-find/{itemName}")
+//    public ResponseEntity<List<Item>> getItemsWithName(@PathVariable String itemName) {
+//        return new ResponseEntity<List<Item>>(valueComparerService.getItemsWithName(itemName), HttpStatus.OK);
+//    }
+
+    @GetMapping("/items/{text}")
     public ResponseEntity<List<Item>> getItems(@PathVariable String text) {
         return new ResponseEntity<List<Item>>(valueComparerService.getItems(text), HttpStatus.OK);
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<Categories> getCategories() {
+        return new ResponseEntity<Categories>(valueComparerService.getCategories(), HttpStatus.OK);
+    }
+
+    @GetMapping("/unit-list")
+    public ResponseEntity<UnitList> getUnitList() {
+        return new ResponseEntity<UnitList>(valueComparerService.getUnitList(), HttpStatus.OK);
     }
 
 

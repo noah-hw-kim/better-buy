@@ -231,7 +231,7 @@ async function searchItems() {
     }
 
     else {
-        let response = await fetch(`http://localhost:8081/api/value-comparer/item-search/${text}`);
+        let response = await fetch(`http://localhost:8081/api/value-comparer/items/${text}`);
         let responseJson = await response.json();
 
         for (let i = 0; i < responseJson.length; i++) {
@@ -290,7 +290,7 @@ function regenerateChildren(elementType, elementsLst, parent) {
 async function saveItems(itemArr) {
     let jsonData = itemArrToJson(itemArr);
 
-    let response = await fetch("http://localhost:8081/api/value-comparer/new-items", {
+    let response = await fetch("http://localhost:8081/api/value-comparer/items", {
         method: "POST", headers: {
             "Content-Type": "application/json",
         }, body: JSON.stringify(jsonData)

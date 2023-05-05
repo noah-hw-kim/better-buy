@@ -68,9 +68,9 @@ public class ValueComparerService {
         return itemRepo.findAll(Sort.by(Sort.Direction.ASC, "category").and(Sort.by(Sort.Direction.ASC, "pricePerBaseAmount")));
     }
 
-    public List<Item> getItemsWithName(String name) {
-        return itemRepo.findAllByNameOrderByPricePerBaseAmountAsc(name);
-    }
+//    public List<Item> getItemsWithName(String name) {
+//        return itemRepo.findAllByNameOrderByPricePerBaseAmountAsc(name);
+//    }
 
 
     public List<Item> getItems(String text) {
