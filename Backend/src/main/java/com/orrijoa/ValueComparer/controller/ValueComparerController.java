@@ -58,7 +58,12 @@ public class ValueComparerController {
 
     @DeleteMapping("/item/{itemId}")
     public void deleteItem(@PathVariable String itemId) {
-        valueComparerService.removeItem(itemId);
+        valueComparerService.deleteItem(itemId);
+    }
+
+    @DeleteMapping("/items")
+    public void deleteItems() {
+        valueComparerService.deleteAllItems();
     }
 
     @GetMapping("/item-find/{itemName}")

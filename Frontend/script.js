@@ -87,7 +87,7 @@ function setUpBtns() {
     let searchItemBtn = document.getElementById("search-item-button");
     let resetBtn = document.getElementById("reset-button");
     let compareForm = document.getElementById("compare-form");
-
+    
     const forms = document.querySelectorAll('.needs-validation');
 
   // Loop over them and prevent submission
@@ -103,7 +103,6 @@ function setUpBtns() {
         setUpCompareBtn();
       }
     }, false)})
-
 
 
     /* comments:
@@ -441,6 +440,12 @@ function createTableHeader() {
     let thClearButton = genElement("button", "Clear");
     thClearButton.id = "clear-button";
 
+    // add even to the clear button that delete all items in db
+    thClearButton.addEventListener("click", () => {
+        deleteAllItems();
+        createTable();
+    })
+
     tr.appendChild(thId);
     tr.appendChild(thName);
     tr.appendChild(thAmount);
@@ -511,6 +516,8 @@ function createTableBody(itemArr) {
 
 // update the table header and the body with itemArr received
 function createTable(itemArr) {
+    clearTable();
+    
     let itemTable = document.getElementById("item-table");
     let itemHeader = document.createElement("thead");
     let itemBody = document.createElement("tbody");
@@ -519,13 +526,13 @@ function createTable(itemArr) {
     itemHeader.appendChild(tableHeader);
     itemTable.appendChild(itemHeader);
 
-    
-    let tableDataRowArr = createTableBody(itemArr);
-
-    for (let i = 0; i < tableDataRowArr.length; i++) {
-        itemBody.appendChild(tableDataRowArr[i]);
+    if (itemArr != null && itemArr.length > 0) {
+        let tableDataRowArr = createTableBody(itemArr);
+        for (let i = 0; i < tableDataRowArr.length; i++) {
+            itemBody.appendChild(tableDataRowArr[i]);
+        }
+        itemTable.appendChild(itemBody);
     }
-    itemTable.appendChild(itemBody);
 }
 
 // delete all contents from the table
@@ -540,6 +547,13 @@ function clearTable() {
 
 // delete an item in the db sending a request to the back end
 async function deleteItem(itemId) {
-    let response = await fetch(`http://localhost:8081/api/value-comparer/item/${itemId}`, { method: "DELETE" });
+    await fetch(`http://localhost:8081/api/value-comparer/item/${itemId}`, { method: "DELETE" });
 }
+
+// delete all items in the db
+async function deleteAllItems() {
+    await fetch(`http://localhost:8081/api/value-comparer/items`, { method: "DELETE" });
+}
+
+
 

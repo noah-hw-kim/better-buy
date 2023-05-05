@@ -92,8 +92,13 @@ public class ValueComparerService {
     }
 
     // remove an item from the db with itemId
-    public void removeItem(String itemId) {
+    public void deleteItem(String itemId) {
         itemRepo.deleteById(Long.parseLong(itemId));
+    }
+
+    // remove all items in the db
+    public void deleteAllItems() {
+        itemRepo.deleteAll();
     }
 
 }
