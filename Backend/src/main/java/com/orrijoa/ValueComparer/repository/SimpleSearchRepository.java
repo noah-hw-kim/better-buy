@@ -10,18 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
+/*
+* This repository find items in mongoDB with given condition
+* */
 @Component
-public class SearchRepositoryImpl implements SearchRepository {
-
+public class SimpleSearchRepository implements SearchRepository {
     @Autowired
     MongoClient client;
-
     @Autowired
     MongoConverter converter;
 

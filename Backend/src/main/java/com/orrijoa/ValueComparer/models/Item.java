@@ -24,7 +24,6 @@ public class Item implements Comparable<Item> {
     private String brand;
     private String store;
     private String category;
-    private String subCategory;
 //         1) volume: base unit - us fluid ounces (vol oz)
 //         2) mass: base unit - mass ounces (oz)
 //         3) length: base unit - inches (in)
@@ -79,7 +78,7 @@ public class Item implements Comparable<Item> {
         }
         Item other = (Item) obj;
 
-        return other.id == id && other.unit.equals(unit) && other.name.equals(name) && other.price == price && other.amount == amount && other.brand.equals(brand) && other.store.equals(store) && other.category.equals(category) && other.subCategory.equals(subCategory);
+        return other.id == id && other.unit.equals(unit) && other.name.equals(name) && other.price == price && other.amount == amount && other.brand.equals(brand) && other.store.equals(store) && other.category.equals(category);
     }
 
     @Override
@@ -92,7 +91,6 @@ public class Item implements Comparable<Item> {
         result = prime * result + ((brand == null) ? 0 : brand.hashCode());
         result = prime * result + ((store == null) ? 0 : store.hashCode());
         result = prime * result + ((category == null) ? 0 : category.hashCode());
-        result = prime * result + ((subCategory == null) ? 0 : subCategory.hashCode());
         result = prime * result + (int) id;
         result = prime * result + (int) price;
         result = prime * result + (int) amount;

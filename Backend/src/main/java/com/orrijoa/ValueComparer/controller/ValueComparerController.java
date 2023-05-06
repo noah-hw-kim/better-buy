@@ -55,7 +55,7 @@ public class ValueComparerController {
     // get searched items in mongoDB
     @GetMapping("/items/{text}")
     public ResponseEntity<List<Item>> getItems(@PathVariable String text) {
-        return new ResponseEntity<List<Item>>(valueComparerService.getItems(text), HttpStatus.OK);
+        return new ResponseEntity<List<Item>>(valueComparerService.getSearchedItems(text), HttpStatus.OK);
     }
 
     // get item category lists from the "models" package
@@ -70,10 +70,10 @@ public class ValueComparerController {
         return new ResponseEntity<UnitList>(valueComparerService.getUnitList(), HttpStatus.OK);
     }
 
-    // get Comparison obj that shows compared items, best value item, and by how much the best value item is cheaper than other items
+    // get Comparison obj that stores compared items and determines best value item
     @GetMapping("/item-comparison/{itemIdList}")
-    public ResponseEntity<Comparison> getCheaper(@PathVariable String[] itemIdList) {
-        return new ResponseEntity<Comparison>(valueComparerService.getCheaper(itemIdList), HttpStatus.OK);
+    public ResponseEntity<Comparison> getBestValue(@PathVariable String[] itemIdList) {
+        return new ResponseEntity<Comparison>(valueComparerService.getBestValue(itemIdList), HttpStatus.OK);
     }
 
 
