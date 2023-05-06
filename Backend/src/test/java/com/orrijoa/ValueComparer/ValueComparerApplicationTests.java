@@ -5,7 +5,6 @@ import com.orrijoa.ValueComparer.models.Item;
 
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.Assert.*;
 
 class ValueComparerApplicationTests {
 
@@ -13,8 +12,8 @@ class ValueComparerApplicationTests {
         Item item1 = new Item();
         Item item2 = new Item();
 
-        item1.setPricePerBaseAmount(5.0);
-        item2.setPricePerBaseAmount(3.0);
+        item1.setPricePerBaseUnit(5.0);
+        item2.setPricePerBaseUnit(3.0);
 
         List<Item> itemList = new ArrayList<>();
 

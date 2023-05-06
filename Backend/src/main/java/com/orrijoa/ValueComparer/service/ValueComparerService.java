@@ -59,7 +59,7 @@ public class ValueComparerService {
                     .brand(i.getBrand())
                     .store(i.getStore())
                     .category(i.getCategory())
-                    .pricePerBaseAmount(calculatePricePerBaseAmount(i))
+                    .pricePerBaseUnit(calculatePricePerBaseAmount(i))
                     .build();
             itemList.add(saveItem);
         }
