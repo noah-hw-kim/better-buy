@@ -70,18 +70,8 @@ public class ValueComparerService {
         return itemRepo.findAll(Sort.by(Sort.Direction.ASC, "category").and(Sort.by(Sort.Direction.ASC, "pricePerBaseAmount")));
     }
 
-//    public List<Item> getItemsWithName(String name) {
-//        return itemRepo.findAllByNameOrderByPricePerBaseAmountAsc(name);
-//    }
-
-
     public List<Item> getItems(String text) {
         return searchRepo.findByText(text);
-    }
-
-
-    public List<Item> getItemsByCategoryAndSubCategory(String category, String subCategory) {
-        return itemRepo.findAllByCategoryAndSubCategoryOrderByPricePerBaseAmountAsc(category, subCategory);
     }
 
     // create item 1 and item 2 objects with inputs and compare the value and return the cheaper item
