@@ -80,6 +80,9 @@ public class ValueComparerService {
         for (int i = 0; i < itemIdList.length; i++) {
             itemList.add(itemRepo.findItemById(Long.parseLong(itemIdList[i])));
         }
+
+//        Comparison comparison = new Comparison(itemList);
+//        System.out.println(comparison.getBestValItem());
         return new Comparison(itemList);
     }
 

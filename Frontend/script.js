@@ -151,7 +151,6 @@ function setUpBtns() {
 
 // set up compare button event
 async function setUpCompareBtn() {
-    console.log("got to setUpCompareBtn")
     let itemArr = document.getElementsByClassName("item");
 
     if (validateItemArr(itemArr) != false) {
@@ -161,7 +160,6 @@ async function setUpCompareBtn() {
         clearTable();
         createTable(updatedItemArr);
 
-        console.log(itemArrJson);
         let comparisionResult = await compareItems(itemArrJson);
 
         updateCompareResult(comparisionResult);
@@ -360,6 +358,8 @@ async function compareItems(itemArrJson) {
 
     let response = await fetch(`http://localhost:8081/api/value-comparer/item-comparison/${idStr}`)
     let comparisionResult = await response.json();
+    console.log("response from backend compare: ");
+    console.log(comparisionResult);
 
     return comparisionResult;
 }
@@ -380,24 +380,27 @@ function itemArrJsonToIdStr(itemArrJson) {
 // with comparision result from the back end, update the compare-result div content
 function updateCompareResult(responseJson) {
     let result = document.getElementById("compare-result");
-    // for later: how to change the hardCode to get the betterItem, comparedItemsList, and valueComparision
-    let betterItem = responseJson.betterItem;
+    console.log(responseJson);
+    // for later: how to change the hardCode to get the bestValItem, comparedItemsList, and valueComparision
+    let bestValItem = responseJson.bestValItem;
     let comparedItemsList = responseJson.comparedItemsList;
-    // valueComparison shows how much the better item is cheaper than the average
-    let valueComparison = responseJson.valueComparison;
+    // // valueComparison shows how much the better item is cheaper than the average
+    // let valueComparison = responseJson.valueComparison;
 
     let comparedItemsStr = "";
 
+    comparedItemsStr += `${bestValItem.name} is of best value.\n\n`;
+
     for (let i = 0; i < comparedItemsList.length; i++) {
         // exclude the better item from the compared Item List and format it
-        if (comparedItemsList[i].name != betterItem.name) {
-            comparedItemsStr += comparedItemsList[i].name + ", ";
-        }
+        comparedItemsStr += `${comparedItemsList[i].name}: $ ${comparedItemsList[i].pricePerBaseAmount} / ${comparedItemsList[i].unit}`;
     }
 
-    // format the item names
-    comparedItemsStr = comparedItemsStr.substring(0, comparedItemsStr.length - 2);
-    let compareResultStr = genElement("p", `${betterItem.name} is approximately ${Math.floor(valueComparison * 100)}% cheaper than the average of the other items(${comparedItemsStr})`);
+    console.log(comparedItemsStr);
+
+    // // format the item names
+    // comparedItemsStr = comparedItemsStr.substring(0, comparedItemsStr.length - 2);
+    // let compareResultStr = genElement("p", `${bestValItem.name} is approximately ${Math.floor(valueComparison * 100)}% cheaper than the average of the other items(${comparedItemsStr})`);
 
     result.replaceChildren();
     result.appendChild(compareResultStr);
