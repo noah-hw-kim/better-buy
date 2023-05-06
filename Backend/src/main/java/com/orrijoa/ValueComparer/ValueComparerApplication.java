@@ -1,8 +1,7 @@
 package com.orrijoa.ValueComparer;
 
 import com.orrijoa.ValueComparer.models.Categories;
-import com.orrijoa.ValueComparer.models.Category;
-import com.orrijoa.ValueComparer.models.UnitConverter;
+import com.orrijoa.ValueComparer.models.UnitToBaseMap;
 import com.orrijoa.ValueComparer.models.UnitList;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -39,10 +38,7 @@ public class ValueComparerApplication {
 	// Cache Unitlist which stays same once created
 	@Bean
 	public UnitList getUnitList() {
-		UnitConverter unitConverter = new UnitConverter();
 		UnitList unitList = new UnitList();
-		unitList.setUnitList(unitConverter.getUnitList());
-
 		return unitList;
 	}
 
@@ -51,6 +47,13 @@ public class ValueComparerApplication {
 	public Categories getCategroy() {
 		Categories categories = new Categories();
 		return categories;
+	}
+
+	// Cache UnitToBaseMap which stays same once created
+	@Bean
+	public UnitToBaseMap getUnitToBaseMap() {
+		UnitToBaseMap unitToBaseMap = new UnitToBaseMap();
+		return unitToBaseMap;
 	}
 
 	public static void main(String[] args) {

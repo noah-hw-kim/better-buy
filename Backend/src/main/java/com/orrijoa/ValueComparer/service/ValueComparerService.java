@@ -21,6 +21,8 @@ public class ValueComparerService {
     private UnitList unitList;
     @Autowired
     private Categories categories;
+    @Autowired
+    private UnitToBaseMap unitToBaseMap;
 
     public List<Item> createItems(List<Item> items) {
         // use item's hashcode for the id to prevent the duplicates
@@ -48,7 +50,7 @@ public class ValueComparerService {
     private double calculatePricePerBaseAmount(Item item) {
         // amount that converted to the base unit
         double result = -1;
-        double baseAmount = UnitConverter.getStandardAmount(item.getUnit()) * item.getAmount();
+        double baseAmount = unitToBaseMap.getBaseAmount(item.getUnit()) * item.getAmount();
         if (baseAmount != 0) {
             result = item.getPrice() / baseAmount;
         }

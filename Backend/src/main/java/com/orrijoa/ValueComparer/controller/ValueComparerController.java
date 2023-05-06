@@ -56,23 +56,25 @@ public class ValueComparerController {
         return new ResponseEntity<List<Item>>(valueComparerService.getItems(text), HttpStatus.OK);
     }
 
-    // get category lists from the "models" package
+    // get item category lists from the "models" package
     @GetMapping("/categories")
     public ResponseEntity<Categories> getCategories() {
         return new ResponseEntity<Categories>(valueComparerService.getCategories(), HttpStatus.OK);
     }
 
+    // get unit lists from the "models" package
     @GetMapping("/unit-list")
     public ResponseEntity<UnitList> getUnitList() {
         return new ResponseEntity<UnitList>(valueComparerService.getUnitList(), HttpStatus.OK);
     }
 
+    // get Comparison obj that shows compared item list, best value item, and how much the best value item is cheaper
     @GetMapping("/item-comparison/{itemIdList}")
     public ResponseEntity<Comparison> getCheaper(@PathVariable String[] itemIdList) {
         return new ResponseEntity<Comparison>(valueComparerService.getCheaper(itemIdList), HttpStatus.OK);
     }
 
-    //    This method is for the swagger api to test the app run
+    // used for swagger api to test
     @ApiIgnore
     @RequestMapping(value = "/")
     public void redirect(HttpServletResponse response) throws IOException {
