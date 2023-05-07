@@ -6,59 +6,25 @@ let massUnitsLst = [];
 let volumeUnitsLst = [];
 let lengthUnitsLst = [];
 let categoryLst = [" "];
-
 let itemCount = 2;
 
 setUpListsAndDB();
 setUpBtns();
 
 /**
- * Generates list of unit types and units
+ * PAGE SETUP ---------------------------------------------------------------------------------------------------------------
  */
-async function genUnitLists() {
-    let response = await fetch("http://localhost:8081/api/value-comparer/unit-list");
-    let responseJson = await response.json();
 
-    let jsonUnitList = responseJson["unitList"];        // get unitList Map
-
-    let jsonUnitListKeys = Object.keys(jsonUnitList);
-    for (let i = 0; i < jsonUnitListKeys.length; i++) { // for each keys in jsonUnitListKeys
-        let currKey = jsonUnitListKeys[i];              // get the key ("mass", "volume", "length", and etc)
-        unitTypeLst.push(currKey);                      // save the key
-
-        if (currKey.includes("mass")) {
-            massUnitsLst.push(...jsonUnitList[currKey]);    // save each items in mass
-        } else if (currKey.includes("volume")) {
-            volumeUnitsLst.push(...jsonUnitList[currKey]);
-        } else if (currKey.includes("length")) {
-            lengthUnitsLst.push(...jsonUnitList[currKey]);
-        }
-    }
-}
-
-/**
- * Generates list of categories
- */
-async function genCategoryList() {
-    let response = await fetch("http://localhost:8081/api/value-comparer/categories");
-    let responseJson = await response.json();
-
-    let jsonCategoryList = responseJson["categories"];        // get category 
-    let jsonCategoryValues = Object.values(jsonCategoryList);
-
-    categoryLst.push(...jsonCategoryValues);                  // save values
-}
-
-// load unitType, unit, and the category from the server 
+// Load unitType, units, and the categories from the server 
 async function setUpListsAndDB() {
-    await genCategoryList();
+    await getCategories();
 
     let categoryDropdown1 = document.getElementById("category-dropdown-1");
     let categoryDropdown2 = document.getElementById("category-dropdown-2");
     genCategoryDropdown(categoryDropdown1);
     genCategoryDropdown(categoryDropdown2);
 
-    await genUnitLists();
+    await getUnitsAndUnitTypes();
 
     let unitTypeDropdown1 = document.getElementById("unit-type-dropdown-1");
     let unitDropdown1 = document.getElementById("unit-dropdown-1");
@@ -76,66 +42,105 @@ async function setUpListsAndDB() {
     createTable(itemArr);
 }
 
-// add events to the buttons
+// Api call: Get units and unit types from backend repository (which will populate dropdowns in genUnitDropdown())
+async function getUnitsAndUnitTypes() {
+    let response = await fetch("http://localhost:8081/api/value-comparer/unit-list");
+    let responseJson = await response.json();
+    let jsonUnitList = responseJson["unitList"];
+    let jsonUnitListKeys = Object.keys(jsonUnitList);
+
+    for (let i = 0; i < jsonUnitListKeys.length; i++) {
+        let currKey = jsonUnitListKeys[i];              
+        unitTypeLst.push(currKey);                      
+
+        if (currKey.includes("mass")) {
+            massUnitsLst.push(...jsonUnitList[currKey]);
+        } else if (currKey.includes("volume")) {
+            volumeUnitsLst.push(...jsonUnitList[currKey]);
+        } else if (currKey.includes("length")) {
+            lengthUnitsLst.push(...jsonUnitList[currKey]);
+        }
+    }
+}
+
+// Api call: Get categories from backend repository (which will populate dropdowns in genCategoryDropdown())
+async function getCategories() {
+    let response = await fetch("http://localhost:8081/api/value-comparer/categories");
+    let responseJson = await response.json();
+    let jsonCategoryList = responseJson["categories"]; 
+    let jsonCategoryValues = Object.values(jsonCategoryList);
+    categoryLst.push(...jsonCategoryValues);
+}
+
+// Api call: Get all records from backend repository (which will populate search history table)
+async function getAllItems() {
+    let response = await fetch("http://localhost:8081/api/value-comparer/all-items");
+    let responseJson = await response.json();
+    let itemArr = [];
+
+    for (let i = 0; i < responseJson.length; i++) {
+        itemArr.push(responseJson[i]);
+    }
+    return itemArr;
+}
+
+// Generates Unit Type dropdown and its corresponding unit dropdown
+function genUnitDropdown(unitTypeDropdown, unitDropdown) {
+    if (unitTypeDropdown.value == "length") {
+        regenerateChildren("option", lengthUnitsLst, unitDropdown);
+    } else if (unitTypeDropdown.value == "mass") {
+        regenerateChildren("option", massUnitsLst, unitDropdown);
+    } else if (unitTypeDropdown.value == "volume") {
+        regenerateChildren("option", volumeUnitsLst, unitDropdown);
+    }
+}
+
+// Generates Category dropdown 
+function genCategoryDropdown(categoryDropdown) {
+    regenerateChildren("option", categoryLst, categoryDropdown);
+}
+
+
+/**
+ * EVENT HANDLERS ---------------------------------------------------------------------------------------------------------------
+ */
+
+// Add event handlers for all page buttons
 function setUpBtns() {
-    let compareBtn = document.getElementById("compare-button");
     let addItemBtn = document.getElementById("add-item-button");
-    let removeItemBtn = document.getElementById("remove-item-button");
+    let removeBtn = document.getElementById("remove-item-button");
     let searchItemBtn = document.getElementById("search-item-button");
     let resetBtn = document.getElementById("reset-button");
     let compareForm = document.getElementById("compare-form");
     
-    const forms = document.querySelectorAll('.needs-validation');
-
-  // Loop over them and prevent submission
-  Array.from(forms).forEach(form => {
-    form.addEventListener('submit', event => {
-      
-        event.preventDefault();
-      if (!form.checkValidity()) {
-        event.stopPropagation();
-      } 
-      else {
-        form.classList.add('was-validated')
-        setUpCompareBtn();
-      }
-    }, false)})
-
-
-    /* comments:
-    2. try to use the actual numbers we're dealing with (e.x., if our thought is "we allow min 2 items" 
-    then do something with 2 (e.x., if >2 then allow remove rather than if at least 3 then allow remove).
-    same result but first one is more intuitive and simple.
-    3. Disable rather than hide, I think. User exp wise I feel that I get confused when a button is suddenly gone.
-    */
+    // handle add button (adds item component)
     addItemBtn.addEventListener("click", () => {
         itemCount++;
-        addNewItem();
-
+        handleAddBtn();
         if (itemCount > 2) {
-            /*removeItemBtn.style.visibility = "visible";*/
-            removeItemBtn.disabled = false;
+            removeBtn.disabled = false;
         }
         if (itemCount >= 4) {
-            /*addItemBtn.style.visibility = "hidden";*/
             addItemBtn.disabled = true;
         }
     })
 
-    removeItemBtn.addEventListener("click", () => {
-        removeItem();
+    // handle remove button (removes item component)
+    removeBtn.addEventListener("click", () => {
+        handleRemoveBtn();
         itemCount--;
 
         if (itemCount <= 2) {
-            removeItemBtn.disabled = true;
+            removeBtn.disabled = true;
         }
         if (itemCount < 4) {
             addItemBtn.disabled = false;
         }
     })
 
+    // handle search button (searches in search history table)
     searchItemBtn.addEventListener("click", async() => {
-        let itemArr = await searchItems();
+        let itemArr = await handleSearchBtn();
 
         clearTable();
 
@@ -144,34 +149,31 @@ function setUpBtns() {
         }
     })
 
+    // handle reset button (clears all item component input)
     resetBtn.addEventListener("click", () => {
         compareForm.reset();
     })
+
+    // handle submit (compare button)
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+            if (!form.checkValidity()) {
+                event.stopPropagation();
+            } 
+            else {
+                form.classList.add('was-validated')
+                handleSubmit();
+            }
+        }, false)
+    })
 }
 
-// set up compare button event
-async function setUpCompareBtn() {
-    let itemArr = document.getElementsByClassName("item");
-
-    if (validateItemArr(itemArr) != false) {
-        let itemArrJson = await saveItems(itemArr);
-        let updatedItemArr = await getAllItems();
-
-        clearTable();
-        createTable(updatedItemArr);
-
-        let comparisionResult = await compareItems(itemArrJson);
-
-        updateCompareResult(comparisionResult);
-    } /*else {
-        alert("Field 'Name', 'Amount', and 'Price' must be filled in");
-    }*/
-}
-
-// set up add item button event
-function addNewItem() {
+// Adds another item component to page
+function handleAddBtn() {
     let item1Div = document.getElementById("item1");
-    let newItemDiv = item1Div.cloneNode(true); // true means clone all childNodes and all event handlers
+    let newItemDiv = item1Div.cloneNode(true);
     newItemDiv.id = `item${itemCount}`;
 
     let h5AndSelectElem = newItemDiv.querySelectorAll("h5, select");
@@ -179,11 +181,11 @@ function addNewItem() {
     for (i = 0; i < h5AndSelectElem.length; i++) {
         let currName = h5AndSelectElem[i].getAttribute("name");
 
-        // change item-index innerHTML
+        // update item title (e.x, "Item 1" -> "Item 2")
         if (currName == "item-index") {
             h5AndSelectElem[i].textContent = `Item ${itemCount}`;
         }
-        // change ids
+        // update ids
         else if (currName == "unit-type") {
             h5AndSelectElem[i].id = `unit-type-dropdown-${itemCount}`;
         } else if (currName == "unit") {
@@ -206,26 +208,21 @@ function addNewItem() {
     newUnitTypeDropdown.addEventListener("change", () => genUnitDropdown(newUnitTypeDropdown, newUnitDropdown));
 }
 
-// set up remove item button event
-function removeItem() {
+// Removes last added item component from page
+function handleRemoveBtn() {
     let formElem = document.getElementById("form-body");
     let targetItem = document.getElementById(`item${itemCount}`);
-
     formElem.removeChild(targetItem);
 }
 
-async function searchItems() {
+// Search items from backend repository
+async function handleSearchBtn() {
     let text = document.getElementById("search-text").value;
-
-    // push item objs to the itemArray to easily generate the table
     let itemArr = [];
 
-    // user search nothing
     if (text == "") {
         return getAllItems();
-    }
-
-    else {
+    } else {
         let response = await fetch(`http://localhost:8081/api/value-comparer/items/${text}`);
         let responseJson = await response.json();
 
@@ -233,58 +230,53 @@ async function searchItems() {
             itemArr.push(responseJson[i]);
         }
     }
-
     return itemArr; 
 }
 
+// Save items in backend repository, compare items, and display the result
+async function handleSubmit() {
+    let itemArr = document.getElementsByClassName("item");
 
+    if (validateInputs(itemArr) != false) {
+        let itemArrJson = await saveToDB(itemArr);
+        let updatedItemArr = await getAllItems();
 
-/**
- * Generates Category dropdown 
- */
-function genCategoryDropdown(categoryDropdown) {
-    regenerateChildren("option", categoryLst, categoryDropdown);
-}
+        clearTable();
+        createTable(updatedItemArr);
 
-/**
- * Generates Unit Type dropdown and its corresponding unit dropdown
- */
-function genUnitDropdown(unitTypeDropdown, unitDropdown) {
-    if (unitTypeDropdown.value == "length") {
-        regenerateChildren("option", lengthUnitsLst, unitDropdown);
-    } else if (unitTypeDropdown.value == "mass") {
-        regenerateChildren("option", massUnitsLst, unitDropdown);
-    } else if (unitTypeDropdown.value == "volume") {
-        regenerateChildren("option", volumeUnitsLst, unitDropdown);
+        let comparisionResult = await compareItems(itemArrJson);
+
+        displayCompareResult(comparisionResult);
     }
 }
 
-/**
- * Returns a single element with text (e.x., "<option>Option1</option>")
- */
-function genElement(elementType, text) {
-    let newElement = document.createElement(elementType);
-    newElement.innerText = text;
-    return newElement;
-}
+// Helper method for handleSubmit()
+function validateInputs(itemArr) {
+    isValid = true; 
+    
+    for (let i = 0; i < itemArr.length; i++) {
+        let divInputs = itemArr[i].getElementsByTagName('input');
 
-/**
- * Clears parent element of its current children and regenerates new children from elementsLst
- */
-function regenerateChildren(elementType, elementsLst, parent) {
-    parent.replaceChildren();
+        for (let i = 0; i < divInputs.length; i++) {
+            if (divInputs[i].name.includes("name") || divInputs[i].name.includes("amount") || divInputs[i].name.includes("price")) {
+                if (divInputs[i].value == "") {
+                    isValid = false;
+                    break; 
+                }
+            }
+        }
 
-    for (let i = 0; i < elementsLst.length; i++) {
-        let newText = elementsLst[i];
-        let newElement = genElement(elementType, newText);
-        parent.appendChild(newElement);
+        if (isValid == false) {
+            break;
+        }
     }
+
+    return isValid;
 }
 
-// send item info to the backend api and getting back the reflection of the item with the id
-async function saveItems(itemArr) {
-    let jsonData = itemArrToJson(itemArr);
-
+// Helper method for handleSubmit()
+async function saveToDB(itemArr) {
+    let jsonData = jsonifyItemArr(itemArr);
     let response = await fetch("http://localhost:8081/api/value-comparer/items", {
         method: "POST", headers: {
             "Content-Type": "application/json",
@@ -295,11 +287,8 @@ async function saveItems(itemArr) {
     return itemArrJson;
 }
 
-/**
- * need to handle both inputs and selects elements in the targetDiv, based on the name and value, converts to the Json obj and return it.
- */
-
-function itemArrToJson(itemArr) {
+// Helper method for saveToDB()
+function jsonifyItemArr(itemArr) {
     let jsonData = [];
 
     for (let i = 0; i < itemArr.length; i++) {
@@ -328,42 +317,17 @@ function itemArrToJson(itemArr) {
     return jsonData;
 }
 
-function validateItemArr(itemArr) {
-    isValid = true; 
-    
-    for (let i = 0; i < itemArr.length; i++) {
-        let divInputs = itemArr[i].getElementsByTagName('input');
-
-        for (let i = 0; i < divInputs.length; i++) {
-            if (divInputs[i].name.includes("name") || divInputs[i].name.includes("amount") || divInputs[i].name.includes("price")) {
-                if (divInputs[i].value == "") {
-                    isValid = false;
-                    break; 
-                }
-            }
-        }
-
-        if (isValid == false) {
-            break;
-        }
-    }
-
-    return isValid;
-}
-
-// send comparing items' id as a string to the back end and receive the comparison obj that contains the better value item, compared item list, and the value comparision that shows how much the better value item is cheaper than the other items in the list
+// Helper method for handleSubmit(): Get comparison result (best value item and compared items list)
 async function compareItems(itemArrJson) {
-    // let itemArrJson = await saveItems(itemArr);
-    let idStr = itemArrJsonToIdStr(itemArrJson);
-
+    let idStr = getIdFromJsonArr(itemArrJson);
     let response = await fetch(`http://localhost:8081/api/value-comparer/item-comparison/${idStr}`)
     let comparisionResult = await response.json();
 
     return comparisionResult;
 }
 
-// receive item Array list as Json format and covert it to the id string connect with "," (comma)
-function itemArrJsonToIdStr(itemArrJson) {
+// Helper method for compareItems(): Get ID from json array passed back from backend repository
+function getIdFromJsonArr(itemArrJson) {
     let idStr = "";
 
     for (i = 0; i < itemArrJson.length; i++) {
@@ -375,141 +339,57 @@ function itemArrJsonToIdStr(itemArrJson) {
     return idStr;
 }
 
-// with comparision result from the back end, update the compare-result div content
-function updateCompareResult(responseJson) {
+// Helper method for handleSubmit():Update the compare-result div with comparison result
+function displayCompareResult(responseJson) {
     let result = document.getElementById("compare-result");
-    // for later: how to change the hardCode to get the bestValItem, comparedItemsList, and valueComparision
     let bestValItem = responseJson.bestValItem;
     let comparedItemsList = responseJson.comparedItemsList;
-    // // valueComparison shows how much the better item is cheaper than the average
-    // let valueComparison = responseJson.valueComparison;
-
     let comparedItemsStr = "";
-
     comparedItemsStr += `${bestValItem.name} is of best value.\n\n`;
 
     for (let i = 0; i < comparedItemsList.length; i++) {
-        // exclude the better item from the compared Item List and format it
-        comparedItemsStr += `${comparedItemsList[i].name}: $ ${comparedItemsList[i].pricePerBaseAmount}/${comparedItemsList[i].unit}\n`;
+        comparedItemsStr += `${comparedItemsList[i].name}: $ ${comparedItemsList[i].pricePerBaseUnit}/${comparedItemsList[i].unit}\n`;
     }
 
-    
-    // format the item names
     let compareResultStr = genElement("p", comparedItemsStr);
-
     result.replaceChildren();
     result.appendChild(compareResultStr);
 }
 
+// Delete an item in the backend repository
+async function deleteRecord(itemId) {
+    await fetch(`http://localhost:8081/api/value-comparer/item/${itemId}`, { method: "DELETE" });
+}
 
-// receive all items in the db from the back end
-async function getAllItems() {
-    let response = await fetch("http://localhost:8081/api/value-comparer/all-items");
-    let responseJson = await response.json();
+// Delete all items in the backend repository
+async function deleteAllRecords() {
+    await fetch(`http://localhost:8081/api/value-comparer/items`, { method: "DELETE" });
+}
 
-    // push item objs to the itemArray to easily generate the table
-    let itemArr = [];
 
-    for (let i = 0; i < responseJson.length; i++) {
-        itemArr.push(responseJson[i]);
+/**
+ * UTILITY ---------------------------------------------------------------------------------------------------------------
+ */
+
+// Returns a single element with text (e.x., "<option>Option1</option>")
+function genElement(elementType, text) {
+    let newElement = document.createElement(elementType);
+    newElement.innerText = text;
+    return newElement;
+}
+
+// Clears parent element of its current children and regenerates new children from elementsLst
+function regenerateChildren(elementType, elementsLst, parent) {
+    parent.replaceChildren();
+
+    for (let i = 0; i < elementsLst.length; i++) {
+        let newText = elementsLst[i];
+        let newElement = genElement(elementType, newText);
+        parent.appendChild(newElement);
     }
-
-    return itemArr;
 }
 
-// create table row for the header
-function createTableHeader() {
-    // create table row for the header
-    let tr = document.createElement("tr");
-
-    // create table headers and attach to the tr
-    let thId = genElement("th", "id");
-    let thName = genElement("th", "name");
-    let thAmount = genElement("th", "amount");
-    let thPrice = genElement("th", "price");
-    let thUnit = genElement("th", "unit");
-    let thBrand = genElement("th", "brand");
-    let thStore = genElement("th", "store");
-    let thCategory = genElement("th", "category");
-    let thPricePerBaseAmount = genElement("th", "unit price");
-    let thClearButton = genElement("button", "Clear");
-    thClearButton.id = "clear-button";
-
-    // add even to the clear button that delete all items in db
-    thClearButton.addEventListener("click", () => {
-        deleteAllItems();
-        createTable();
-    })
-
-    tr.appendChild(thId);
-    tr.appendChild(thName);
-    tr.appendChild(thAmount);
-    tr.appendChild(thPrice);
-    tr.appendChild(thUnit);
-    tr.appendChild(thBrand);
-    tr.appendChild(thStore);
-    tr.appendChild(thCategory);
-    tr.appendChild(thPricePerBaseAmount);
-    tr.appendChild(thClearButton);
-
-    tr.id = "item-table-header";
-    return tr;
-}
-
-// create table row for the body
-function createTableBody(itemArr) {
-    let trArr = [];
-
-    if (itemArr.length != 0) {
-        for (let i = 0; i < itemArr.length; i++) {
-            let tr = document.createElement("tr");
-
-            let tdId = genElement("td", itemArr[i].id);
-            let tdName = genElement("td", itemArr[i].name);
-            let tdAmount = genElement("td", itemArr[i].amount);
-            let tdPrice = genElement("td", `$${itemArr[i].price}`);
-            let tdUnit = genElement("td", itemArr[i].unit);
-            let tdBrand = genElement("td", itemArr[i].brand);
-            let tdStore = genElement("td", itemArr[i].store);
-            let tdCategory = genElement("td", itemArr[i].category);
-            let tdPricePerBaseAmount;
-
-            // check if the item's base unit is mass/volume/length
-            if (massUnitsLst.includes(itemArr[i].unit) || volumeUnitsLst.includes(itemArr[i].unit)) {
-                tdPricePerBaseAmount = genElement("td", `$${itemArr[i].pricePerBaseAmount.toFixed(3)} / oz`);
-            } else if (lengthUnitsLst.includes(itemArr[i].unit)) {
-                tdPricePerBaseAmount = genElement("td", `$${itemArr[i].pricePerBaseAmount.toFixed(3)} / in`);
-            }
-
-            // create deleteBtn so that the user can delete the item from the database
-            let tdDeleteBtn = genElement("button", "x");
-            tdDeleteBtn.addEventListener("click", async() => {
-                
-                await deleteItem(itemArr[i].id);
-                clearTable();
-
-                let updatedItemArr = await getAllItems();
-                createTable(updatedItemArr);
-            })
-
-            tr.appendChild(tdId);
-            tr.appendChild(tdName);
-            tr.appendChild(tdAmount);
-            tr.appendChild(tdPrice);
-            tr.appendChild(tdUnit);
-            tr.appendChild(tdBrand);
-            tr.appendChild(tdStore);
-            tr.appendChild(tdCategory);
-            tr.appendChild(tdPricePerBaseAmount);
-            tr.appendChild(tdDeleteBtn);
-
-            trArr.push(tr);
-        }
-    }
-    return trArr;
-}
-
-// update the table header and the body with itemArr received
+// Recreate table and update body with new item inputs
 function createTable(itemArr) {
     clearTable();
     
@@ -530,25 +410,78 @@ function createTable(itemArr) {
     }
 }
 
-// delete all contents from the table
+// Clear table contents (this does not delete records from backend repo)
 function clearTable() {
     let itemTable = document.getElementById("item-table");
-    // while (itemTable.rows.length > 0) {
-    //     itemTable.deleteRow(0);
-    // }
-
     itemTable.replaceChildren();
 }
 
-// delete an item in the db sending a request to the back end
-async function deleteItem(itemId) {
-    await fetch(`http://localhost:8081/api/value-comparer/item/${itemId}`, { method: "DELETE" });
+// Create table header row
+function createTableHeader() {
+    // create table row for the header
+    let tr = document.createElement("tr");
+
+    // create table headers and attach to the tr
+    let thId = genElement("th", "id");
+    let thName = genElement("th", "name");
+    let thAmount = genElement("th", "amount");
+    let thPrice = genElement("th", "price");
+    let thUnit = genElement("th", "unit");
+    let thBrand = genElement("th", "brand");
+    let thStore = genElement("th", "store");
+    let thCategory = genElement("th", "category");
+    let thPricePerBaseUnit = genElement("th", "unit price");
+    let thClearBtn = genElement("button", "Clear");
+    thClearBtn.id = "clear-button";
+
+    // add even to the clear button that delete all items in db
+    thClearBtn.addEventListener("click", () => {
+        deleteAllRecords();
+        createTable();
+    })
+
+    tr.append(thId, thName, thAmount, thPrice, thUnit, thBrand, thStore, thCategory, thPricePerBaseUnit, thClearBtn)
+    tr.id = "item-table-header";
+    return tr;
 }
 
-// delete all items in the db
-async function deleteAllItems() {
-    await fetch(`http://localhost:8081/api/value-comparer/items`, { method: "DELETE" });
+// Create table rows for each item submitted
+function createTableBody(itemArr) {
+    let trArr = [];
+
+    if (itemArr.length != 0) {
+        for (let i = 0; i < itemArr.length; i++) {
+            let tr = document.createElement("tr");
+
+            let tdId = genElement("td", itemArr[i].id);
+            let tdName = genElement("td", itemArr[i].name);
+            let tdAmount = genElement("td", itemArr[i].amount);
+            let tdPrice = genElement("td", `$${itemArr[i].price}`);
+            let tdUnit = genElement("td", itemArr[i].unit);
+            let tdBrand = genElement("td", itemArr[i].brand);
+            let tdStore = genElement("td", itemArr[i].store);
+            let tdCategory = genElement("td", itemArr[i].category);
+            let tdPricePerBaseUnit;
+
+            // check if the item's base unit is mass/volume/length
+            if (massUnitsLst.includes(itemArr[i].unit) || volumeUnitsLst.includes(itemArr[i].unit)) {
+                tdPricePerBaseUnit = genElement("td", `$${itemArr[i].pricePerBaseUnit.toFixed(3)} / oz`);
+            } else if (lengthUnitsLst.includes(itemArr[i].unit)) {
+                tdPricePerBaseUnit = genElement("td", `$${itemArr[i].pricePerBaseUnit.toFixed(3)} / in`);
+            }
+
+            // create deleteBtn so that the user can delete the item from the database
+            let tdDeleteBtn = genElement("button", "x");
+            tdDeleteBtn.addEventListener("click", async() => {
+                await deleteRecord(itemArr[i].id);
+                clearTable();
+                let updatedItemArr = await getAllItems();
+                createTable(updatedItemArr);
+            })
+
+            tr.append(tdId, tdName, tdAmount, tdPrice, tdUnit, tdBrand, tdStore, tdCategory, tdPricePerBaseUnit, tdDeleteBtn)
+            trArr.push(tr);
+        }
+    }
+    return trArr;
 }
-
-
-
