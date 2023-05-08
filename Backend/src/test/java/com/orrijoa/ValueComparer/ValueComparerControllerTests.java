@@ -7,7 +7,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class ValueComparerControllerTests {
 
     public void test(){
-        
+
     }
 
 }
