@@ -15,31 +15,18 @@ setUpBtns();
  * PAGE SETUP ---------------------------------------------------------------------------------------------------------------
  */
 
-// Load unitType, units, and the categories from the server 
+// Load unitType, units, categories, and search history from the server 
 async function setUpListsAndDB() {
     await getCategories();
-
-    let categoryDropdown1 = document.getElementById("category-dropdown-1");
-    let categoryDropdown2 = document.getElementById("category-dropdown-2");
-    genCategoryDropdown(categoryDropdown1);
-    genCategoryDropdown(categoryDropdown2);
+    genCategoryDropdown("category-dropdown-1");
+    genCategoryDropdown("category-dropdown-2");
 
     await getUnitsAndUnitTypes();
+    genUnitAndUnitTypeDropdowns("unit-type-dropdown-1", "unit-dropdown-1");
+    genUnitAndUnitTypeDropdowns("unit-type-dropdown-2", "unit-dropdown-2");
 
-    let unitTypeDropdown1 = document.getElementById("unit-type-dropdown-1");
-    let unitDropdown1 = document.getElementById("unit-dropdown-1");
-
-    let unitTypeDropdown2 = document.getElementById("unit-type-dropdown-2");
-    let unitDropdown2 = document.getElementById("unit-dropdown-2");
-
-    genUnitDropdown(unitTypeDropdown1, unitDropdown1);
-    genUnitDropdown(unitTypeDropdown2, unitDropdown2);
-
-    unitTypeDropdown1.addEventListener("change", () => genUnitDropdown(unitTypeDropdown1, unitDropdown1));
-    unitTypeDropdown2.addEventListener("change", () => genUnitDropdown(unitTypeDropdown2, unitDropdown2));
-
-    let itemArr = await getAllItems();
-    createTable(itemArr);
+    let searchedItemsArr = await getAllItems();
+    genSearchTable(searchedItemsArr);
 }
 
 // Api call: Get units and unit types from backend repository (which will populate dropdowns in genUnitDropdown())
@@ -76,28 +63,45 @@ async function getCategories() {
 async function getAllItems() {
     let response = await fetch("http://localhost:8081/api/value-comparer/all-items");
     let responseJson = await response.json();
-    let itemArr = [];
+    let searchedItemsArr = [];
 
     for (let i = 0; i < responseJson.length; i++) {
-        itemArr.push(responseJson[i]);
+        searchedItemsArr.push(responseJson[i]);
     }
-    return itemArr;
+    return searchedItemsArr;
 }
 
-// Generates Unit Type dropdown and its corresponding unit dropdown
-function genUnitDropdown(unitTypeDropdown, unitDropdown) {
+// Setup Unit and Unit Type Dropdowns
+function genUnitAndUnitTypeDropdowns(unitTypeDropdownID, unitDropdownID) {
+    let unitTypeDropdown = document.getElementById(unitTypeDropdownID);
+
+    genUnitTypeDropdown(unitTypeDropdownID);
+    genUnitDropdown(unitTypeDropdownID, unitDropdownID);
+
+    unitTypeDropdown.addEventListener("change", () => genUnitDropdown(unitTypeDropdownID, unitDropdownID));
+}
+
+// Helper method for genUnitAndUnitTypeDropdowns: Generates Unit Type dropdown ("volume", "mass", or "length")
+function genUnitTypeDropdown(unitTypeDropdownID) {
+    regenerateChildren("option", unitTypeLst, unitTypeDropdownID);
+}
+
+// Helper method for genUnitAndUnitTypeDropdowns: Generates unit dropdown corresponding to unit type selected
+function genUnitDropdown(unitTypeDropdownID, unitDropdownID) {
+    let unitTypeDropdown = document.getElementById(unitTypeDropdownID);
+
     if (unitTypeDropdown.value == "length") {
-        regenerateChildren("option", lengthUnitsLst, unitDropdown);
+        regenerateChildren("option", lengthUnitsLst, unitDropdownID);
     } else if (unitTypeDropdown.value == "mass") {
-        regenerateChildren("option", massUnitsLst, unitDropdown);
+        regenerateChildren("option", massUnitsLst, unitDropdownID);
     } else if (unitTypeDropdown.value == "volume") {
-        regenerateChildren("option", volumeUnitsLst, unitDropdown);
+        regenerateChildren("option", volumeUnitsLst, unitDropdownID);
     }
 }
 
-// Generates Category dropdown 
-function genCategoryDropdown(categoryDropdown) {
-    regenerateChildren("option", categoryLst, categoryDropdown);
+// Generates Category dropdown for provided category dropdown element id
+function genCategoryDropdown(categoryDropdownID) {
+    regenerateChildren("option", categoryLst, categoryDropdownID);
 }
 
 
@@ -109,7 +113,7 @@ function genCategoryDropdown(categoryDropdown) {
 function setUpBtns() {
     let addItemBtn = document.getElementById("add-item-button");
     let removeBtn = document.getElementById("remove-item-button");
-    let searchItemBtn = document.getElementById("search-item-button");
+    let searchRecordsBtn = document.getElementById("search-records-button");
     let resetBtn = document.getElementById("reset-button");
     let compareForm = document.getElementById("compare-form");
     
@@ -139,13 +143,13 @@ function setUpBtns() {
     })
 
     // handle search button (searches in search history table)
-    searchItemBtn.addEventListener("click", async() => {
-        let itemArr = await handleSearchBtn();
+    searchRecordsBtn.addEventListener("click", async() => {
+        let searchedRecordsArr = await handleSearchBtn();
 
         clearTable();
 
-        if (itemArr.length > 0) {
-            createTable(itemArr);
+        if (searchedRecordsArr.length > 0) {
+            genSearchTable(searchedRecordsArr);
         }
     })
 
@@ -181,31 +185,24 @@ function handleAddBtn() {
     for (i = 0; i < h5AndSelectElem.length; i++) {
         let currName = h5AndSelectElem[i].getAttribute("name");
 
-        // update item title (e.x, "Item 1" -> "Item 2")
+        // update item title (e.x, "Item 1" -> "Item 3")
         if (currName == "item-index") {
             h5AndSelectElem[i].textContent = `Item ${itemCount}`;
         }
-        // update ids
+        // update ids (e.x., "unit-dropdown-1" -> "unit-dropdown-3")
         else if (currName == "unit-type") {
             h5AndSelectElem[i].id = `unit-type-dropdown-${itemCount}`;
         } else if (currName == "unit") {
             h5AndSelectElem[i].id = `unit-dropdown-${itemCount}`;
         } else if (currName == "category") {
-            h5AndSelectElem[i].id = `category-dropdown-${itemCount}`
+            h5AndSelectElem[i].id = `category-dropdown-${itemCount}`;
         }
     }
 
+    // append new item div to page and add in event
     let formElem = document.getElementById("form-body");
     formElem.appendChild(newItemDiv);
-
-    let newCategoryDropdown = document.getElementById(`category-dropdown-${itemCount}`);
-    genCategoryDropdown(newCategoryDropdown);
-
-    let newUnitTypeDropdown = document.getElementById(`unit-type-dropdown-${itemCount}`);
-    let newUnitDropdown = document.getElementById(`unit-dropdown-${itemCount}`);
-    genUnitDropdown(newUnitTypeDropdown, newUnitDropdown);
-
-    newUnitTypeDropdown.addEventListener("change", () => genUnitDropdown(newUnitTypeDropdown, newUnitDropdown));
+    genUnitAndUnitTypeDropdowns(`unit-type-dropdown-${itemCount}`, `unit-dropdown-${itemCount}`)
 }
 
 // Removes last added item component from page
@@ -217,45 +214,45 @@ function handleRemoveBtn() {
 
 // Search items from backend repository
 async function handleSearchBtn() {
-    let text = document.getElementById("search-text").value;
-    let itemArr = [];
+    let searchText = document.getElementById("search-text").value;
+    let searchReturnArr = [];
 
-    if (text == "") {
+    if (searchText == "") {
         return getAllItems();
     } else {
-        let response = await fetch(`http://localhost:8081/api/value-comparer/items/${text}`);
+        let response = await fetch(`http://localhost:8081/api/value-comparer/items/${searchText}`);
         let responseJson = await response.json();
 
         for (let i = 0; i < responseJson.length; i++) {
-            itemArr.push(responseJson[i]);
+            searchReturnArr.push(responseJson[i]);
         }
     }
-    return itemArr; 
+    return searchReturnArr; 
 }
 
 // Save items in backend repository, compare items, and display the result
 async function handleSubmit() {
-    let itemArr = document.getElementsByClassName("item");
+    let itemsArr = document.getElementsByClassName("item");
 
-    if (validateInputs(itemArr) != false) {
-        let itemArrJson = await saveToDB(itemArr);
-        let updatedItemArr = await getAllItems();
+    if (validateInputs(itemsArr) != false) {
+        let itemsArrJson = await saveToDB(itemsArr);
+        let updatedSearchedRecordsArr = await getAllItems();
 
         clearTable();
-        createTable(updatedItemArr);
+        genSearchTable(updatedSearchedRecordsArr);
 
-        let comparisionResult = await compareItems(itemArrJson);
+        let comparisionResult = await compareItems(itemsArrJson);
 
         displayCompareResult(comparisionResult);
     }
 }
 
 // Helper method for handleSubmit()
-function validateInputs(itemArr) {
+function validateInputs(searchedItemsArr) {
     isValid = true; 
     
-    for (let i = 0; i < itemArr.length; i++) {
-        let divInputs = itemArr[i].getElementsByTagName('input');
+    for (let i = 0; i < searchedItemsArr.length; i++) {
+        let divInputs = searchedItemsArr[i].getElementsByTagName('input');
 
         for (let i = 0; i < divInputs.length; i++) {
             if (divInputs[i].name.includes("name") || divInputs[i].name.includes("amount") || divInputs[i].name.includes("price")) {
@@ -275,26 +272,26 @@ function validateInputs(itemArr) {
 }
 
 // Helper method for handleSubmit()
-async function saveToDB(itemArr) {
-    let jsonData = jsonifyItemArr(itemArr);
+async function saveToDB(searchedItemsArr) {
+    let jsonData = jsonifysearchedItemsArr(searchedItemsArr);
     let response = await fetch("http://localhost:8081/api/value-comparer/items", {
         method: "POST", headers: {
             "Content-Type": "application/json",
         }, body: JSON.stringify(jsonData)
     });
-    let itemArrJson = await response.json();
+    let searchedItemsArrJson = await response.json();
 
-    return itemArrJson;
+    return searchedItemsArrJson;
 }
 
 // Helper method for saveToDB()
-function jsonifyItemArr(itemArr) {
+function jsonifysearchedItemsArr(searchedItemsArr) {
     let jsonData = [];
 
-    for (let i = 0; i < itemArr.length; i++) {
+    for (let i = 0; i < searchedItemsArr.length; i++) {
         let jsonElem = {};
-        let divInputs = itemArr[i].getElementsByTagName('input');
-        let divSelects = itemArr[i].getElementsByTagName('select');
+        let divInputs = searchedItemsArr[i].getElementsByTagName('input');
+        let divSelects = searchedItemsArr[i].getElementsByTagName('select');
 
         for (let i = 0; i < divInputs.length; i++) {
             // change the value type from string to float if the fileds are amount and price.
@@ -318,20 +315,19 @@ function jsonifyItemArr(itemArr) {
 }
 
 // Helper method for handleSubmit(): Get comparison result (best value item and compared items list)
-async function compareItems(itemArrJson) {
-    let idStr = getIdFromJsonArr(itemArrJson);
+async function compareItems(searchedItemsArrJson) {
+    let idStr = getIdFromJsonArr(searchedItemsArrJson);
     let response = await fetch(`http://localhost:8081/api/value-comparer/item-comparison/${idStr}`)
     let comparisionResult = await response.json();
-
     return comparisionResult;
 }
 
 // Helper method for compareItems(): Get ID from json array passed back from backend repository
-function getIdFromJsonArr(itemArrJson) {
+function getIdFromJsonArr(searchedItemsArrJson) {
     let idStr = "";
 
-    for (i = 0; i < itemArrJson.length; i++) {
-        idStr += itemArrJson[i].id + ",";
+    for (i = 0; i < searchedItemsArrJson.length; i++) {
+        idStr += searchedItemsArrJson[i].id + ",";
     }
 
     idStr = idStr.substring(0, idStr.length - 1);
@@ -379,7 +375,8 @@ function genElement(elementType, text) {
 }
 
 // Clears parent element of its current children and regenerates new children from elementsLst
-function regenerateChildren(elementType, elementsLst, parent) {
+function regenerateChildren(elementType, elementsLst, parentID) {
+    let parent = document.getElementById(parentID);
     parent.replaceChildren();
 
     for (let i = 0; i < elementsLst.length; i++) {
@@ -390,19 +387,19 @@ function regenerateChildren(elementType, elementsLst, parent) {
 }
 
 // Recreate table and update body with new item inputs
-function createTable(itemArr) {
+function genSearchTable(searchedItemsArr) {
     clearTable();
     
     let itemTable = document.getElementById("item-table");
     let itemHeader = document.createElement("thead");
     let itemBody = document.createElement("tbody");
 
-    let tableHeader = createTableHeader();
+    let tableHeader = genSearchHeader();
     itemHeader.appendChild(tableHeader);
     itemTable.appendChild(itemHeader);
 
-    if (itemArr != null && itemArr.length > 0) {
-        let tableDataRowArr = createTableBody(itemArr);
+    if (searchedItemsArr != null && searchedItemsArr.length > 0) {
+        let tableDataRowArr = genSearchBody(searchedItemsArr);
         for (let i = 0; i < tableDataRowArr.length; i++) {
             itemBody.appendChild(tableDataRowArr[i]);
         }
@@ -417,7 +414,7 @@ function clearTable() {
 }
 
 // Create table header row
-function createTableHeader() {
+function genSearchHeader() {
     // create table row for the header
     let tr = document.createElement("tr");
 
@@ -437,7 +434,7 @@ function createTableHeader() {
     // add even to the clear button that delete all items in db
     thClearBtn.addEventListener("click", () => {
         deleteAllRecords();
-        createTable();
+        genSearchTable();
     })
 
     tr.append(thId, thName, thAmount, thPrice, thUnit, thBrand, thStore, thCategory, thPricePerBaseUnit, thClearBtn)
@@ -446,37 +443,37 @@ function createTableHeader() {
 }
 
 // Create table rows for each item submitted
-function createTableBody(itemArr) {
+function genSearchBody(searchedItemsArr) {
     let trArr = [];
 
-    if (itemArr.length != 0) {
-        for (let i = 0; i < itemArr.length; i++) {
+    if (searchedItemsArr.length != 0) {
+        for (let i = 0; i < searchedItemsArr.length; i++) {
             let tr = document.createElement("tr");
 
-            let tdId = genElement("td", itemArr[i].id);
-            let tdName = genElement("td", itemArr[i].name);
-            let tdAmount = genElement("td", itemArr[i].amount);
-            let tdPrice = genElement("td", `$${itemArr[i].price}`);
-            let tdUnit = genElement("td", itemArr[i].unit);
-            let tdBrand = genElement("td", itemArr[i].brand);
-            let tdStore = genElement("td", itemArr[i].store);
-            let tdCategory = genElement("td", itemArr[i].category);
+            let tdId = genElement("td", searchedItemsArr[i].id);
+            let tdName = genElement("td", searchedItemsArr[i].name);
+            let tdAmount = genElement("td", searchedItemsArr[i].amount);
+            let tdPrice = genElement("td", `$${searchedItemsArr[i].price}`);
+            let tdUnit = genElement("td", searchedItemsArr[i].unit);
+            let tdBrand = genElement("td", searchedItemsArr[i].brand);
+            let tdStore = genElement("td", searchedItemsArr[i].store);
+            let tdCategory = genElement("td", searchedItemsArr[i].category);
             let tdPricePerBaseUnit;
 
             // check if the item's base unit is mass/volume/length
-            if (massUnitsLst.includes(itemArr[i].unit) || volumeUnitsLst.includes(itemArr[i].unit)) {
-                tdPricePerBaseUnit = genElement("td", `$${itemArr[i].pricePerBaseUnit.toFixed(3)} / oz`);
-            } else if (lengthUnitsLst.includes(itemArr[i].unit)) {
-                tdPricePerBaseUnit = genElement("td", `$${itemArr[i].pricePerBaseUnit.toFixed(3)} / in`);
+            if (massUnitsLst.includes(searchedItemsArr[i].unit) || volumeUnitsLst.includes(searchedItemsArr[i].unit)) {
+                tdPricePerBaseUnit = genElement("td", `$${searchedItemsArr[i].pricePerBaseUnit.toFixed(3)} / oz`);
+            } else if (lengthUnitsLst.includes(searchedItemsArr[i].unit)) {
+                tdPricePerBaseUnit = genElement("td", `$${searchedItemsArr[i].pricePerBaseUnit.toFixed(3)} / in`);
             }
 
             // create deleteBtn so that the user can delete the item from the database
             let tdDeleteBtn = genElement("button", "x");
             tdDeleteBtn.addEventListener("click", async() => {
-                await deleteRecord(itemArr[i].id);
+                await deleteRecord(searchedItemsArr[i].id);
                 clearTable();
-                let updatedItemArr = await getAllItems();
-                createTable(updatedItemArr);
+                let updatedsearchedItemsArr = await getAllItems();
+                genSearchTable(updatedsearchedItemsArr);
             })
 
             tr.append(tdId, tdName, tdAmount, tdPrice, tdUnit, tdBrand, tdStore, tdCategory, tdPricePerBaseUnit, tdDeleteBtn)
