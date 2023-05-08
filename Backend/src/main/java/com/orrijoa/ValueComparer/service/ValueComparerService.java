@@ -8,6 +8,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 public class ValueComparerService {
@@ -60,6 +62,7 @@ public class ValueComparerService {
                     .store(i.getStore())
                     .category(i.getCategory())
                     .pricePerBaseUnit(calculatePricePerBaseAmount(i))
+                    .baseUnit(defineBaseUnit(i))
                     .build();
             itemList.add(saveItem);
         }
@@ -78,6 +81,19 @@ public class ValueComparerService {
         result = result / DECIMAL_PLACE;
 
         return result;
+    }
+
+    // helper method used in createItems()
+    private String defineBaseUnit(Item item) {
+        String itemUnit = item.getUnit();
+        Map<String, Set<String>> unitTypeToUnit = unitList.getUnitTypeToUnitCopy();
+
+        for (String unitType : unitTypeToUnit.keySet()) {
+            if (unitTypeToUnit.get(unitType).contains(itemUnit)) {
+                return unitType;
+            }
+        }
+        return null;
     }
 
     // creates a comparison obj using itemIds

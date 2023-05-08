@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
@@ -80,6 +79,7 @@ public class ValueComparerController {
     /*
      * Backend Test Methods -----------------------------------------------------------------------------------------------
      * */
+
     // used for swagger api to test CRUD methods on backend
     @ApiIgnore
     @RequestMapping(value = "/")

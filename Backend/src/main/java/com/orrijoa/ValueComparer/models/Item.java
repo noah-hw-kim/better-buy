@@ -23,6 +23,7 @@ public class Item implements Comparable<Item> {
     private String store;
     private String category;
     private double pricePerBaseUnit;  // e.g) 1 gallon :  128 fluid oz
+    private String baseUnit;
 
     @Override
     public int compareTo(Item other) {
@@ -39,7 +40,7 @@ public class Item implements Comparable<Item> {
         }
         Item other = (Item) obj;
 
-        return other.id == id && other.unit.equals(unit) && other.name.equals(name) && other.price == price && other.amount == amount && other.brand.equals(brand) && other.store.equals(store) && other.category.equals(category) && other.pricePerBaseUnit == pricePerBaseUnit;
+        return other.id == id && other.unit.equals(unit) && other.name.equals(name) && other.price == price && other.amount == amount && other.brand.equals(brand) && other.store.equals(store) && other.category.equals(category) && other.pricePerBaseUnit == pricePerBaseUnit && other.baseUnit.equals(baseUnit);
     }
 
     // creating hashcode() with custom : starting point 1, prime multiplier 31
@@ -52,6 +53,7 @@ public class Item implements Comparable<Item> {
         result = prime * result + ((brand == null) ? 0 : brand.hashCode());
         result = prime * result + ((store == null) ? 0 : store.hashCode());
         result = prime * result + ((category == null) ? 0 : category.hashCode());
+        result = prime * result + ((baseUnit == null) ? 0 : baseUnit.hashCode());
         result = prime * result + (int) id;
         result = prime * result + (int) price;
         result = prime * result + (int) amount;
