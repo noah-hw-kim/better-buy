@@ -1,4 +1,4 @@
-package com.orrijoa.ValueComparer.models;
+package com.orrijoa.BetterBuy.models;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

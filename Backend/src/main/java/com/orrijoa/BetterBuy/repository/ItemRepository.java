@@ -1,6 +1,6 @@
-package com.orrijoa.ValueComparer.repository;
+package com.orrijoa.BetterBuy.repository;
 
-import com.orrijoa.ValueComparer.models.Item;
+import com.orrijoa.BetterBuy.models.Item;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

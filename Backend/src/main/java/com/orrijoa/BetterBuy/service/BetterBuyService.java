@@ -1,8 +1,8 @@
-package com.orrijoa.ValueComparer.service;
+package com.orrijoa.BetterBuy.service;
 
-import com.orrijoa.ValueComparer.models.*;
-import com.orrijoa.ValueComparer.repository.ItemRepository;
-import com.orrijoa.ValueComparer.repository.SearchRepository;
+import com.orrijoa.BetterBuy.models.*;
+import com.orrijoa.BetterBuy.repository.ItemRepository;
+import com.orrijoa.BetterBuy.repository.SearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Service
-public class ValueComparerService {
+public class BetterBuyService {
     @Autowired
     private ItemRepository itemRepo;
     @Autowired

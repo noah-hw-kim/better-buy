@@ -1,10 +1,10 @@
-package com.orrijoa.ValueComparer.repository;
+package com.orrijoa.BetterBuy.repository;
 
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.orrijoa.ValueComparer.models.Item;
+import com.orrijoa.BetterBuy.models.Item;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

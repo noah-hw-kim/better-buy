@@ -1,8 +1,8 @@
-package com.orrijoa.ValueComparer;
+package com.orrijoa.BetterBuy;
 
-import com.orrijoa.ValueComparer.models.Categories;
-import com.orrijoa.ValueComparer.models.UnitToBaseMap;
-import com.orrijoa.ValueComparer.models.UnitList;
+import com.orrijoa.BetterBuy.models.Categories;
+import com.orrijoa.BetterBuy.models.UnitToBaseMap;
+import com.orrijoa.BetterBuy.models.UnitList;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-public class ValueComparerApplication {
+public class BetterBuyApplication {
 
 	// Use for swagger api for testing
 	@Bean
@@ -57,7 +57,7 @@ public class ValueComparerApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(ValueComparerApplication.class, args);
+		SpringApplication.run(BetterBuyApplication.class, args);
 	}
 
 }

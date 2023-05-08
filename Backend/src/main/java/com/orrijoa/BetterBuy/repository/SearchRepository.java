@@ -1,6 +1,6 @@
-package com.orrijoa.ValueComparer.repository;
+package com.orrijoa.BetterBuy.repository;
 
-import com.orrijoa.ValueComparer.models.Item;
+import com.orrijoa.BetterBuy.models.Item;
 import java.util.List;
 
 public interface SearchRepository {

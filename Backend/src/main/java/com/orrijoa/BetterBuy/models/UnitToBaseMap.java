@@ -1,4 +1,4 @@
-package com.orrijoa.ValueComparer.models;
+package com.orrijoa.BetterBuy.models;
 
 import io.github.qudtlib.Qudt;
 import io.github.qudtlib.model.Unit;

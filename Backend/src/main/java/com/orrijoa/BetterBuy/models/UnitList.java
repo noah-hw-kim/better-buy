@@ -1,4 +1,4 @@
-package com.orrijoa.ValueComparer.models;
+package com.orrijoa.BetterBuy.models;
 
 import lombok.Data;
 import org.springframework.context.annotation.Bean;
