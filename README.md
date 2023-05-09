@@ -23,7 +23,8 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+[![LinkedIn][linkedin-shield]][linkedin1-url]
+[![LinkedIn][linkedin-shield]][linkedin2-url]
 
 
 
@@ -232,7 +233,8 @@ Project Link: [https://github.com/noah-hw-kim/better-buy](https://github.com/noa
 [license-shield]: https://img.shields.io/github/license/noah-hw-kim/better-buy.svg?style=for-the-badge
 [license-url]: https://github.com/noah-hw-kim/better-buy/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/noah-hw-kim/
+[linkedin1-url]: https://linkedin.com/in/noah-hw-kim/
+[linkedin2-url]: https://linkedin.com/in/ngolanny/
 [product-screenshot]: images/screenshot.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
