@@ -5,7 +5,9 @@ import com.orrijoa.BetterBuy.models.UnitToBaseMap;
 import com.orrijoa.BetterBuy.models.UnitList;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -17,6 +19,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
+@EntityScan(basePackages = "com.orrijoa.BetterBuy")
+@ComponentScan({ "com.orrijoa.BetterBuy.*" })
 public class BetterBuyApplication {
 
 	// Use for swagger api for testing
@@ -44,7 +48,7 @@ public class BetterBuyApplication {
 
 	// Cache Unitlist which stays same once created
 	@Bean
-	public UnitList getUnitList() {
+	public UnitList getUnitTypeToUnit() {
 		UnitList unitList = new UnitList();
 		return unitList;
 	}

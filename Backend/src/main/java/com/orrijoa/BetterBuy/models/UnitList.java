@@ -2,8 +2,9 @@ package com.orrijoa.BetterBuy.models;
 
 import lombok.Data;
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
 import java.util.*;
-import java.util.stream.Collectors;
 
 /*
 * Returns data used to populate Unit Type and Unit dropdowns
@@ -29,5 +30,10 @@ public class UnitList {
         unitTypeToUnit.put("volume", volumeUnitSet);
         unitTypeToUnit.put("mass", massUnitSet);
         unitTypeToUnit.put("length", lengthUnitSet);
+    }
+
+    @Bean
+    public Map<String, Set<String>> getUnitTypeToUnit() {
+        return unitTypeToUnit;
     }
 }

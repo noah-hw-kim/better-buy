@@ -29,6 +29,16 @@ async function setUpListsAndDB() {
     genSearchTable(searchedItemsArr);
 }
 
+// Api call: Get categories from backend repository (which will populate dropdowns in genCategoryDropdown())
+async function getCategories() {
+    let response = await fetch("http://localhost:8081/api/better-buy/categories");
+    let responseJson = await response.json();
+    let jsonCategoryList = responseJson["categories"]; 
+    let jsonCategoryValues = Object.values(jsonCategoryList);
+    categoryLst.push(...jsonCategoryValues);
+    categoryLst.sort();
+}
+
 // Api call: Get units and unit types from backend repository (which will populate dropdowns in genUnitDropdown())
 async function getUnitsAndUnitTypes() {
     let response = await fetch("http://localhost:8081/api/better-buy/unit-list");
@@ -48,15 +58,11 @@ async function getUnitsAndUnitTypes() {
             lengthUnitsLst.push(...jsonUnitList[currKey]);
         }
     }
-}
 
-// Api call: Get categories from backend repository (which will populate dropdowns in genCategoryDropdown())
-async function getCategories() {
-    let response = await fetch("http://localhost:8081/api/better-buy/categories");
-    let responseJson = await response.json();
-    let jsonCategoryList = responseJson["categories"]; 
-    let jsonCategoryValues = Object.values(jsonCategoryList);
-    categoryLst.push(...jsonCategoryValues);
+    unitTypeLst.sort();
+    massUnitsLst.sort();
+    volumeUnitsLst.sort();
+    lengthUnitsLst.sort();
 }
 
 // Api call: Get all records from backend repository (which will populate search history table)
