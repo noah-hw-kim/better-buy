@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-BetterBuyApplication<ValueComparer>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.orrijoa.BetterBuy.BetterBuyApplication",
+            "projectName": "ValueComparer",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
