@@ -94,15 +94,15 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 
 ### Built With
-<a href="#built-with">FrontEnd</a>
+FrontEnd
 <ul>
-  <li><a href="#built-with">JavaScript</a></li>
+  <li><a href=[Javascript-url]>JavaScript</a></li>
   <li><a href="#built-with">Bootstrap</a></li>
   <li><a href="#built-with">HTML</a></li>
   <li><a href="#built-with">CSS</a></li>
 </ul>
 
-<a href="#built-with">BackEnd</a>
+BackEnd
 <ul>
   <li><a href="#built-with">Java</a></li>
   <li><a href="#built-with">Spring Boot</a></li>
@@ -238,3 +238,12 @@ Project Link: [https://github.com/noah-hw-kim/better-buy](https://github.com/noa
 [linkedin1-url]: https://linkedin.com/in/noah-hw-kim/
 [linkedin2-url]: https://linkedin.com/in/ngolanny/
 [product-screenshot]: images/screenshot.png
+[Javascript-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+[Bootstrap-url]: https://getbootstrap.com
+[HTML-url]: https://developer.mozilla.org/en-US/docs/Web/HTML
+[CSS-url]: https://developer.mozilla.org/en-US/docs/Web/CSS
+[Java-url]: https://www.java.com/en/
+[SpringBoot-url]: https://spring.io/
+[MongoDB-url]: https://www.mongodb.com/
+[Maven-url]: https://maven.apache.org/
+
