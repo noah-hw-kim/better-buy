@@ -30,11 +30,4 @@ public class UnitList {
         unitTypeToUnit.put("mass", massUnitSet);
         unitTypeToUnit.put("length", lengthUnitSet);
     }
-
-    @Bean
-    public Map<String, Set<String>> getUnitTypeToUnitCopy() {
-        Map<String, Set<String>> unitTypeToUnitCopy = unitTypeToUnit.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> Set.copyOf(e.getValue())));
-
-        return unitTypeToUnitCopy;
-    }
 }

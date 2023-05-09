@@ -86,7 +86,7 @@ public class BetterBuyService {
     // helper method used in createItems()
     private String defineBaseUnit(Item item) {
         String itemUnit = item.getUnit();
-        Map<String, Set<String>> unitTypeToUnit = unitList.getUnitTypeToUnitCopy();
+        Map<String, Set<String>> unitTypeToUnit = unitList.getUnitTypeToUnit();
 
         for (String unitType : unitTypeToUnit.keySet()) {
             if (unitTypeToUnit.get(unitType).contains(itemUnit)) {
