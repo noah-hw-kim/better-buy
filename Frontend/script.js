@@ -33,7 +33,7 @@ async function setUpListsAndDB() {
 async function getUnitsAndUnitTypes() {
     let response = await fetch("http://localhost:8081/api/value-comparer/unit-list");
     let responseJson = await response.json();
-    let jsonUnitList = responseJson["unitList"];
+    let jsonUnitList = responseJson["unitTypeToUnit"];
     let jsonUnitListKeys = Object.keys(jsonUnitList);
 
     for (let i = 0; i < jsonUnitListKeys.length; i++) {
