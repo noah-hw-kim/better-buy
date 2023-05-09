@@ -38,7 +38,7 @@
 <h3 align="center">Better-Buy-App</h3>
 
   <p align="center">
-    Use Better Buy App to compare items and get the best value item!
+    Use Better Buy App to compare products and determine the best value product!
     <br />
     <a href="https://github.com/noah-hw-kim/better-buy"><strong>Explore the docs »</strong></a>
     <br />
