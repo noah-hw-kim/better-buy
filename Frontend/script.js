@@ -160,6 +160,7 @@ function setUpBtns() {
 
     // handle submit (compare button)
     const forms = document.querySelectorAll('.needs-validation');
+
     Array.from(forms).forEach(form => {
         form.addEventListener('submit', event => {
             event.preventDefault();
@@ -344,7 +345,7 @@ function displayCompareResult(responseJson) {
     comparedItemsStr += `${bestValItem.name} is of best value.\n\n`;
 
     for (let i = 0; i < comparedItemsList.length; i++) {
-        comparedItemsStr += `${comparedItemsList[i].name}: $ ${comparedItemsList[i].pricePerBaseUnit}/${comparedItemsList[i].unit}\n`;
+        comparedItemsStr += `${comparedItemsList[i].name}: $ ${comparedItemsList[i].pricePerBaseUnit}/${comparedItemsList[i].baseUnit}\n`;
     }
 
     let compareResultStr = genElement("p", comparedItemsStr);
