@@ -38,7 +38,7 @@
 <h3 align="center">Better-Buy-App</h3>
 
   <p align="center">
-    project_description
+    write a short project description
     <br />
     <a href="https://github.com/noah-hw-kim/better-buy"><strong>Explore the docs »</strong></a>
     <br />
@@ -85,6 +85,7 @@
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
+Project details
 
 Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `noah-hw-kim`, `better-buy`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
 
@@ -93,23 +94,23 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 
 ### Built With
+<a href="#built-with">FrontEnd</a>
+<ul>
+  <li><a href="#built-with">JavaScript</a></li>
+  <li><a href="#built-with">Bootstrap</a></li>
+  <li><a href="#built-with">HTML</a></li>
+  <li><a href="#built-with">CSS</a></li>
+</ul>
 
-<!-- * [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url] -->
-Java
-Java Script
-Spring Boot
-Bootstrap
-MongoDB
+<a href="#built-with">BackEnd</a>
+<ul>
+  <li><a href="#built-with">Java</a></li>
+  <li><a href="#built-with">Spring Boot</a></li>
+  <li><a href="#built-with">MongoDB</a></li>
+  <li><a href="#built-with">Maven Project</a></li>
+</ul>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- GETTING STARTED -->
@@ -192,7 +193,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the Apache 2.0 License. See `LICENSE.md` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -201,7 +202,8 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Noah(Hyeonwoo) Kim - [@twitter_handle](https://twitter.com/twitter_handle) - noah.hw.kim@gmail.com
+Lanny Ngo - lannyngo.com
 
 Project Link: [https://github.com/noah-hw-kim/better-buy](https://github.com/noah-hw-kim/better-buy)
 
@@ -236,19 +238,3 @@ Project Link: [https://github.com/noah-hw-kim/better-buy](https://github.com/noa
 [linkedin1-url]: https://linkedin.com/in/noah-hw-kim/
 [linkedin2-url]: https://linkedin.com/in/ngolanny/
 [product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com 
