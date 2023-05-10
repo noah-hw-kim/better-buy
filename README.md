@@ -89,8 +89,6 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 ### Built With
 FrontEnd
 <ul>
@@ -113,6 +111,7 @@ BackEnd
 
 <!-- GETTING STARTED -->
 ## Getting Started
+
 ### Prerequisites
 1. <a href="https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html">Java 17 version</a> (We're testing the above version) 
 * Check java version (Windows/Mac/Linux OS)
@@ -121,7 +120,7 @@ BackEnd
   ```
   
 2. <a href="https://www.mongodb.com/docs/atlas/getting-started/">MongoDB</a>
-3. This app runs with spring boot. We tested our app running with two major IDE VScode and Intellij.
+3. Spring Boot Extension.
 * For VS code, it requires extensions "Extension Pack for Java" and "Spring Boot Extension Pack". <br>
 Installation instruction link [https://code.visualstudio.com/docs/java/java-spring-boot](https://code.visualstudio.com/docs/java/java-spring-boot)
 * For Intellij, no extensions required.
@@ -160,21 +159,40 @@ MONGO_CLUSTER="[Cluster_Name]"
 
 <!-- USAGE EXAMPLES -->
 ## Usage
+
+### Set up the app
 1. Run "BetterBuyApplication.java" in Backend directory (Backend -> src -> main -> java\com\orrijoa\BetterBuy)
 * Intellij
-
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/" alt="intellij_BetterBuyApplication" width="60%" height="60%">
 * VS code
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/" alt="vscode_BetterBuyApplication" width="60%" height="60%">
 
-2. Run "main.html" in Frontend directory
-
+2. Run live server "main.html" in Frontend directory
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/" alt="vscode_main_html" width="60%" height="60%">
 
 3. Main Page
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_MainPage.png" alt="main" width="200" height="200">
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_MainPage.png" alt="main" width="60%" height="60%">
+
+### Compare items
+1. Fill out a list of items' info in main page (Required - Name, Price, Amount, Unity Type, and Unit | Optional - Brand, Store, and Category)
+2. Click compare button
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Item_Compare.png" alt="main" width="60%" height="60%">
+
+3. Compare result displayed
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Item_Compare_Result.png" alt="main" width="60%" height="60%">
+
+### Search items
+1. Enter keyword (name, brand, stroe, or category) in the search box next to "Searchy History"
+2. Click search icon
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Item_Compare.png" alt="main" width="60%" height="60%">
+
+3. Search result displayed
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Item_Compare_Result.png" alt="main" width="60%" height="60%">
 
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+<!-- Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+_For more examples, please refer to the [Documentation](https://example.com)_ -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
