@@ -92,18 +92,18 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 ### Built With
 FrontEnd
 <ul>
-  <li><a href="#Javascript-url">JavaScript</a></li>
-  <li><a href="#built-with">Bootstrap</a></li>
-  <li><a href="#built-with">HTML</a></li>
-  <li><a href="#built-with">CSS</a></li>
+  <li>JavaScript</li>
+  <li>Bootstrap</li>
+  <li>HTML</li>
+  <li>CSS</li>
 </ul>
 
 BackEnd
 <ul>
-  <li><a href="#built-with">Java</a></li>
-  <li><a href="#built-with">Spring Boot</a></li>
-  <li><a href="#built-with">MongoDB</a></li>
-  <li><a href="#built-with">Maven Project</a></li>
+  <li>Java</li>
+  <li>Spring Boot</li>
+  <li>MongoDB</li>
+  <li>Maven Project</li>
 </ul>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -119,10 +119,10 @@ BackEnd
   java -version
   ```
   
-2. <a href="https://www.mongodb.com/docs/atlas/getting-started/">MongoDB</a>
-3. Spring Boot Extension.
+2. <a href="https://www.mongodb.com/docs/atlas/getting-started/">MongoDB Atalas</a>
+3. Spring Boot Extension
 * For VS code, it requires extensions "Extension Pack for Java" and "Spring Boot Extension Pack". <br>
-Installation instruction link [https://code.visualstudio.com/docs/java/java-spring-boot](https://code.visualstudio.com/docs/java/java-spring-boot)
+[Installation instruction link](https://code.visualstudio.com/docs/java/java-spring-boot)
 * For Intellij, no extensions required.
 
 ### Installation
@@ -132,7 +132,7 @@ Installation instruction link [https://code.visualstudio.com/docs/java/java-spri
    ```
 
 2. Create .env file in "resources" directory (Backend -> src -> main -> java -> com.orrijoa.BetterBuy -> resources)
-3. Define .env file accordingly <br>
+3. Define .env file with your mongoDB cluster accordingly <br>
 e.x.) MONGO_DATABASE="[Database_Name]" <br>
 MONGO_USER="[User_Name]" <br>
 MONGO_PASSWORD="[User_Password]" <br>
@@ -244,7 +244,7 @@ Distributed under the APACHE-2.0 License. See `LICENSE.md` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Noah(Hyeonwoo) Kim - [@twitter_handle](https://twitter.com/twitter_handle) - noah.hw.kim@gmail.com
+Noah(Hyeonwoo) Kim - noah.hw.kim@gmail.com
 Lanny Ngo - lannyngo@gmail.com
 
 Project Link: [https://github.com/noah-hw-kim/better-buy](https://github.com/noah-hw-kim/better-buy)
