@@ -4,9 +4,7 @@
 *** Thanks for checking out the Best-README-Template. If you have a suggestion
 *** that would make this better, please fork the repo and create a pull request
 *** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
+
 
 
 
@@ -120,6 +118,15 @@ This is an example of how you may give instructions on setting up your project l
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
+1. Java above x.x version
+2. MongoDB API
+Details
+
+
+We tested our web application on both major IDEs which are Intellij and VS code.
+
+1) Intellij - Doesn't require any extensions for installation.
+2) VS code - It requires extensions called Extension Pack for Java and Spring Boot Extension Pack.
 
 This is an example of how to list things you need to use the software and how to install them.
 * npm
@@ -128,6 +135,9 @@ This is an example of how to list things you need to use the software and how to
   ```
 
 ### Installation
+1. clone the repo
+2. change application properties mongodb info to your db created
+
 
 1. Get a free API Key at [https://example.com](https://example.com)
 2. Clone the repo
