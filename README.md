@@ -278,12 +278,4 @@ Project Link: [https://github.com/noah-hw-kim/better-buy](https://github.com/noa
 [linkedin1-url]: https://linkedin.com/in/noah-hw-kim/
 [linkedin2-url]: https://linkedin.com/in/ngolanny/
 [product-screenshot]: images/screenshot.png
-[Javascript-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript
-[Bootstrap-url]: https://getbootstrap.com
-[HTML-url]: https://developer.mozilla.org/en-US/docs/Web/HTML
-[CSS-url]: https://developer.mozilla.org/en-US/docs/Web/CSS
-[Java-url]: https://www.java.com/en/
-[SpringBoot-url]: https://spring.io/
-[MongoDB-url]: https://www.mongodb.com/
-[Maven-url]: https://maven.apache.org/
 
