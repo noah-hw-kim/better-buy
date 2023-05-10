@@ -186,7 +186,7 @@
       same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright [2023] [Hyeonwoo Kim and Lan-anh Ngo]
+   Copyright 2023 Hyeonwoo Kim and Lan-anh Ngo
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -200,7 +200,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
    
-   Source of Intellectual Property included in the ValueComparer
+   Source of Intellectual Property included in the BetterBuy
    Project: QUDT
    Git-address: https://github.com/qudt/qudt-public-repo
    License: Creative Commons Attribution 4.0 International License (CC BY 4.0), available at https://creativecommons.org/licenses/by/4.0/. Attribution should be made to QUDT.org"
