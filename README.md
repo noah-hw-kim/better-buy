@@ -36,7 +36,7 @@
 <h3 align="center">Better-Buy-App</h3>
 
   <p align="center">
-    Use Better Buy App to compare products and determine the best value product!
+    Use Better Buy to compare products and determine the best value product!
     <br />
     <a href="https://github.com/noah-hw-kim/better-buy"><strong>Explore the docs »</strong></a>
     <br />
@@ -122,7 +122,7 @@ BackEnd
   
 2. <a href="https://www.mongodb.com/docs/atlas/getting-started/">MongoDB</a>
 3. This app runs with spring boot. We tested our app running with two major IDE VScode and Intellij.
-* For VS code, it requires extensions "Extension Pack for Java" and "Spring Boot Extension Pack".
+* For VS code, it requires extensions "Extension Pack for Java" and "Spring Boot Extension Pack". <br>
 Installation instruction link [https://code.visualstudio.com/docs/java/java-spring-boot](https://code.visualstudio.com/docs/java/java-spring-boot)
 * For Intellij, no extensions required.
 
@@ -133,11 +133,11 @@ Installation instruction link [https://code.visualstudio.com/docs/java/java-spri
    ```
 
 2. Create .env file in "resources" directory (Backend -> src -> main -> java -> com.orrijoa.BetterBuy -> resources)
-3. Define .env file accordingly
-e.x.) MONGO_DATABASE="valuecomparer-api-db"
-MONGO_USER="noahhwkim"
-MONGO_PASSWORD="m7f2jxwewTVVi6GS"
-MONGO_CLUSTER="cluster0.iubmmr3.mongodb.net/test"
+3. Define .env file accordingly <br>
+e.x.) MONGO_DATABASE="[Database_Name]" <br>
+MONGO_USER="[User_Name]" <br>
+MONGO_PASSWORD="[User_Password]" <br>
+MONGO_CLUSTER="[Cluster_Name]"
 
 <!-- 
 1. Get a free API Key at [https://example.com](https://example.com)
@@ -160,6 +160,13 @@ MONGO_CLUSTER="cluster0.iubmmr3.mongodb.net/test"
 
 <!-- USAGE EXAMPLES -->
 ## Usage
+1. Run "BetterBuyApplication.java" in Backend directory (Backend -> src -> main -> java\com\orrijoa\BetterBuy)
+* Intellij
+
+* VS code
+
+2. Run "main.html" in Frontend directory 
+
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
@@ -172,11 +179,11 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Available search box to search not an exact match
+- [ ] Available search box to search with non-exact match
 - [ ] Available user to select the unit system in between imperial or metric and update the base unit accordingly 
 - [ ] Change the base unit according to the categories
     - e.x.) current base unit for mass = oz -> Meat, Fish and Seafood base unit for mass = lb
-- [ ] Launch SmartPhone App version  
+- [ ] Launch App version  
 
 See the [open issues](https://github.com/noah-hw-kim/better-buy/issues) for a full list of proposed features (and known issues).
 
@@ -226,7 +233,7 @@ Project Link: [https://github.com/noah-hw-kim/better-buy](https://github.com/noa
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* [https://github.com/qudt/qudt-public-repo](https://github.com/qudt/qudt-public-repo)
+* QUDT Libraries - [https://github.com/qudt/qudt-public-repo](https://github.com/qudt/qudt-public-repo)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
