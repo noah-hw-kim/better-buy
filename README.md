@@ -169,7 +169,7 @@ MONGO_CLUSTER="[Cluster_Name]"
 
 
 3. Main Page
-[![Main Page][mainPage-screenshot]](https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_MainPage.png)
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_MainPage.png" alt="main" width="200" height="200">
 
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
