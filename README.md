@@ -114,23 +114,32 @@ BackEnd
 <!-- GETTING STARTED -->
 ## Getting Started
 ### Prerequisites
-1. <a href="https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html">Java 17 version</a>(We're testing the above version)
-* check java version (Windows/Mac/Linux OS)
+1. <a href="https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html">Java 17 version</a> (We're testing the above version) 
+* Check java version (Windows/Mac/Linux OS)
   ```sh
   java -version
   ```
   
-2. <a href="https://www.mongodb.com/">MongoDB Account</a>
+2. <a href="https://www.mongodb.com/docs/atlas/getting-started/">MongoDB</a>
 3. This app runs with spring boot. We tested our app running with two major IDE VScode and Intellij.
-- For VS code, it requires extensions "Extension Pack for Java" and "Spring Boot Extension Pack".
+* For VS code, it requires extensions "Extension Pack for Java" and "Spring Boot Extension Pack".
 Installation instruction link [https://code.visualstudio.com/docs/java/java-spring-boot](https://code.visualstudio.com/docs/java/java-spring-boot)
-- For Intellij, no extensions required.
+* For Intellij, no extensions required.
 
 ### Installation
-1. clone the repo
-2. change application properties mongodb info to your db created
+1. Clone the repo
+```sh
+   git clone https://github.com/noah-hw-kim/better-buy.git
+   ```
 
+2. Create .env file in "resources" directory (Backend -> src -> main -> java -> com.orrijoa.BetterBuy -> resources)
+3. Define .env file accordingly
+e.x.) MONGO_DATABASE="valuecomparer-api-db"
+MONGO_USER="noahhwkim"
+MONGO_PASSWORD="m7f2jxwewTVVi6GS"
+MONGO_CLUSTER="cluster0.iubmmr3.mongodb.net/test"
 
+<!-- 
 1. Get a free API Key at [https://example.com](https://example.com)
 2. Clone the repo
    ```sh
@@ -143,7 +152,7 @@ Installation instruction link [https://code.visualstudio.com/docs/java/java-spri
 4. Enter your API in `config.js`
    ```js
    const API_KEY = 'ENTER YOUR API';
-   ```
+   ``` -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -195,7 +204,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Distributed under the Apache 2.0 License. See `LICENSE.md` for more information.
+Distributed under the APACHE-2.0 License. See `LICENSE.md` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -205,7 +214,7 @@ Distributed under the Apache 2.0 License. See `LICENSE.md` for more information.
 ## Contact
 
 Noah(Hyeonwoo) Kim - [@twitter_handle](https://twitter.com/twitter_handle) - noah.hw.kim@gmail.com
-Lanny Ngo - lannyngo.com
+Lanny Ngo - lannyngo@gmail.com
 
 Project Link: [https://github.com/noah-hw-kim/better-buy](https://github.com/noah-hw-kim/better-buy)
 
@@ -216,9 +225,7 @@ Project Link: [https://github.com/noah-hw-kim/better-buy](https://github.com/noa
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
-* []()
-* []()
+* [https://github.com/qudt/qudt-public-repo](https://github.com/qudt/qudt-public-repo)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
