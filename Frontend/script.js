@@ -352,7 +352,15 @@ function displayCompareResult(responseJson) {
     let comparedItemsStr = `${brand} ${name} ($${price} for ${amount} ${unit}) is of best value.\n\n`;
 
     for (let i = 0; i < comparedItemsList.length; i++) {
-        comparedItemsStr += `${comparedItemsList[i].name}: $${comparedItemsList[i].pricePerBaseUnit}/${comparedItemsList[i].baseUnit}\n`;
+        let comparedItemsList = responseJson.comparedItemsList;
+
+        // sort by lowest price per base unit
+        comparedItemsList.sort((a,b) => {
+            return a.pricePerBaseUnit-b.pricePerBaseUnit;
+        })
+
+        let item = comparedItemsList[i];
+        comparedItemsStr += `${item.brand} ${item.name} (${item.amount} ${item.unit}): $${item.pricePerBaseUnit}/${item.baseUnit}\n`;
     }
 
     let compareResultStr = genElement("p", comparedItemsStr);
