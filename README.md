@@ -113,26 +113,18 @@ BackEnd
 
 <!-- GETTING STARTED -->
 ## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
 ### Prerequisites
-1. Java above x.x version
-2. MongoDB API
-Details
-
-
-We tested our web application on both major IDEs which are Intellij and VS code.
-
-1) Intellij - Doesn't require any extensions for installation.
-2) VS code - It requires extensions called Extension Pack for Java and Spring Boot Extension Pack.
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
+1. <a href="https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html">Java 17 version</a>(We're testing the above version)
+* check java version (Windows/Mac/Linux OS)
   ```sh
-  npm install npm@latest -g
+  java -version
   ```
+  
+2. <a href="https://www.mongodb.com/">MongoDB Account</a>
+3. This app runs with spring boot. We tested our app running with two major IDE VScode and Intellij.
+- For VS code, it requires extensions "Extension Pack for Java" and "Spring Boot Extension Pack".
+Installation instruction link [https://code.visualstudio.com/docs/java/java-spring-boot](https://code.visualstudio.com/docs/java/java-spring-boot)
+- For Intellij, no extensions required.
 
 ### Installation
 1. clone the repo
