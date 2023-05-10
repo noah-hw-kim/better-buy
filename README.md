@@ -113,7 +113,7 @@ BackEnd
 ## Getting Started
 
 ### Prerequisites
-1. <a href="https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html">Java 17 version</a> (We're testing the above version) 
+1. <a href="https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html">Java 17 version</a> (We're testing the later version) 
 * Check java version (Windows/Mac/Linux OS)
   ```sh
   java -version
