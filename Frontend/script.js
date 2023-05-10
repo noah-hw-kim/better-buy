@@ -1,6 +1,3 @@
-// need to add required feature for name, price, and amount when + and -
-
-// indicate current number of items
 let unitTypeLst = [];
 let massUnitsLst = [];
 let volumeUnitsLst = [];
@@ -347,11 +344,15 @@ function displayCompareResult(responseJson) {
     let result = document.getElementById("compare-result");
     let bestValItem = responseJson.bestValItem;
     let comparedItemsList = responseJson.comparedItemsList;
-    let comparedItemsStr = "";
-    comparedItemsStr += `${bestValItem.name} is of best value.\n\n`;
+    let brand = bestValItem.brand;
+    let name = bestValItem.name;
+    let price = bestValItem.price;
+    let amount = bestValItem.amount;
+    let unit = bestValItem.unit;
+    let comparedItemsStr = `${brand} ${name} ($${price} for ${amount} ${unit}) is of best value.\n\n`;
 
     for (let i = 0; i < comparedItemsList.length; i++) {
-        comparedItemsStr += `${comparedItemsList[i].name}: $ ${comparedItemsList[i].pricePerBaseUnit}/${comparedItemsList[i].baseUnit}\n`;
+        comparedItemsStr += `${comparedItemsList[i].name}: $${comparedItemsList[i].pricePerBaseUnit}/${comparedItemsList[i].baseUnit}\n`;
     }
 
     let compareResultStr = genElement("p", comparedItemsStr);
@@ -426,7 +427,6 @@ function genSearchHeader() {
     let tr = document.createElement("tr");
 
     // create table headers and attach to the tr
-    let thId = genElement("th", "id");
     let thName = genElement("th", "name");
     let thAmount = genElement("th", "amount");
     let thPrice = genElement("th", "price");
@@ -444,7 +444,7 @@ function genSearchHeader() {
         genSearchTable();
     })
 
-    tr.append(thId, thName, thAmount, thPrice, thUnit, thBrand, thStore, thCategory, thPricePerBaseUnit, thClearBtn)
+    tr.append(thName, thAmount, thPrice, thUnit, thBrand, thStore, thCategory, thPricePerBaseUnit, thClearBtn)
     tr.id = "item-table-header";
     return tr;
 }
@@ -457,7 +457,6 @@ function genSearchBody(searchedItemsArr) {
         for (let i = 0; i < searchedItemsArr.length; i++) {
             let tr = document.createElement("tr");
 
-            let tdId = genElement("td", searchedItemsArr[i].id);
             let tdName = genElement("td", searchedItemsArr[i].name);
             let tdAmount = genElement("td", searchedItemsArr[i].amount);
             let tdPrice = genElement("td", `$${searchedItemsArr[i].price}`);
@@ -483,7 +482,7 @@ function genSearchBody(searchedItemsArr) {
                 genSearchTable(updatedsearchedItemsArr);
             })
 
-            tr.append(tdId, tdName, tdAmount, tdPrice, tdUnit, tdBrand, tdStore, tdCategory, tdPricePerBaseUnit, tdDeleteBtn)
+            tr.append(tdName, tdAmount, tdPrice, tdUnit, tdBrand, tdStore, tdCategory, tdPricePerBaseUnit, tdDeleteBtn)
             trArr.push(tr);
         }
     }
