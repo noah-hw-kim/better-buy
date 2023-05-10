@@ -165,7 +165,11 @@ MONGO_CLUSTER="[Cluster_Name]"
 
 * VS code
 
-2. Run "main.html" in Frontend directory 
+2. Run "main.html" in Frontend directory
+
+
+3. Main Page
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_MainPage.png" alt="main" width="200" height="200">
 
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
