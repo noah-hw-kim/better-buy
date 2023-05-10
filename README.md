@@ -172,10 +172,11 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Available search box to search not an exact match
+- [ ] Available user to select the unit system in between imperial or metric and update the base unit accordingly 
+- [ ] Change the base unit according to the categories
+    - e.x.) current base unit for mass = oz -> Meat, Fish and Seafood base unit for mass = lb
+- [ ] Launch SmartPhone App version  
 
 See the [open issues](https://github.com/noah-hw-kim/better-buy/issues) for a full list of proposed features (and known issues).
 
