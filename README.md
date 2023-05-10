@@ -176,18 +176,18 @@ MONGO_CLUSTER="[Cluster_Name]"
 ### Compare items
 1. Fill out a list of items' info in main page (Required - Name, Price, Amount, Unity Type, and Unit | Optional - Brand, Store, and Category)
 2. Click compare button
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Item_Compare.png" alt="main" width="60%" height="60%">
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Compare.png" alt="compare" width="60%" height="60%">
 
 3. Compare result displayed
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Item_Compare_Result.png" alt="main" width="60%" height="60%">
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Compare_Result.png" alt="compare_result" width="60%" height="60%">
 
 ### Search items
 1. Enter keyword (name, brand, stroe, or category) in the search box next to "Searchy History"
 2. Click search icon
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Item_Compare.png" alt="main" width="60%" height="60%">
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Search.png" alt="search" width="60%" height="60%">
 
 3. Search result displayed
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Item_Compare_Result.png" alt="main" width="60%" height="60%">
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Search_Result.png" alt="search_result" width="60%" height="60%">
 
 
 <!-- Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
@@ -202,9 +202,10 @@ _For more examples, please refer to the [Documentation](https://example.com)_ --
 ## Roadmap
 
 - [ ] Available search box to search with non-exact match
-- [ ] Available user to select the unit system in between imperial or metric and update the base unit accordingly 
-- [ ] Change the base unit according to the categories
-    - e.x.) current base unit for mass = oz -> Meat, Fish and Seafood base unit for mass = lb
+- [ ] Available to select the unit system in between imperial or metric by user and update the base unit accordingly 
+- [ ] Available to update the base unit according to the categories selected by user
+    - e.x.) current: base unit for mass for all categories = oz 
+    - future plan: base unit for mass for Meat, Fish and Seafood's = lb
 - [ ] Launch App version  
 
 See the [open issues](https://github.com/noah-hw-kim/better-buy/issues) for a full list of proposed features (and known issues).
