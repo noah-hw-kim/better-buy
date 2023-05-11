@@ -30,7 +30,7 @@
 <br />
 <div align="center">
 <!--   <a href="https://github.com/noah-hw-kim/better-buy">
-    <img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_MainPage.png" alt="Main" width="70%" height="70%">
+    <img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_MainPage.png" alt="Main" width="60%" height="60%">
   </a> -->
 
 <h3 align="center">Better-Buy-App</h3>
