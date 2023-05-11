@@ -119,17 +119,15 @@ BackEnd
 ## Getting Started
 
 ### Prerequisites
-1. <a href="https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html">Java 17 version</a> (We're testing the later version) 
+1. <a href="https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html">Java SE 17 version</a>
 * Check java version (Windows/Mac/Linux OS)
   ```sh
   java -version
   ```
   
 2. <a href="https://www.mongodb.com/docs/atlas/getting-started/">MongoDB Atalas</a>
-3. Spring Boot Extension
-* For VS code, it requires extensions "Extension Pack for Java" and "Spring Boot Extension Pack". <br>
+3. Spring Boot Extensions (if using VS Code): "Extension Pack for Java" and "Spring Boot Extension Pack". <br>
 [Installation instruction link](https://code.visualstudio.com/docs/java/java-spring-boot)
-* For Intellij, no extensions required.
 
 ### Installation
 1. Clone the repo
@@ -138,10 +136,10 @@ BackEnd
    ```
 
 2. Create .env file in "resources" directory (Backend -> src -> main -> java -> com.orrijoa.BetterBuy -> resources)
-3. Define .env file with your mongoDB cluster accordingly <br>
-e.x.) MONGO_DATABASE="[Database_Name]" <br>
-MONGO_USER="[User_Name]" <br>
-MONGO_PASSWORD="[User_Password]" <br>
+3. Define .env file with your mongoDB cluster accordingly: <br>
+MONGO_DATABASE="[Database_Name]"<br>
+MONGO_USER="[User_Name]"<br>
+MONGO_PASSWORD="[User_Password]"<br>
 MONGO_CLUSTER="[Cluster_Name]"
 
 <!-- 
@@ -168,23 +166,21 @@ MONGO_CLUSTER="[Cluster_Name]"
 
 ### Set up the app
 1. Run "BetterBuyApplication.java" in Backend directory (Backend -> src -> main -> java\com\orrijoa\BetterBuy)
-* Intellij
+* If using Intellij:
 <img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Intellij_BetterBuyApplication.png" alt="Intellij_BetterBuyApplication" width="60%" height="60%">
-* VS code
+* If using VS Code:
 <img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Vscode_BetterBuyApplication.png" alt="Vscode_BetterBuyApplication" width="50%" height="50%">
 
 2. Run live server "main.html" in Frontend directory
 <img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Vscode_main_html.png" alt="Vscode_main_html" width="50%" height="50%">
 
-3. Main Page
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_MainPage.png" alt="Main" width="60%" height="60%">
-
 ### Compare items
-1. Fill out a list of items' info in main page (Required - Name, Price, Amount, Unity Type, and Unit | Optional - Brand, Store, and Category)
-2. Click compare button
+1. Fill out a list of items info in main page (Required: Name, Price, Amount, Unity Type, and Unit; Optional: Brand, Store, and Category)
+2. 
+3. Click 'Compare' button
 <img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Compare.png" alt="Compare" width="60%" height="60%">
 
-3. Compare result displayed
+3. See comparison result displayed
 <img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Compare_result.png" alt="Compare_result" width="60%" height="60%">
 
 ### Search items
@@ -207,13 +203,12 @@ _For more examples, please refer to the [Documentation](https://example.com)_ --
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Prevent user to compare different Unit Type. e.x.) length vs volume
-- [ ] Available search box to search with non-exact match
-- [ ] Available to select the unit system in between imperial or metric by user and update the base unit accordingly 
-- [ ] Available to update the base unit according to the categories selected by user
-    - e.x.) current: base unit for mass for all categories = oz 
-    - future plan: base unit for mass for Meat, Fish and Seafood's = lb
-- [ ] Launch App version  
+- [ ] Prevent user from comparing different unit types. (e.x., length vs volume)
+- [ ] Allow wildcard search in Search History
+- [ ] Allow section between imperial or metric units (and update base unit accordingly)
+- [ ] Update base unit according to the categories selected by user (e.x., current: base unit for mass for all categories = oz --> update: base unit for mass for Meat, Fish and Seafood's = lb, base unit for grains = oz, etc.)
+- [ ] Launch iPhone and Android App versions
+- [ ] Allow URL link entry and webpage parsing to complete item inputs
 
 See the [open issues](https://github.com/noah-hw-kim/better-buy/issues) for a full list of proposed features (and known issues).
 
@@ -251,7 +246,7 @@ Distributed under the APACHE-2.0 License. See `LICENSE.md` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Noah(Hyeonwoo) Kim - noah.hw.kim@gmail.com
+Noah (Hyeonwoo) Kim - noah.hw.kim@gmail.com
 Lanny Ngo - lannyngo@gmail.com
 
 Project Link: [https://github.com/noah-hw-kim/better-buy](https://github.com/noah-hw-kim/better-buy)
