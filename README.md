@@ -207,6 +207,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_ --
 <!-- ROADMAP -->
 ## Roadmap
 
+- [ ] Prevent user to compare different Unit Type. e.x.) length vs volume
 - [ ] Available search box to search with non-exact match
 - [ ] Available to select the unit system in between imperial or metric by user and update the base unit accordingly 
 - [ ] Available to update the base unit according to the categories selected by user
