@@ -29,9 +29,9 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/noah-hw-kim/better-buy">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
+<!--   <a href="https://github.com/noah-hw-kim/better-buy">
+    <img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_MainPage.png" alt="Main" width="70%" height="70%">
+  </a> -->
 
 <h3 align="center">Better-Buy-App</h3>
 
@@ -82,30 +82,34 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Better Buy][product-screenshot]](https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_MainPage.png)
 Project details
+* User can add up to 4 items to compare.
+* User can select the item unit type (volume, mass, or length) and unit (oz, pound, etc).
+* User can select the item category
+* User can search items in search history
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `noah-hw-kim`, `better-buy`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+<!-- add up to 4 items and the program shows the product with the better value for the price.
+User can search the items compared -->
+<!-- Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `noah-hw-kim`, `better-buy`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description` -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 ### Built With
 FrontEnd
 <ul>
-  <li><a href="#Javascript-url">JavaScript</a></li>
-  <li><a href="#built-with">Bootstrap</a></li>
-  <li><a href="#built-with">HTML</a></li>
-  <li><a href="#built-with">CSS</a></li>
+  <li>JavaScript</li>
+  <li>Bootstrap</li>
+  <li>HTML</li>
+  <li>CSS</li>
 </ul>
 
 BackEnd
 <ul>
-  <li><a href="#built-with">Java</a></li>
-  <li><a href="#built-with">Spring Boot</a></li>
-  <li><a href="#built-with">MongoDB</a></li>
-  <li><a href="#built-with">Maven Project</a></li>
+  <li>Java</li>
+  <li>Spring Boot</li>
+  <li>MongoDB</li>
+  <li>Maven Project</li>
 </ul>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -113,17 +117,18 @@ BackEnd
 
 <!-- GETTING STARTED -->
 ## Getting Started
+
 ### Prerequisites
-1. <a href="https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html">Java 17 version</a> (We're testing the above version) 
+1. <a href="https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html">Java 17 version</a> (We're testing the later version) 
 * Check java version (Windows/Mac/Linux OS)
   ```sh
   java -version
   ```
   
-2. <a href="https://www.mongodb.com/docs/atlas/getting-started/">MongoDB</a>
-3. This app runs with spring boot. We tested our app running with two major IDE VScode and Intellij.
+2. <a href="https://www.mongodb.com/docs/atlas/getting-started/">MongoDB Atalas</a>
+3. Spring Boot Extension
 * For VS code, it requires extensions "Extension Pack for Java" and "Spring Boot Extension Pack". <br>
-Installation instruction link [https://code.visualstudio.com/docs/java/java-spring-boot](https://code.visualstudio.com/docs/java/java-spring-boot)
+[Installation instruction link](https://code.visualstudio.com/docs/java/java-spring-boot)
 * For Intellij, no extensions required.
 
 ### Installation
@@ -133,7 +138,7 @@ Installation instruction link [https://code.visualstudio.com/docs/java/java-spri
    ```
 
 2. Create .env file in "resources" directory (Backend -> src -> main -> java -> com.orrijoa.BetterBuy -> resources)
-3. Define .env file accordingly <br>
+3. Define .env file with your mongoDB cluster accordingly <br>
 e.x.) MONGO_DATABASE="[Database_Name]" <br>
 MONGO_USER="[User_Name]" <br>
 MONGO_PASSWORD="[User_Password]" <br>
@@ -160,21 +165,40 @@ MONGO_CLUSTER="[Cluster_Name]"
 
 <!-- USAGE EXAMPLES -->
 ## Usage
+
+### Set up the app
 1. Run "BetterBuyApplication.java" in Backend directory (Backend -> src -> main -> java\com\orrijoa\BetterBuy)
 * Intellij
-
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/" alt="Intellij_BetterBuyApplication" width="60%" height="60%">
 * VS code
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/" alt="Vscode_BetterBuyApplication" width="60%" height="60%">
 
-2. Run "main.html" in Frontend directory
-
+2. Run live server "main.html" in Frontend directory
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/" alt="Vscode_main_html" width="60%" height="60%">
 
 3. Main Page
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_MainPage.png" alt="main" width="200" height="200">
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_MainPage.png" alt="Main" width="60%" height="60%">
+
+### Compare items
+1. Fill out a list of items' info in main page (Required - Name, Price, Amount, Unity Type, and Unit | Optional - Brand, Store, and Category)
+2. Click compare button
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Compare.png" alt="Compare" width="60%" height="60%">
+
+3. Compare result displayed
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Compare_Result.png" alt="Compare_result" width="60%" height="60%">
+
+### Search items
+1. Enter keyword (name, brand, stroe, or category) in the search box next to "Searchy History"
+2. Click search icon
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Search.png" alt="Search" width="60%" height="60%">
+
+3. Search result displayed
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Search_Result.png" alt="Search_result" width="60%" height="60%">
 
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+<!-- Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+_For more examples, please refer to the [Documentation](https://example.com)_ -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -184,9 +208,10 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 ## Roadmap
 
 - [ ] Available search box to search with non-exact match
-- [ ] Available user to select the unit system in between imperial or metric and update the base unit accordingly 
-- [ ] Change the base unit according to the categories
-    - e.x.) current base unit for mass = oz -> Meat, Fish and Seafood base unit for mass = lb
+- [ ] Available to select the unit system in between imperial or metric by user and update the base unit accordingly 
+- [ ] Available to update the base unit according to the categories selected by user
+    - e.x.) current: base unit for mass for all categories = oz 
+    - future plan: base unit for mass for Meat, Fish and Seafood's = lb
 - [ ] Launch App version  
 
 See the [open issues](https://github.com/noah-hw-kim/better-buy/issues) for a full list of proposed features (and known issues).
@@ -225,7 +250,7 @@ Distributed under the APACHE-2.0 License. See `LICENSE.md` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Noah(Hyeonwoo) Kim - [@twitter_handle](https://twitter.com/twitter_handle) - noah.hw.kim@gmail.com
+Noah(Hyeonwoo) Kim - noah.hw.kim@gmail.com
 Lanny Ngo - lannyngo@gmail.com
 
 Project Link: [https://github.com/noah-hw-kim/better-buy](https://github.com/noah-hw-kim/better-buy)
@@ -254,17 +279,9 @@ Project Link: [https://github.com/noah-hw-kim/better-buy](https://github.com/noa
 [issues-shield]: https://img.shields.io/github/issues/noah-hw-kim/better-buy.svg?style=for-the-badge
 [issues-url]: https://github.com/noah-hw-kim/better-buy/issues
 [license-shield]: https://img.shields.io/github/license/noah-hw-kim/better-buy.svg?style=for-the-badge
-[license-url]: https://github.com/noah-hw-kim/better-buy/blob/master/LICENSE.txt
+[license-url]: https://github.com/noah-hw-kim/better-buy/blob/main/LICENSE.md
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin1-url]: https://linkedin.com/in/noah-hw-kim/
 [linkedin2-url]: https://linkedin.com/in/ngolanny/
-[product-screenshot]: images/screenshot.png
-[Javascript-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript
-[Bootstrap-url]: https://getbootstrap.com
-[HTML-url]: https://developer.mozilla.org/en-US/docs/Web/HTML
-[CSS-url]: https://developer.mozilla.org/en-US/docs/Web/CSS
-[Java-url]: https://www.java.com/en/
-[SpringBoot-url]: https://spring.io/
-[MongoDB-url]: https://www.mongodb.com/
-[Maven-url]: https://maven.apache.org/
+[product-screenshot]: https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_MainPage.png
 
