@@ -81,13 +81,13 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-[![Better Buy][product-screenshot]](https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_MainPage.png)
 Project details
-* User can add up to 4 items to compare.
-* User can select the item unit type (volume, mass, or length) and unit (oz, pound, etc).
-* User can select the item category
-* User can search items in search history
+<ul>
+  <li>User can add up to 4 items to compare.</li>
+  <li>User can select the item unit type (volume, mass, or length) and unit (oz, pound, etc).</li>
+  <li>User can select the item category</li>
+  <li>User can search items in search history</li>
+</ul>
 
 <!-- add up to 4 items and the program shows the product with the better value for the price.
 User can search the items compared -->
@@ -171,10 +171,10 @@ MONGO_CLUSTER="[Cluster_Name]"
 * Intellij
 <img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Intellij_BetterBuyApplication.png" alt="Intellij_BetterBuyApplication" width="60%" height="60%">
 * VS code
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Vscode_BetterBuyApplication.png" alt="Vscode_BetterBuyApplication" width="60%" height="60%">
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Vscode_BetterBuyApplication.png" alt="Vscode_BetterBuyApplication" width="50%" height="50%">
 
 2. Run live server "main.html" in Frontend directory
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/" alt="Vscode_main_html" width="60%" height="60%">
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Vscode_main_html.png" alt="Vscode_main_html" width="50%" height="50%">
 
 3. Main Page
 <img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_MainPage.png" alt="Main" width="60%" height="60%">
