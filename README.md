@@ -169,9 +169,9 @@ MONGO_CLUSTER="[Cluster_Name]"
 ### Set up the app
 1. Run "BetterBuyApplication.java" in Backend directory (Backend -> src -> main -> java\com\orrijoa\BetterBuy)
 * Intellij
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/" alt="Intellij_BetterBuyApplication" width="60%" height="60%">
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Intellij_BetterBuyApplication.png" alt="Intellij_BetterBuyApplication" width="60%" height="60%">
 * VS code
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/" alt="Vscode_BetterBuyApplication" width="60%" height="60%">
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Vscode_BetterBuyApplication.png" alt="Vscode_BetterBuyApplication" width="60%" height="60%">
 
 2. Run live server "main.html" in Frontend directory
 <img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/" alt="Vscode_main_html" width="60%" height="60%">
@@ -182,18 +182,18 @@ MONGO_CLUSTER="[Cluster_Name]"
 ### Compare items
 1. Fill out a list of items' info in main page (Required - Name, Price, Amount, Unity Type, and Unit | Optional - Brand, Store, and Category)
 2. Click compare button
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Compare.png" alt="Compare" width="60%" height="60%">
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Compare.png" alt="Compare" width="60%" height="60%">
 
 3. Compare result displayed
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Compare_Result.png" alt="Compare_result" width="60%" height="60%">
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Compare_result.png" alt="Compare_result" width="60%" height="60%">
 
 ### Search items
 1. Enter keyword (name, brand, stroe, or category) in the search box next to "Searchy History"
 2. Click search icon
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Search.png" alt="Search" width="60%" height="60%">
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Search.png" alt="Search" width="60%" height="60%">
 
 3. Search result displayed
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/BetterBuy_Search_Result.png" alt="Search_result" width="60%" height="60%">
+<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Search_result.png" alt="Search_result" width="60%" height="60%">
 
 
 <!-- Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
