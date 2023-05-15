@@ -81,6 +81,10 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+<video width="320" height="240">
+  <source src="Image/Better Buy Demo.mov" type="video/mp4">
+</video>
+
 Project details
 <ul>
   <li>User can add up to 4 items to compare.</li>
