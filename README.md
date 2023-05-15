@@ -81,11 +81,8 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-<video width="320" height="240">
-  <source src="Image/Better Buy Demo.mov" type="video/mp4">
-</video>
+https://github.com/noah-hw-kim/better-buy/assets/97554088/e1b0e953-1c7f-48cf-b6a8-166db775ec55
 
-Project details
 <ul>
   <li>User can add up to 4 items to compare.</li>
   <li>User can select the item unit type (volume, mass, or length) and unit (oz, pound, etc).</li>
@@ -123,23 +120,31 @@ BackEnd
 ## Getting Started
 
 ### Prerequisites
-1. <a href="https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html">Java SE 17 version</a>
-* Check java version (Windows/Mac/Linux OS)
+There are two methods to run this app:
+1. IntelliJ (Back-end) + VS Code (Front-end)
+2. VS Code (Back-end + Front-end)
+
+
+For both methods:
+1. Check that you have <a href="https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html">Java SE 17</a> installed (Windows/Mac/Linux OS).
   ```sh
   java -version
   ```
-  
-2. <a href="https://www.mongodb.com/docs/atlas/getting-started/">MongoDB Atalas</a>
-3. Spring Boot Extensions (if using VS Code): "Extension Pack for Java" and "Spring Boot Extension Pack". <br>
-[Installation instruction link](https://code.visualstudio.com/docs/java/java-spring-boot)
+2. Install <a href="https://www.mongodb.com/docs/atlas/getting-started/">MongoDB Atalas</a>.
+3. Install the VS Code extension: "Live Server (Five Server)" by Yannick
+
+
+Additional prerequisite for Method #2 (VS Code Back-end + Front-end):
+1. Install Spring Boot Extensions: ["Extension Pack for Java" and "Spring Boot Extension Pack"](https://code.visualstudio.com/docs/java/java-spring-boot). <br>
+
 
 ### Installation
-1. Clone the repo
+1. Clone the repo.
 ```sh
    git clone https://github.com/noah-hw-kim/better-buy.git
    ```
 
-2. Create .env file in "resources" directory (Backend -> src -> main -> java -> com.orrijoa.BetterBuy -> resources)
+2. Create .env file in "resources" directory (Backend -> src -> main -> java -> com.orrijoa.BetterBuy -> resources).
 3. Define .env file with your mongoDB cluster accordingly: <br>
 MONGO_DATABASE="[Database_Name]"<br>
 MONGO_USER="[User_Name]"<br>
@@ -148,15 +153,15 @@ MONGO_CLUSTER="[Cluster_Name]"
 
 <!-- 
 1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+2. Clone the repo.
    ```sh
    git clone https://github.com/noah-hw-kim/better-buy.git
    ```
-3. Install NPM packages
+3. Install NPM packages.
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
+4. Enter your API in `config.js`.
    ```js
    const API_KEY = 'ENTER YOUR API';
    ``` -->
@@ -168,32 +173,23 @@ MONGO_CLUSTER="[Cluster_Name]"
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-### Set up the app
-1. Run "BetterBuyApplication.java" in Backend directory (Backend -> src -> main -> java\com\orrijoa\BetterBuy)
-* If using Intellij:
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Intellij_BetterBuyApplication.png" alt="Intellij_BetterBuyApplication" width="60%" height="60%">
-* If using VS Code:
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Vscode_BetterBuyApplication.png" alt="Vscode_BetterBuyApplication" width="50%" height="50%">
+### Set up the app: Method #1 (IntelliJ Back-end + VS Code Front-end)
+1. Back-end: Run server via IntelliJ (Run the "BetterBuyApplication.java" file located inside: Backend -> src -> main -> java -> com.orrijoa.BetterBuy).<br><img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Intellij_BetterBuyApplication.png" alt="Intellij_BetterBuyApplication" width="65%" height="65%">
+2. Front-end: Run "main.html" via VS Code's Live Server extension.<br><img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Vscode_main_html.png" alt="Vscode_main_html" width="50%" height="50%">
 
-2. Run live server "main.html" in Frontend directory
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Vscode_main_html.png" alt="Vscode_main_html" width="50%" height="50%">
+### Set up the app: Method #2 (VS Code Back-end + Front-end)
+1. Back-end: Run server via VS Code<br><img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Vscode_BetterBuyApplication.png" alt="Vscode_BetterBuyApplication" width="30%" height="30%">.
+2. Front-end: Run "main.html" via VS Code's Live Server extension.<br><img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Vscode_main_html.png" alt="Vscode_main_html" width="50%" height="50%">
 
 ### Compare items
 1. Fill out a list of items info in main page (Required: Name, Price, Amount, Unity Type, and Unit; Optional: Brand, Store, and Category)
-2. 
-3. Click 'Compare' button
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Compare.png" alt="Compare" width="60%" height="60%">
-
-3. See comparison result displayed
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Compare_result.png" alt="Compare_result" width="60%" height="60%">
+2. Click 'Compare' button<br><img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Compare.png" alt="Compare" width="90%" height="90%">
+3. See comparison result displayed<br><img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Compare_result.png" alt="Compare_result" width="90%" height="90%">
 
 ### Search items
-1. Enter keyword (name, brand, stroe, or category) in the search box next to "Searchy History"
-2. Click search icon
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Search.png" alt="Search" width="60%" height="60%">
-
-3. Search result displayed
-<img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Search_result.png" alt="Search_result" width="60%" height="60%">
+1. Enter keyword (name, brand, store, or category) in the search box next to "Searchy History".
+2. Click search icon.<br><img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Search.png" alt="Search">
+3. See search result displayed.<br><img src="https://github.com/noah-hw-kim/better-buy/blob/main/Image/Search_result.png" alt="Search_result">
 
 
 <!-- Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
