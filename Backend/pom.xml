@@ -17,7 +17,6 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
@@ -68,7 +67,6 @@
 			<artifactId>junit</artifactId>
 			<version>4.13.2</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>

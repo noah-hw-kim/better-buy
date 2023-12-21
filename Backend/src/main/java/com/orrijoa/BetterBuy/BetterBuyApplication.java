@@ -22,7 +22,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EntityScan(basePackages = "com.orrijoa.BetterBuy")
 @ComponentScan({ "com.orrijoa.BetterBuy.*" })
 public class BetterBuyApplication {
-
 	// Use for swagger api for testing
 	@Bean
 	public Docket api() {

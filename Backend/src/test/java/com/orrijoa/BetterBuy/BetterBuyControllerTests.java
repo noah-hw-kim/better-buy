@@ -6,9 +6,6 @@ import static org.junit.Assert.*;
 
 public class BetterBuyControllerTests {
 
-    @Test
-    public void test(){
-        assertArrayEquals();
-    }
+
 
 }
