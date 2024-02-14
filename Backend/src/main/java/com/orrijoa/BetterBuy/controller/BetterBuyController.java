@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class BetterBuyController {
 
     // add new items in mongoDB
     @PostMapping("/items")
-    public ResponseEntity<List<Item>> createItems(@RequestBody List<Item> items) {
+    public ResponseEntity<List<Item>> createItems(@RequestBody @Valid List<Item> items) {
         return new ResponseEntity<List<Item>>(betterBuyService.createItems(items), HttpStatus.CREATED);
     }
 

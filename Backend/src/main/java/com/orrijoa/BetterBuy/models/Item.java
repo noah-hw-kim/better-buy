@@ -4,6 +4,11 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * represents a single record in ItemRepository
  * */
@@ -15,12 +20,39 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Item implements Comparable<Item> {
     @Id
     private long id;
+
+    @NotBlank(message = "Invalid Unit: Empty unit")
+    @NotNull(message = "Invalid Unit: Unit is NULL")
     private String unit;
+
+    @NotBlank(message = "Invalid Price: Empty Price")
+    @NotNull(message = "Invalid Price: Price is NULL")
+    @Min(value = 0, message = "Invalid Price: Less than zero")
     private double price;
+
+    @NotBlank(message = "Invalid Amount: Empty Amount")
+    @NotNull(message = "Invalid Amount: Amount is NULL")
+    @Min(value = 0, message = "Invalid Amount: Less than zero")
     private double amount;
+
+    @NotBlank(message = "Invalid Name: Empty Name")
+    @NotNull(message = "Invalid Name: Name is NULL")
+    @Size(min = 1, max = 30, message = "Invalid Name: Must be of 1 - 30 characters")
     private String name;
+
+    @NotBlank(message = "Invalid Brand: Empty Brand")
+    @NotNull(message = "Invalid Brand: Brand is NULL")
+    @Size(min = 1, max = 30, message = "Invalid Brand: Must be of 1 - 30 characters")
     private String brand;
+
+    @NotBlank(message = "Invalid Store: Empty Store")
+    @NotNull(message = "Invalid Store: Store is NULL")
+    @Size(min = 1, max = 30, message = "Invalid Store: Must be of 1 - 30 characters")
     private String store;
+
+    @NotBlank(message = "Invalid Category: Empty Category")
+    @NotNull(message = "Invalid Category: Category is NULL")
+    @Size(min = 1, max = 30, message = "Invalid Category: Must be of 1 - 30 characters")
     private String category;
     private double pricePerBaseUnit;  // e.g) 1 gallon :  128 fluid oz
     private String baseUnit;
