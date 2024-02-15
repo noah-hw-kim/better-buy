@@ -94,5 +94,4 @@ public class UnitToBaseMap {
     public Double getBaseAmount(String unit) {
         return unitToBaseUnitRatio.get(unit);
     }
-
 }
