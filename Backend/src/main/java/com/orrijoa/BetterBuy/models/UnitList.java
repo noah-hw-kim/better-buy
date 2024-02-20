@@ -32,7 +32,6 @@ public class UnitList {
         unitTypeToUnit.put("length", lengthUnitSet);
     }
 
-    @Bean
     public Map<String, Set<String>> getUnitTypeToUnit() {
         return unitTypeToUnit;
     }

@@ -3,6 +3,7 @@ package com.orrijoa.BetterBuy.service;
 import com.orrijoa.BetterBuy.models.*;
 import com.orrijoa.BetterBuy.repository.ItemRepository;
 import com.orrijoa.BetterBuy.repository.SearchRepository;
+import com.orrijoa.BetterBuy.repository.SimpleSearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class BetterBuyService {
     @Autowired
     private ItemRepository itemRepo;
     @Autowired
-    private SearchRepository searchRepo;
+    private SimpleSearchRepository simpleSearchRepo;
     @Autowired
     private UnitList unitList;
     @Autowired
@@ -106,7 +107,7 @@ public class BetterBuyService {
 
     // return search records from SearchRepository
     public List<Item> getSearchedItems(String text) {
-        return searchRepo.findByText(text);
+        return simpleSearchRepo.findByText(text);
     }
 
     // remove an item from the ItemRepository by itemId
