@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "items")
 public class Item implements Comparable<Item> {
     @Id
-    private long id;
+    private String id;
     private String unit;
     private double price;
     private double amount;
@@ -54,7 +54,7 @@ public class Item implements Comparable<Item> {
         result = prime * result + ((store == null) ? 0 : store.hashCode());
         result = prime * result + ((category == null) ? 0 : category.hashCode());
         result = prime * result + ((baseUnit == null) ? 0 : baseUnit.hashCode());
-        result = prime * result + (int) id;
+        result = prime * result + Integer.parseInt(id) ;
         result = prime * result + (int) price;
         result = prime * result + (int) amount;
         result = prime * result + (int) pricePerBaseUnit;

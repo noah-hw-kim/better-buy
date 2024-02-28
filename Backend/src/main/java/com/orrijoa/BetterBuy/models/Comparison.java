@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /* Comparison obj takes in a list of items passed from service layer from mongoDB.
 *  It then stores the best value item and the list of items compared.
