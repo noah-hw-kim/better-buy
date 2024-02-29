@@ -17,8 +17,8 @@ public class ItemRepositoryTest {
     @Test
     public void testFindAll() {
         // Given
-        Item item1 = Item.builder().id(100L).build();
-        Item item2 = Item.builder().id(10L).build();
+        Item item1 = new Item();
+        Item item2 = new Item();
         itemRepository.save(item1);
         itemRepository.save(item2);
 

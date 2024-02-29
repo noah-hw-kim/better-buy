@@ -54,7 +54,7 @@ public class BetterBuyService {
 
         for (Item i : items) {
             Item saveItem = Item.builder()
-                    .id(i.hashCode())   // use item's hashcode as id to prevent duplicates
+//                    .id(i.hashCode())   // use item's hashcode as id to prevent duplicates
                     .unit(i.getUnit())
                     .price(i.getPrice())
                     .amount(i.getAmount())
@@ -100,7 +100,7 @@ public class BetterBuyService {
     public Comparison getBestValue(String[] itemIdList) {
         List<Item> itemList = new ArrayList<>();
         for (int i = 0; i < itemIdList.length; i++) {
-            itemList.add(itemRepo.findItemById(Long.parseLong(itemIdList[i])));
+            itemList.add(itemRepo.findItemById(itemIdList[i]));
         }
         return new Comparison(itemList);
     }
@@ -112,7 +112,7 @@ public class BetterBuyService {
 
     // remove an item from the ItemRepository by itemId
     public void deleteItem(String itemId) {
-        itemRepo.deleteById(Long.parseLong(itemId));
+        itemRepo.deleteById(itemId);
     }
 
     // remove all items from the ItemRepository
