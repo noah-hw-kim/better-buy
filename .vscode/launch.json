@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "BetterBuyApplication",
+            "request": "launch",
+            "mainClass": "com.orrijoa.BetterBuy.BetterBuyApplication",
+            "projectName": "BetterBuy"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-BetterBuyApplication<ValueComparer>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
