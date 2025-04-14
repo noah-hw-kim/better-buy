@@ -1,3 +1,5 @@
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
 let unitTypeLst = [];
 let massUnitsLst = [];
 let volumeUnitsLst = [];
@@ -28,7 +30,7 @@ async function setUpListsAndDB() {
 
 // Api call: Get categories from backend repository (which will populate dropdowns in genCategoryDropdown())
 async function getCategories() {
-    let response = await fetch("http://localhost:8081/api/better-buy/categories");
+    let response = await fetch(`${BASE_URL}/api/better-buy/categories`);
     let responseJson = await response.json();
     let jsonCategoryList = responseJson["categories"]; 
     let jsonCategoryValues = Object.values(jsonCategoryList);
@@ -38,7 +40,7 @@ async function getCategories() {
 
 // Api call: Get units and unit types from backend repository (which will populate dropdowns in genUnitDropdown())
 async function getUnitsAndUnitTypes() {
-    let response = await fetch("http://localhost:8081/api/better-buy/unit-list");
+    let response = await fetch(`${BASE_URL}/api/better-buy/unit-list`);
     let responseJson = await response.json();
     let jsonUnitList = responseJson["unitTypeToUnit"];
     let jsonUnitListKeys = Object.keys(jsonUnitList);
@@ -64,7 +66,7 @@ async function getUnitsAndUnitTypes() {
 
 // Api call: Get all records from backend repository (which will populate search history table)
 async function getAllItems() {
-    let response = await fetch("http://localhost:8081/api/better-buy/all-items");
+    let response = await fetch(`${BASE_URL}/api/better-buy/all-items`);
     let responseJson = await response.json();
     let searchedItemsArr = [];
 
@@ -224,7 +226,7 @@ async function handleSearchBtn() {
     if (searchText == "") {
         return getAllItems();
     } else {
-        let response = await fetch(`http://localhost:8081/api/better-buy/items/${searchText}`);
+        let response = await fetch(`${BASE_URL}/api/better-buy/items/${searchText}`);
         let responseJson = await response.json();
 
         for (let i = 0; i < responseJson.length; i++) {
@@ -278,7 +280,7 @@ function validateInputs(searchedItemsArr) {
 // Helper method for handleSubmit()
 async function saveToDB(searchedItemsArr) {
     let jsonData = jsonifysearchedItemsArr(searchedItemsArr);
-    let response = await fetch("http://localhost:8081/api/better-buy/items", {
+    let response = await fetch(`${BASE_URL}/api/better-buy/items`, {
         method: "POST", headers: {
             "Content-Type": "application/json",
         }, body: JSON.stringify(jsonData)
@@ -321,7 +323,7 @@ function jsonifysearchedItemsArr(searchedItemsArr) {
 // Helper method for handleSubmit(): Get comparison result (best value item and compared items list)
 async function compareItems(searchedItemsArrJson) {
     let idStr = getIdFromJsonArr(searchedItemsArrJson);
-    let response = await fetch(`http://localhost:8081/api/better-buy/item-comparison/${idStr}`)
+    let response = await fetch(`${BASE_URL}/api/better-buy/item-comparison/${idStr}`)
     let comparisionResult = await response.json();
     return comparisionResult;
 }
@@ -370,12 +372,12 @@ function displayCompareResult(responseJson) {
 
 // Delete an item in the backend repository
 async function deleteRecord(itemId) {
-    await fetch(`http://localhost:8081/api/better-buy/item/${itemId}`, { method: "DELETE" });
+    await fetch(`${BASE_URL}/api/better-buy/item/${itemId}`, { method: "DELETE" });
 }
 
 // Delete all items in the backend repository
 async function deleteAllRecords() {
-    await fetch(`http://localhost:8081/api/better-buy/items`, { method: "DELETE" });
+    await fetch(`${BASE_URL}/api/better-buy/items`, { method: "DELETE" });
 }
 
 
