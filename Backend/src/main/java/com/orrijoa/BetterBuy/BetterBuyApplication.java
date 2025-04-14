@@ -57,5 +57,6 @@ public class BetterBuyApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BetterBuyApplication.class, args);
 	}
+	
 
 }
