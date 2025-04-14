@@ -1,22 +1,28 @@
 package com.orrijoa.BetterBuy.controller;
 
-import com.orrijoa.BetterBuy.service.BetterBuyService;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.orrijoa.BetterBuy.models.Categories;
 import com.orrijoa.BetterBuy.models.Comparison;
 import com.orrijoa.BetterBuy.models.Item;
 import com.orrijoa.BetterBuy.models.UnitList;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-// import springfox.documentation.annotations.ApiIgnore;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
+import com.orrijoa.BetterBuy.service.BetterBuyService;
 
 @RestController
 @RequestMapping("api/better-buy")
-@CrossOrigin
+@CrossOrigin(origins = "https://better-buy-frontend.onrender.com")
 public class BetterBuyController {
 
     @Autowired
