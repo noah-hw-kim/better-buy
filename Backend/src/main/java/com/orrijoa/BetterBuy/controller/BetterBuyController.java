@@ -22,7 +22,10 @@ import com.orrijoa.BetterBuy.service.BetterBuyService;
 
 @RestController
 @RequestMapping("api/better-buy")
-@CrossOrigin(origins = "https://better-buy-frontend.onrender.com")
+@CrossOrigin(origins = {
+    "http://localhost:5173",
+    "https://your-frontend.onrender.com"
+})
 public class BetterBuyController {
 
     @Autowired
