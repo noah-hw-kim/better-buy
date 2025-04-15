@@ -1,5 +1,5 @@
 // const BASE_URL = import.meta.env.VITE_BACKEND_URL;
-const BASE_URL = "https://better-buy-backend.onrender.com/";
+const BASE_URL = "https://better-buy-backend.onrender.com";
 
 let unitTypeLst = [];
 let massUnitsLst = [];
@@ -189,7 +189,7 @@ function handleAddBtn() {
 
     let h5AndSelectElem = newItemDiv.querySelectorAll("h5, select");
 
-    for (i = 0; i < h5AndSelectElem.length; i++) {
+    for (let i = 0; i < h5AndSelectElem.length; i++) {
         let currName = h5AndSelectElem[i].getAttribute("name");
 
         // update item title (e.x, "Item 1" -> "Item 3")
