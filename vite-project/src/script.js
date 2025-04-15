@@ -1,5 +1,4 @@
-// const BASE_URL = import.meta.env.VITE_BACKEND_URL;
-const BASE_URL = "https://better-buy-backend.onrender.com";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 let unitTypeLst = [];
 let massUnitsLst = [];
